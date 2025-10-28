@@ -1,0 +1,20 @@
+<p>Totale antal produkter:{{totalProducts}}</p>
+
+{{! 
+Dette er et for each loop hvor vi looper igennem et array, enten hard coded eller fra en database }}
+{{#each products}}
+    <p>Id:{{this.id}}</p>
+    <p>Name:{{this.name}}</p>
+    <p>Price:{{this.price}}</p>
+
+    {{#if this.inStock}}
+        <p>In Stock!</p>
+    {{else}}
+        <p> Not in stock </p>
+    {{/if}}
+
+    <p>-------------------------</p>
+
+{{/each}}
+{{!-- 
+Kan kigge på noget der hedder partial views til næsæte gang hvis jeg keder mig --}}
