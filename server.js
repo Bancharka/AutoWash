@@ -18,25 +18,54 @@ app.set("views", "./views/");
 
 //Det her er basically routing som vi har gjort i
 app.get("/", (req, res) => {
-    res.render("home", {
+    res.render("login", {
         title: "Hjem",
         message: "Velkommen homie gratt gratt!",
     });
 });
 
-app.get('/products', (req, res) => {
-    //hapser data fra databasen
-        const products = [
-            { id: 1, name: 'Laptop', price: 5000, inStock: true },
-            { id: 2, name: 'Mouse', price: 200, inStock: true },
-            { id: 3, name: 'Keyboard', price: 400, inStock: false },
-            { id: 4, name: 'Monitor', price: 2000, inStock: true },
-        ];
-        res.render('products', {
-            title: 'Products', 
-            products: products,
-            totalProducts: products.length
-        });
+app.get("/dashboard", (req, res) => {
+    res.render("dashboard", {
+        title: "Dashboard",
+        message: "Velkommen homie gratt gratt!",
     });
+});
+
+app.get("/new-cleaning", (req, res) => {
+    res.render("newCleaning", {
+        title: "Ny rengøring",
+        message: "Velkommen homie gratt gratt!",
+    });
+});
+
+app.get("/add-user", (req, res) => {
+    res.render("addUser", {
+        title: "Tilføj bruger",
+        message: "Velkommen homie gratt gratt!",
+    });
+});
+
+app.get("/products", (req, res) => {
+    res.render("products", {
+        title: "Produkter",
+        message: "Velkommen homie gratt gratt!",
+    });
+});
+
+app.get("/stations", (req, res) => {
+    res.render("stations", {
+        title: "Stationer",
+        message: "Velkommen homie gratt gratt!",
+    });
+});
+
+app.get("/add-station", (req, res) => {
+    res.render("addUser", {
+        title: "Tilføj bruger",
+        message: "Velkommen homie gratt gratt!",
+    });
+});
+
+
 
 app.listen(PORT);
