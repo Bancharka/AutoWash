@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       Stations.belongsTo(models.Companies, {
         foreignKey: 'companyId',
       });
+      // define association here
     }
   }
   Stations.init({
