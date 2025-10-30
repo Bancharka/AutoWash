@@ -10,19 +10,24 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       firstName: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       lastName: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       email: {
+        allowNull: false,
         type: Sequelize.STRING,
         unique: true,
       },
       password: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       isAdmin: {
+        allowNull: false,
         type: Sequelize.BOOLEAN,
       },
       createdAt: {

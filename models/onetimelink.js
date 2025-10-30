@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class OneTimeLink extends Model {
     /**
@@ -10,14 +8,19 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Stations.belongsTo(models.Logs, {
+        foreignKey: "logId",
+      });
     }
   }
-  OneTimeLink.init({
-    logId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'OneTimeLink',
-  });
+  OneTimeLink.init(
+    {
+      logId: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: "OneTimeLink",
+    }
+  );
   return OneTimeLink;
 };
