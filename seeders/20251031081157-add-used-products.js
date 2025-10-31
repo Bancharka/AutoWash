@@ -1,25 +1,54 @@
-'use strict';
+"use strict";
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
-  },
+	async up(queryInterface, Sequelize) {
+		await queryInterface.bulkInsert(
+			"UsedProducts",
+			[
+				{
+					//her kan flere produkter bruges flere gange i samme log
+					productId: 1,
+					logId: 1,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+				{
+					productId: 2,
+					logId: 1,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+				{
+					productId: 2,
+					logId: 2,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+				{
+					productId: 2,
+					logId: 3,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+				{
+					productId: 4,
+					logId: 3,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+				{
+					productId: 7,
+					logId: 5,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+			],
+			{}
+		);
+	},
 
-  async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
-  }
+	async down(queryInterface, Sequelize) {
+		await queryInterface.bulkDelete("UsedProducts", null, {});
+	},
 };
