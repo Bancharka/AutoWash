@@ -14,6 +14,7 @@ module.exports = {
 		 */
 		await queryInterface.bulkInsert("stations", [
 			{
+				id: 1,
 				address: "Hovedgaden 12",
 				postalCode: "2750",
 				city: "Ballerup",
@@ -22,6 +23,7 @@ module.exports = {
 				updatedAt: new Date(),
 			},
 			{
+				id: 2,
 				address: "Søndergade 44",
 				postalCode: "8700",
 				city: "Horsens",
@@ -30,6 +32,7 @@ module.exports = {
 				updatedAt: new Date(),
 			},
 			{
+				id: 3,
 				address: "Nørrevænget 9",
 				postalCode: "7100",
 				city: "Vejle",
@@ -38,6 +41,7 @@ module.exports = {
 				updatedAt: new Date(),
 			},
 			{
+				id: 4,
 				address: "Strandvejen 201",
 				postalCode: "2100",
 				city: "København Ø",
@@ -46,6 +50,7 @@ module.exports = {
 				updatedAt: new Date(),
 			},
 			{
+				id: 5,
 				address: "Vesterbro 31",
 				postalCode: "5000",
 				city: "Odense C",
@@ -54,6 +59,7 @@ module.exports = {
 				updatedAt: new Date(),
 			},
 			{
+				id: 6,
 				address: "Stationsvej 2",
 				postalCode: "4000",
 				city: "Roskilde",
@@ -62,6 +68,7 @@ module.exports = {
 				updatedAt: new Date(),
 			},
 			{
+				id: 7,
 				address: "Vestergade 89",
 				postalCode: "8000",
 				city: "Aarhus C",
@@ -70,6 +77,7 @@ module.exports = {
 				updatedAt: new Date(),
 			},
 			{
+				id: 8,
 				address: "Jyllingevej 178",
 				postalCode: "2720",
 				city: "Vanløse",
@@ -78,6 +86,7 @@ module.exports = {
 				updatedAt: new Date(),
 			},
 			{
+				id: 9,
 				address: "Algade 23",
 				postalCode: "4000",
 				city: "Roskilde",
@@ -86,6 +95,7 @@ module.exports = {
 				updatedAt: new Date(),
 			},
 			{
+				id: 10,
 				address: "Torvet 6",
 				postalCode: "6400",
 				city: "Sønderborg",
