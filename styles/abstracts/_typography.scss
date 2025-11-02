@@ -1,0 +1,55 @@
+@font-face {
+  font-family: "Geist";
+  src: url("../assets/fonts/Geist.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist";
+  src: url("../assets/fonts/Geist-Italic.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+$font-family-base: "Geist", sans-serif;
+
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.875rem;
+$font-size-base: 1rem;
+$font-size-lg: 1.5rem;
+$font-size-xl: 2rem;
+
+$font-weight-medium: 500;
+
+$line-height-body: 1.5;
+$line-height-heading: 1.25;
+$line-height-label: 1.25;
+
+@mixin text-heading {
+  font-weight: $font-weight-medium;
+  line-height: $line-height-heading;
+}
+
+@mixin text-label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-label;
+}
+
+@mixin text-label-body {
+  font-size: $font-size-sm;
+}
+
+@mixin text-input {
+  font-size: $font-size-sm;
+  &::placeholder {
+    opacity: 0.5;
+  }
+}
+
+@mixin text-small {
+  font-size: $font-size-xs;
+}

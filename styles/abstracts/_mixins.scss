@@ -1,0 +1,8 @@
+@use "../abstracts" as *;
+
+@mixin box {
+  padding: $spacing-sm;
+  background-color: $color-surface;
+  color: $color-surface-foreground;
+  border-radius: $border-radius;
+}

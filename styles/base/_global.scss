@@ -1,0 +1,13 @@
+@use "../abstracts" as *;
+
+html {
+  background-color: $color-background;
+  color: $color-foreground;
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  line-height: $line-height-body;
+}
+
+body {
+  min-height: 100vh;
+}
