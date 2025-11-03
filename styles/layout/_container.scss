@@ -1,5 +1,11 @@
 @use "../abstracts" as *;
 
 .container {
+  margin: auto;
   padding: 0 $spacing-md;
+  // TEMP
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  max-width: 400px;
 }
