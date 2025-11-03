@@ -1,0 +1,35 @@
+@use "../abstracts" as *;
+
+.destructive-entry {
+  display: flex;
+  gap: $spacing-xs;
+  height: 3rem;
+
+  &__box {
+    @include box;
+    @include text-label-body;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-grow: 1;
+  }
+
+  &__button {
+    border: $border-width solid $color-destructive;
+    width: 3rem;
+    border-radius: $border-radius;
+    flex-shrink: 0;
+  }
+
+  &__label {
+    white-space: nowrap;
+  }
+
+  &__name {
+    display: inline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
