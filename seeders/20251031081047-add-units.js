@@ -5,7 +5,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert("Units", [
       {
-        id: 1,
+        id: 1, //have en forkortelse på 
         name: "Liter",
         createdAt: new Date(),
         updatedAt: new Date(),
