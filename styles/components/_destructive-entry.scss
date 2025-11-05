@@ -3,6 +3,7 @@
 .destructive-entry {
   display: flex;
   gap: $spacing-xs;
+  max-width: 100%;
   height: 3rem;
 
   &__box {

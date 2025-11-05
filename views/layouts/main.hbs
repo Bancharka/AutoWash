@@ -9,19 +9,13 @@
     <div class="container">
       {{! Det er her vores forskellige views skal sættes ind }}
       {{{body}}}
-      <button class="btn btn--primary">Hej</button>
-      <a href="/" class="btn btn--primary">Hej</a>
-      <button class="btn btn--secondary">Hej</button>
-      <button class="btn btn--outline">Hej</button>
-      <button class="btn btn--ghost">Hej</button>
-      <button class="btn btn--destructive">Hej</button>
-      <div class="destructive-entry">
-        <div class="destructive-entry__box">
-          <span class="destructive-entry__name">Kalkfjerner</span>
-          <span class="destructive-entry__label">2 liter</span>
-        </div>
-        <button class="destructive-entry__button"></button>
-      </div>
+      {{> button type="button" text="Hej"}}
+      {{> button type="button" text="Hej" variant="primary"}}
+      {{> button type="button" text="Hej" variant="secondary"}}
+      {{> button href="/" text="Hej" variant="outline"}}
+      {{> button type="button" text="Hej" variant="ghost"}}
+      {{> button type="button" text="Hej" variant="destructive"}}
+      {{> destructiveEntry name="Kalkfjerner" amount="2" unit="liter"}}
     </div>
   </body>
 </html>
