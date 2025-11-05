@@ -1,1 +1,6 @@
-.dropdown {}
+@use "../abstracts" as *;
+
+.dropdown {
+    @include box;
+    @include text-label;
+}

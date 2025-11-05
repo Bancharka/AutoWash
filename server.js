@@ -26,7 +26,13 @@ app.get("/", (req, res) => {
   res.render("login", {
     title: "Hjem",
     message: "Velkommen homie gratt gratt!",
-    placeholderText: "Dynamisk placeholder"
+    placeholderText: "Dynamisk placeholder",
+    label: "Placeholder",
+    value: "Example",
+    value1: "Example",
+    value2: "Example",
+    value3: "Example",
+    value4: "Example"
   });
 });
 
