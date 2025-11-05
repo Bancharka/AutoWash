@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "sass": "sass --watch styles:public/styles"
   },
   "keywords": [],
   "author": "",
@@ -17,7 +18,7 @@
     "mysql2": "^3.15.3",
     "pg": "^8.16.3",
     "pg-hstore": "^2.3.4",
-    "sass": "^1.93.2",
+    "sass": "^1.93.3",
     "sequelize": "^6.37.7"
   }
 }
