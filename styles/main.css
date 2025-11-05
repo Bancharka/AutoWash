@@ -67,28 +67,23 @@ video {
   border-radius: 0.5rem;
   cursor: pointer;
 }
-
 .btn--primary {
   background-color: #0d2673;
   color: #ffffff;
 }
-
 .btn--secondary {
   background-color: #bac9f7;
   color: #030817;
 }
-
 .btn--outline {
   border: 1px solid #0d2673;
   background-color: transparent;
   color: #030817;
 }
-
 .btn--ghost {
   background-color: transparent;
   color: #0d2673;
 }
-
 .btn--destructive {
   background-color: transparent;
   border: 1px solid #e31919;
@@ -100,7 +95,6 @@ video {
   gap: 0.5rem;
   height: 3rem;
 }
-
 .destructive-entry__box {
   padding: 1rem;
   background-color: #ffffff;
@@ -114,18 +108,15 @@ video {
   gap: 0.5rem;
   width: 100%;
 }
-
 .destructive-entry__button {
   border: 1px solid #e31919;
   width: 3rem;
   border-radius: 0.5rem;
   flex-shrink: 0;
 }
-
 .destructive-entry__label {
   white-space: nowrap;
 }
-
 .destructive-entry__name {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -147,32 +138,27 @@ video {
   justify-content: space-between;
   gap: 0.5rem;
 }
-
 .dashboard-display__content {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
-
 .dashboard-display__title {
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.25;
   color: #0d2673;
 }
-
 .dashboard-display__date {
   color: #667399;
   font-size: 0.875rem;
 }
-
 .dashboard-display__link {
   color: #667399;
   display: flex;
   font-size: 1.5rem;
   align-items: center;
 }
-
 .dashboard-display:hover {
   cursor: pointer;
 }
@@ -184,6 +170,4 @@ video {
   flex-direction: column;
   gap: 1.5rem;
   max-width: 400px;
-} 
-
-/*# sourceMappingURL=main.css.map */
+}/*# sourceMappingURL=main.css.map */
