@@ -124,7 +124,13 @@ video {
 }
 
 .input {
-  background-color: blue;
+  padding: 1rem;
+  background-color: #ffffff;
+  color: #030817;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25;
 }
 
 .container {
