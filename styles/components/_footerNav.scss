@@ -1,0 +1,28 @@
+@use "../abstracts" as *;
+
+.footerNav {
+	display: flex;
+	justify-content: space-around;
+	background-color: $color-primary;
+	padding: $spacing-xs;
+
+	button {
+		display: flex;
+		flex-direction: column;
+		background-color: $color-primary;
+		cursor: pointer;
+	}
+
+	li {
+		list-style: none;
+	}
+	&__icon {
+		color: $color-primary-foreground;
+	}
+	&__text {
+		color: $color-primary-foreground;
+	}
+	&__buttonIcon {
+		max-height: $icon-size;
+	}
+}

@@ -127,6 +127,31 @@ video {
   background-color: blue;
 }
 
+.footerNav {
+  display: flex;
+  justify-content: space-around;
+  background-color: #0d2673;
+  padding: 0.5rem;
+}
+.footerNav button {
+  display: flex;
+  flex-direction: column;
+  background-color: #0d2673;
+  cursor: pointer;
+}
+.footerNav li {
+  list-style: none;
+}
+.footerNav__icon {
+  color: #ffffff;
+}
+.footerNav__text {
+  color: #ffffff;
+}
+.footerNav__buttonIcon {
+  max-height: 1.5rem;
+}
+
 .container {
   margin: auto;
   padding: 0 1.5rem;
