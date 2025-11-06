@@ -163,6 +163,36 @@ video {
   cursor: pointer;
 }
 
+.station-item {
+  padding: 1rem;
+  background-color: #ffffff;
+  color: #030817;
+  border-radius: 0.5rem;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.station-item__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.station-item__text {
+  color: #667399;
+  font-size: 0.875rem;
+}
+.station-item__close {
+  color: #667399;
+  display: flex;
+  font-size: 1.5rem;
+  align-items: center;
+}
+.station-item:hover {
+  cursor: pointer;
+}
+
 .container {
   margin: auto;
   padding: 0 1.5rem;
