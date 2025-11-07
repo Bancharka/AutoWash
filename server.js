@@ -1,6 +1,7 @@
 const express = require("express");
 const { engine } = require("express-handlebars");
 const path = require("path");
+const helpers = require("./helpers/helpers");
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.engine(
     extname: "hbs",
     defaultLayout: "main",
     layoutsDir: "./views/layouts",
+    helpers: helpers
   })
 );
 
