@@ -168,6 +168,18 @@ video {
   color: #667399;
 }
 
+.box {
+  padding: 1rem;
+  background-color: #ffffff;
+  color: #030817;
+  border-radius: 0.5rem;
+  display: flex;
+  height: 5rem;
+  width: 5rem;
+  align-items: center;
+  justify-content: center;
+}
+
 .container {
   margin: auto;
   padding: 0 1.5rem;
