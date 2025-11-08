@@ -133,7 +133,7 @@ video {
   background-color: #0d2673;
   padding: 0.5rem;
 }
-.footerNav button {
+.footerNav a {
   display: flex;
   flex-direction: column;
   background-color: #0d2673;
@@ -150,6 +150,22 @@ video {
 }
 .footerNav__buttonIcon {
   max-height: 1.5rem;
+}
+
+.bob {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+}
+.bob hr {
+  border-top: 3px solid #667399;
+  padding: 0 1.5rem;
+  border-radius: 5px;
+  width: 7rem;
+}
+.bob div {
+  padding: 0 0.5rem;
+  color: #667399;
 }
 
 .container {

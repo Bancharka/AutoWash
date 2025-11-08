@@ -1,0 +1,19 @@
+@use "../abstracts" as *;
+
+.bob {
+	margin-top: 20px;
+	display: flex;
+	align-items: center;
+
+	hr {
+		border-top: 3px solid $color-muted;
+		padding: 0 1.5rem;
+		border-radius: 5px;
+		width: 7rem;
+	}
+
+	div {
+		padding: 0 $spacing-xs;
+		color: $color-muted;
+	}
+}
