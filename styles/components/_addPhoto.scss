@@ -1,0 +1,10 @@
+@use "../abstracts" as *;
+
+.box {
+	@include box;
+	display: flex;
+	height: 5rem;
+	width: 5rem;
+	align-items: center;
+	justify-content: center;
+}
