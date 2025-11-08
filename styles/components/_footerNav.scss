@@ -1,16 +1,25 @@
 @use "../abstracts" as *;
 
+.highlight {
+	opacity: 1 !important;
+}
 .footerNav {
 	display: flex;
 	justify-content: space-around;
 	background-color: $color-primary;
 	padding: $spacing-xs;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
 
 	a {
 		display: flex;
 		flex-direction: column;
 		background-color: $color-primary;
 		cursor: pointer;
+		border-radius: $border-radius;
+		padding: $spacing-xs;
+		opacity: 0.5;
 	}
 
 	li {

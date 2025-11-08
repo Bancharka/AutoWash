@@ -127,17 +127,27 @@ video {
   background-color: blue;
 }
 
+.highlight {
+  opacity: 1 !important;
+}
+
 .footerNav {
   display: flex;
   justify-content: space-around;
   background-color: #0d2673;
   padding: 0.5rem;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 .footerNav a {
   display: flex;
   flex-direction: column;
   background-color: #0d2673;
   cursor: pointer;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  opacity: 0.5;
 }
 .footerNav li {
   list-style: none;
@@ -156,19 +166,21 @@ video {
   margin-top: 20px;
   display: flex;
   align-items: center;
+  width: 100%;
+  justify-content: center;
 }
 .bob hr {
   border-top: 3px solid #667399;
   padding: 0 1.5rem;
   border-radius: 5px;
-  width: 7rem;
+  width: 30%;
 }
 .bob div {
   padding: 0 0.5rem;
   color: #667399;
 }
 
-.box {
+.addphotobox {
   padding: 1rem;
   background-color: #ffffff;
   color: #030817;
@@ -178,6 +190,19 @@ video {
   width: 5rem;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+header button {
+  cursor: pointer;
+  width: fit-content;
 }
 
 .container {

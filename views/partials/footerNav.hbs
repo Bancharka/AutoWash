@@ -1,26 +1,28 @@
 <nav class="footerNav">
-	<a href="" target="_blank">
+	<a class="{{#if (eq currentPath '/')}} highlight {{/if}}" href="#" target="">
 		<img
 			class="footerNav__buttonIcon"
 			src="/assets/icons/staff.svg"
 			alt=""
 		/>
 		<li class="footerNav__text">Personale</li>
-	</a href="" target="_blank">
-	<a href="" target="_blank">
+	</a>
+
+	<a class="{{#if (eq currentPath '/products')}} highlight {{/if}}" href="#" target="">
 		<img
 			class="footerNav__buttonIcon"
 			src="/assets/icons/drop.svg"
 			alt=""
 		/>
 		<li class="footerNav__text">Produkter</li>
-	</a href="" target="_blank">
-	<a href="" target="_blank">
+	</a>
+
+	<a class="{{#if (eq currentPath '/stations')}} highlight {{/if}}" href="#" target="">
 		<img
 			class="footerNav__buttonIcon"
 			src="/assets/icons/stations.svg"
 			alt=""
 		/>
 		<li class="footerNav__text">Stationer</li>
-	</a href="" target="_blank">
+	</a>
 </nav>

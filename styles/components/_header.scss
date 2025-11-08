@@ -1,0 +1,14 @@
+@use "../abstracts" as *;
+
+header {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: $spacing-sm;
+
+	button {
+		cursor: pointer;
+		width: fit-content;
+	}
+}

@@ -1,10 +1,11 @@
 @use "../abstracts" as *;
 
-.box {
+.addphotobox {
 	@include box;
 	display: flex;
 	height: 5rem;
 	width: 5rem;
 	align-items: center;
 	justify-content: center;
+	cursor: pointer;
 }
