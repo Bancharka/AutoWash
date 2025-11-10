@@ -2,6 +2,7 @@ const express = require("express");
 const { engine } = require("express-handlebars");
 const path = require("path");
 const helpers = require("./helpers/helpers");
+const Handlebars = require("handlebars");
 
 const app = express();
 
@@ -78,6 +79,21 @@ app.get("/add-station", (req, res) => {
     title: "Tilføj bruger",
     message: "Velkommen homie gratt gratt!",
   });
+});
+
+Handlebars.registerHelper("buttonVariant", function (variant) {
+  switch (variant) {
+    case "secondary":
+      return "button--secondary";
+    case "outline":
+      return "button--outline";
+    case "ghost":
+      return "button--ghost";
+    case "destructive":
+      return "button--destructive";
+    default:
+      return "button--primary";
+  }
 });
 
 app.listen(PORT);

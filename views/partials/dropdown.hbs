@@ -1,8 +1,21 @@
-<select class="dropdown">
-  <option value={{placeholderText}}>{{placeholderText}}</option>
-  <option value={{value}}>{{value}}</option>
-  <option value={{value1}}>{{value1}}</option>
-  <option value={{value2}}>{{value2}}</option>
-  <option value={{value3}}>{{value3}}</option>
-  <option value={{value4}}>{{value4}}</option>
-</select>
+<div class="dropdown">
+  <button class="dropdown__trigger">
+    <span class="dropdown__label">{{label}}</span>
+    <span>[ICON]</span>
+  </button>
+  <div class="dropdown__content">
+    <input
+      type="text"
+      id="{{id}}"
+      placeholder="{{placeholder}}"
+      class="dropdown__search"
+    />
+    <div class="dropdown__group">
+      <span class="dropdown__item">Hej</span>
+      <span class="dropdown__item">Hej</span>
+      <span class="dropdown__item">Hej</span>
+      <span class="dropdown__item">Hej</span>
+      <span class="dropdown__item">Hej</span>
+    </div>
+  </div>
+</div>

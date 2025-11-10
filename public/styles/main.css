@@ -19,33 +19,27 @@ html {
   font-size: 1rem;
   line-height: 1.5;
 }
-
 body {
   min-height: 100vh;
 }
-
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
-
 * {
   margin: 0;
   border: 0;
   padding: 0;
   font: inherit;
 }
-
 a {
   text-decoration-line: none;
 }
-
 ol,
 ul {
   list-style: none;
 }
-
 img,
 picture,
 svg,
@@ -53,8 +47,7 @@ video {
   display: block;
   max-width: 100%;
 }
-
-.btn {
+.button {
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.25;
@@ -65,39 +58,41 @@ video {
   width: 100%;
   height: 2.5rem;
   border-radius: 0.5rem;
+  white-space: nowrap;
+  flex-shrink: 0;
   cursor: pointer;
 }
-.btn--primary {
+.button--primary {
   background-color: #0d2673;
-  color: #ffffff;
+  color: #fff;
 }
-.btn--secondary {
+.button--secondary {
   background-color: #bac9f7;
   color: #030817;
 }
-.btn--outline {
+.button--outline {
   border: 1px solid #0d2673;
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0);
   color: #030817;
 }
-.btn--ghost {
-  background-color: transparent;
+.button--ghost {
+  background-color: rgba(0, 0, 0, 0);
   color: #0d2673;
 }
-.btn--destructive {
-  background-color: transparent;
+.button--destructive {
+  background-color: rgba(0, 0, 0, 0);
   border: 1px solid #e31919;
   color: #e31919;
 }
-
 .destructive-entry {
   display: flex;
   gap: 0.5rem;
+  max-width: 100%;
   height: 3rem;
 }
 .destructive-entry__box {
   padding: 1rem;
-  background-color: #ffffff;
+  background-color: #fff;
   color: #030817;
   border-radius: 0.5rem;
   color: #667399;
@@ -122,27 +117,84 @@ video {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
-.input {
-  padding: 1rem;
-  background-color: #ffffff;
-  color: #030817;
-  border-radius: 0.5rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 1.25;
-}
-
 .dropdown {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.dropdown__content {
+  display: flex;
+  position: absolute;
+  top: 100%;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 0.5rem;
+}
+.dropdown__group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 8.5rem;
+  overflow-y: scroll;
+}
+.dropdown__item {
+  color: #667399;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.dropdown__item:hover {
+  background-color: #edf0f7;
+  border-radius: 0.5rem;
+}
+.dropdown__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dropdown__search {
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  height: 2.5rem;
+}
+.dropdown__search::-moz-placeholder {
+  opacity: 0.5;
+}
+.dropdown__search::placeholder {
+  opacity: 0.5;
+}
+.dropdown__search:focus {
+  outline: none;
+}
+.dropdown__trigger {
   padding: 1rem;
-  background-color: #ffffff;
+  background-color: #fff;
   color: #030817;
   border-radius: 0.5rem;
+  color: #667399;
   font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 1.25;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  height: 3rem;
+  cursor: pointer;
 }
-
 .container {
   margin: auto;
   padding: 0 1.5rem;
@@ -151,5 +203,3 @@ video {
   gap: 1.5rem;
   max-width: 400px;
 }
-
-/*# sourceMappingURL=main.css.map */
