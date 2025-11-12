@@ -1,0 +1,36 @@
+@use "../abstracts" as *;
+
+.dashboard-display {
+  @include box;
+  background-color: $color-surface;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-xs;
+
+  &__content {
+    display: flex;
+    flex-direction: column; 
+    gap: $spacing-xs;
+  }
+
+  &__title {
+    @include text-label;
+    color: $color-primary;
+  }
+
+  &__date {
+    @include text-label-body;
+  }
+
+  &__link {
+    color: $color-muted;
+    display: flex;
+    font-size: 1.5rem;
+    align-items: center; 
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}

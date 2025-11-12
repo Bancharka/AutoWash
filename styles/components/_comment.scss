@@ -1,0 +1,26 @@
+@use "../abstracts" as *;
+
+.comment {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+
+  &__label {
+    @include text-label;
+    color: $color-foreground;
+  }
+
+  &__input {
+    @include box;
+    @include text-input;
+
+    width: 100%;
+    min-height: 8rem;
+    resize: none;
+    outline: none;
+
+    &::placeholder {
+      color: $color-muted;
+    }
+  }
+}
