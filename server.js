@@ -35,7 +35,8 @@ app.get("/", (req, res) => {
     value1: "Example",
     value2: "Example",
     value3: "Example",
-    value4: "Example"
+    value4: "Example",
+    testItems: ["Test1", "Test2", "Test3"]
   });
 });
 

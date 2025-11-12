@@ -6,8 +6,43 @@
   flex-direction: column;
   gap: $spacing-xs;
 
-  &__content {
+  &__trigger {
+    @include box;
+    @include text-label-body;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-xs;
+    width: 100%;
+    height: 3rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+
+    &:hover {
+      background-color: $color-background;
+    }
+  }
+
+  &__label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    text-align: left;
+  }
+
+  &__icon {
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+
+  &--open &__icon {
+    transform: rotate(180deg);
+  }
+
+  &__content {
+    display: none;
     position: absolute;
     top: 100%;
     flex-direction: column;
@@ -17,6 +52,26 @@
     width: 100%;
     background-color: $color-surface;
     border-radius: $border-radius;
+    z-index: 1000;
+
+    &--show {
+      display: flex;
+    }
+  }
+
+  &__search {
+    @include text-input;
+    display: flex;
+    align-items: center;
+    padding: $spacing-xs;
+    height: 2.5rem;
+    border: none;
+    border-bottom: 1px solid $color-background;
+
+    &:focus {
+      outline: none;
+      border-bottom-color: $color-primary;
+    }
   }
 
   &__group {
@@ -29,7 +84,6 @@
 
   &__item {
     @include text-label-body;
-
     display: flex;
     align-items: center;
     padding: 0 $spacing-xs;
@@ -39,6 +93,8 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: pointer;
+    text-decoration: none;
+    color: inherit;
 
     &:hover {
       background-color: $color-background;
@@ -46,35 +102,10 @@
     }
   }
 
-  &__label {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  &__search {
-    @include text-input;
-
-    display: flex;
-    align-items: center;
-    padding: $spacing-xs;
-    height: 2.5rem;
-
-    &:focus {
-      outline: none;
-    }
-  }
-
-  &__trigger {
-    @include box;
+  &__no-results {
     @include text-label-body;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: $spacing-xs;
-    width: 100%;
-    height: 3rem;
-    cursor: pointer;
+    padding: $spacing-xs;
+    text-align: center;
+    color: $color-text-secondary;
   }
 }
