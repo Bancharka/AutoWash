@@ -1,4 +1,5 @@
 // Function to open/close dropdown
+console.log("script running...");
 function toggleDropdown(dropdownId) {
     const dropdown = document.getElementById(dropdownId);
     dropdown.classList.toggle("dropdown__content--show");
