@@ -1,21 +1,13 @@
 <div class="dropdown">
-  <button
-    onclick="toggleDropdown('{{id}}')"
-    class="dropdown__trigger"
-    type="button"
-  >
-    <span class="dropdown__label">{{label}}</span>
-    <span class="dropdown__icon">▼</span>
-  </button>
+  <input
+    type="text"
+    placeholder="{{placeholder}}"
+    id="{{id}}-search"
+    class="dropdown__search"
+    onfocus="showDropdown('{{id}}')"
+    oninput="filterDropdown('{{id}}')"
+  />
   <div id="{{id}}" class="dropdown__content">
-    <input
-      type="text"
-      placeholder="{{placeholder}}"
-      {{! -search er tilføjet for at gøre id'et unikt  }}
-      id="{{id}}-search"
-      onkeyup="filterDropdown('{{id}}')"
-      class="dropdown__search"
-    />
     <div class="dropdown__group">
       {{#each items}}
         <a href="#" class="dropdown__item">{{this}}</a>
