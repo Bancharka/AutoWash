@@ -68,7 +68,6 @@ app.get("/new-cleaning", (req, res) => {
 app.get("/users", (req, res) => {
   res.render("users", {
     title: "Personale",
-    message: "Velkommen homie gratt gratt!",
   });
 });
 
