@@ -1,0 +1,73 @@
+@use "../abstracts" as *;
+
+.dropdownSearch {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    gap: $spacing-xs;
+
+    &__search {
+        @include box;
+        @include text-input;
+        display: flex;
+        align-items: center;
+        width: 100%;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    &__content {
+        display: none;
+        position: absolute;
+        top: 100%;
+        flex-direction: column;
+        gap: $spacing-xs;
+        margin-top: $spacing-xs;
+        padding: $spacing-xs;
+        width: 100%;
+        background-color: $color-surface;
+        border-radius: $border-radius;
+        z-index: 1000;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+        &--show {
+            display: flex;
+        }
+    }
+
+    &__group {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-xs;
+        max-height: 8.5rem;
+        overflow-y: auto;
+    }
+
+    &__item {
+        @include text-label-body;
+        display: flex;
+        align-items: center;
+        padding: 0 $spacing-xs;
+        height: 2.5rem;
+        flex-shrink: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        cursor: pointer;
+        text-decoration: none;
+        color: inherit;
+
+        &:hover {
+            background-color: $color-background;
+            border-radius: $border-radius;
+        }
+    }
+
+    &__no-results {
+        @include text-label-body;
+        padding: $spacing-xs;
+        text-align: center;
+    }
+}
