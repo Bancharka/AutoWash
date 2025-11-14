@@ -3,6 +3,7 @@
 .destructive-entry {
   display: flex;
   gap: $spacing-xs;
+  max-width: 100%;
   height: 3rem;
 
   &__box {
@@ -17,10 +18,14 @@
   }
 
   &__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: $border-width solid $color-destructive;
     width: 3rem;
     border-radius: $border-radius;
     flex-shrink: 0;
+    cursor: pointer;
   }
 
   &__label {
