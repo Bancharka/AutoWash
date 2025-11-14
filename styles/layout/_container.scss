@@ -3,7 +3,11 @@
 .container {
   margin: auto;
   padding: 2rem $spacing-md 6rem;
-  // TEMP
+}
+
+.mobile-container {
+  margin: auto;
+  padding: 2rem $spacing-md 6rem;
   display: flex;
   flex-direction: column;
   gap: $spacing-md;
