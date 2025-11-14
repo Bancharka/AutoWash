@@ -15,15 +15,9 @@
     margin-top: $spacing-xs;
     padding: $spacing-xs;
     width: 100%;
+    max-height: 8.5rem;
     background-color: $color-surface;
     border-radius: $border-radius;
-  }
-
-  &__group {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-xs;
-    max-height: 8.5rem;
     overflow-y: scroll;
   }
 
