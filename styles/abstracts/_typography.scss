@@ -24,20 +24,21 @@ $font-size-base: 1rem;
 $font-size-lg: 1.5rem;
 $font-size-xl: 2rem;
 
-$font-weight-medium: 500;
+$font-weight-heading: 600;
+$font-weight-label: 500;
 
 $line-height-body: 1.5;
 $line-height-heading: 1.25;
 $line-height-label: 1.25;
 
 @mixin text-heading {
-  font-weight: $font-weight-medium;
+  font-weight: $font-weight-heading;
   line-height: $line-height-heading;
 }
 
 @mixin text-label {
   font-size: $font-size-sm;
-  font-weight: $font-weight-medium;
+  font-weight: $font-weight-label;
   line-height: $line-height-label;
 }
 
