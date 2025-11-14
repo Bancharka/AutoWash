@@ -47,12 +47,7 @@ video {
   display: block;
   max-width: 100%;
 }
-button,
-input {
-  color: inherit;
-  border: none;
-  background-color: rgba(0, 0, 0, 0);
-}
+
 .button {
   font-size: 0.875rem;
   font-weight: 500;
@@ -82,11 +77,11 @@ input {
   color: #030817;
 }
 .button--ghost {
-  background-color: rgba(0, 0, 0, 0);
+  background-color: transparent;
   color: #0d2673;
 }
 .button--destructive {
-  background-color: rgba(0, 0, 0, 0);
+  background-color: transparent;
   border: 1px solid #e31919;
   color: #e31919;
 }
@@ -127,8 +122,79 @@ input {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.input {
-  background-color: blue;
+
+.dropdown {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.dropdown__search {
+  padding: 1rem;
+  background-color: #ffffff;
+  color: #030817;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+.dropdown__search::placeholder {
+  opacity: 0.5;
+}
+.dropdown__search {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.dropdown__search:focus {
+  outline: none;
+}
+.dropdown__content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.dropdown__content--show {
+  display: flex;
+}
+.dropdown__group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 8.5rem;
+  overflow-y: auto;
+}
+.dropdown__item {
+  color: #667399;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+.dropdown__item:hover {
+  background-color: #edf0f7;
+  border-radius: 0.5rem;
+}
+.dropdown__no-results {
+  color: #667399;
+  font-size: 0.875rem;
+  padding: 0.5rem;
+  text-align: center;
 }
 .highlight {
   opacity: 1 !important;
@@ -383,3 +449,5 @@ header button {
   gap: 1.5rem;
   max-width: 400px;
 }
+
+/*# sourceMappingURL=main.css.map */

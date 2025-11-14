@@ -25,9 +25,11 @@
       {{> button type="button" text="Hej" variant="ghost"}}
       {{> button type="button" text="Hej" variant="destructive"}}
       {{> destructiveEntry name="Kalkfjerner" amount="2" unit="liter"}}
+      {{> dropdownSearch id ="testDropDown" label="Det her er en test" placeholder="Søg efter produkter" items=testItems}}
       {{> dropdown id="input" label="Vælg produkt" placeholder="Søg efter produkter"}}
     </div>
     {{>footerNav}}
     
+    <script src="/assets/js/dropdownSearch.js"></script>
   </body>
 </html>

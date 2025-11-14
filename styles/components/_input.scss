@@ -1,5 +1,6 @@
 @use "../abstracts" as *;
 
 .input {
-    background-color: blue;
+    @include box;
+    @include text-label;
 }
