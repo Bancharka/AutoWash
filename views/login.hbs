@@ -1,1 +1,7 @@
 <p>{{message}}</p>
+
+{{#each users}}
+
+	<p> {{firstName}} {{lastName}} har emailen: <br /> {{this.email}}</p>
+
+{{/each}}
