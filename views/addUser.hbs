@@ -1,0 +1,14 @@
+<div class="flex flex-col gap-xl">
+    <h1>{{title}}</h1>
+    <div class="flex flex-col gap-lg">
+        <p class="labelTilføj">Navn</p>
+        {{> input}}
+        <p class="labelTilføj">Tildel station</p>
+        {{> dropdownSearch id ="testDropDown" label="Det her er en test" placeholder="Søg efter stationer" items=testItems}}
+    </div>
+    <div class="flex gap-md btn-row">
+    {{> button href="/" text="Annuller" variant="outline"}}
+    {{> button type="button" text="Tilføj" variant="primary"}}
+    </div>
+    {{> footerNav}}
+</div>
