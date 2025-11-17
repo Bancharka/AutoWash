@@ -27,3 +27,10 @@ video {
   display: block;
   max-width: 100%;
 }
+
+button,
+input {
+  color: inherit;
+  border: none;
+  background-color: transparent;
+}

@@ -1,0 +1,17 @@
+<div class="dropdownSearch">
+  <input
+    type="text"
+    placeholder="{{placeholder}}"
+    id="{{id}}-search"
+    class="dropdownSearch__search"
+    onfocus="showDropdown('{{id}}')"
+    oninput="filterDropdown('{{id}}')"
+  />
+  <div id="{{id}}" class="dropdownSearch__content">
+    <div class="dropdownSearch__group">
+      {{#each items}}
+        <a href="#" class="dropdownSearch__item">{{this}}</a>
+      {{/each}}
+    </div>
+  </div>
+</div>
