@@ -98,6 +98,8 @@ app.get("/add-station", (req, res) => {
 	});
 });
 
+// vi skal have en const HOST = process.env.HOST || '0.0.0.0';
+// her skal vi have HOST på app.listen(PORT, HOST, () => { console.log('Server running on http://${HOST}:${PORT}'); })
 app.listen(PORT);
 
 //Her er en test funktion for at se om der er hul igennem til databasen. Den trækker alt fra en tabel, her er det Users, og laver det om til en json string, null her betyder at den skal vise alt som det er, og 2 er den indentation den skal bruge.! :D
