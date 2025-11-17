@@ -1,0 +1,15 @@
+<div class="flex flex-col gap-xl">
+    <h1>{{title}}</h1>
+        <div class="flex flex-col gap-lg">
+    {{>button type="button" text="Tilføj station" variant="secondary"}}
+            {{>dashboard-display dashtitle="Shell" dashadress="Årslevvej 24" dashpostal="5000 Odense C" variant="edit"}}
+            
+        </div>
+        <div class="flex flex-col gap-lg">
+            {{>dashboard-display dashtitle="Circle K"dashadress="Årslevvej 24" dashpostal="5000 Odense C" variant="edit"}}
+        </div>
+        <div class="flex flex-col gap-lg">
+            {{>dashboard-display dashtitle="Wash World" dashadress="Årslevvej 24" dashpostal="5000 Odense C" variant="edit"}}
+        </div>
+    {{>footerNav}}
+</div>

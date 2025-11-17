@@ -68,6 +68,7 @@ app.get("/new-cleaning", (req, res) => {
 app.get("/users", (req, res) => {
   res.render("users", {
     title: "Personale",
+    dashtitle: "Gitte Nielsen"
   });
 });
 

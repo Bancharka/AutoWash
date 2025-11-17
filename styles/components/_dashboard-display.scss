@@ -10,7 +10,7 @@
 
   &__content {
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     gap: $spacing-xs;
   }
 
@@ -23,11 +23,19 @@
     @include text-label-body;
   }
 
+  &__adress {
+    @include text-label-body;
+  }
+
+  &__postal {
+    @include text-label-body;
+  }
+
   &__link {
     color: $color-muted;
     display: flex;
     font-size: 1.5rem;
-    align-items: center; 
+    align-items: center;
   }
 
   &:hover {
