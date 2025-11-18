@@ -1,0 +1,26 @@
+<div class="flex flex-col gap-xl">
+    <h1>{{title}}</h1>
+    <div class="flex flex-col gap-lg">
+        <div class="flex flex-col gap-md">
+            <p class="labelTilføj">Navn</p>
+            {{> input}}
+        </div>
+        <div class="flex flex-col gap-md">
+            <p class="labelTilføj">Adresse</p>
+            {{> input}}
+        </div>
+        <div class="flex flex-col gap-md">
+            <p class="labelTilføj">Postnummer</p>
+            {{> input}}
+        </div>
+        <div class="flex flex-col gap-md">
+            <p class="labelTilføj">By</p>
+            {{> input}}
+        </div>
+    </div>
+    <div class="flex gap-md btn-row">
+        {{> button href="/" text="Annuller" variant="outline"}}
+        {{> button type="button" text="Tilføj" variant="primary"}}
+    </div>
+    {{> footerNav}}
+</div>

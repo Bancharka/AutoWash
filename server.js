@@ -86,6 +86,13 @@ app.get("/products", (req, res) => {
   });
 });
 
+app.get("/add-product", (req, res) => {
+  res.render("addProduct", {
+    title: "Tilføj produkt",
+    message: "Velkommen homie gratt gratt!",
+  });
+});
+
 app.get("/stations", (req, res) => {
   res.render("stations", {
     title: "Stationer",
@@ -94,8 +101,8 @@ app.get("/stations", (req, res) => {
 });
 
 app.get("/add-station", (req, res) => {
-  res.render("addUser", {
-    title: "Tilføj bruger",
+  res.render("addStation", {
+    title: "Tilføj station",
     message: "Velkommen homie gratt gratt!",
   });
 });

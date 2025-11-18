@@ -499,6 +499,12 @@ header button {
   flex: 1;
 }
 
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
 .container {
   margin: auto;
   padding: 2rem 1.5rem 6rem;
