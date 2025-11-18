@@ -74,10 +74,13 @@ app.get("/new-cleaning", (req, res) => {
 	});
 });
 
-app.get("/users", (req, res) => {
+app.get("/users", async (req, res) => {
+	const users = await db.Users.findAll({ raw: true });
+
 	res.render("users", {
 		title: "Personale",
 		dashtitle: "Gitte Nielsen",
+		users: users,
 	});
 });
 
