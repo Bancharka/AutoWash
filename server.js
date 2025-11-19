@@ -90,17 +90,33 @@ app.get("/add-user", (req, res) => {
 	});
 });
 
-app.get("/products", (req, res) => {
+app.get("/products", async (req, res) => {
+	const products = await db.Products.findAll({ raw: true });
+
 	res.render("products", {
 		title: "Produkter",
 		message: "Velkommen homie gratt gratt!",
+		products: products,
 	});
 });
 
-app.get("/stations", (req, res) => {
+app.get("/stations", async (req, res) => {
+	const stations = await db.Stations.findAll({
+		include: [
+			{
+				model: db.Companies,
+				as: "Companies",
+			},
+		],
+		raw: false,
+	});
+
+	const plainStations = stations.map((station) => station.toJSON());
+
 	res.render("stations", {
 		title: "Stationer",
 		message: "Velkommen homie gratt gratt!",
+		stations: plainStations,
 	});
 });
 

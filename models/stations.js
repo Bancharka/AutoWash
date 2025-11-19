@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
 		static associate(models) {
 			Stations.belongsTo(models.Companies, {
 				foreignKey: "companyId",
+				as: "Companies",
 			});
 			Stations.belongsToMany(models.Users, {
 				through: models.AssignedStations,
