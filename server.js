@@ -57,13 +57,13 @@ app.get("/", async (req, res) => {
 			value4: "Example",
 			testItems: ["Test1", "Test2", "Test3"],
 		});
-	} catch (error) { }
+	} catch (error) {}
 });
 
 app.get("/dashboard", (req, res) => {
 	res.render("dashboard", {
 		title: "Dashboard",
-		seperator: "Fuldført"
+		seperator: "Fuldført",
 	});
 });
 
@@ -100,6 +100,20 @@ app.get("/products", async (req, res) => {
 	});
 });
 
+app.get("/add-product", (req, res) => {
+	res.render("addProduct", {
+		title: "Tilføj produkt",
+		message: "Velkommen homie gratt gratt!",
+	});
+});
+
+app.get("/add-product", (req, res) => {
+	res.render("addProduct", {
+		title: "Tilføj produkt",
+		message: "Velkommen homie gratt gratt!",
+	});
+});
+
 app.get("/stations", async (req, res) => {
 	const stations = await db.Stations.findAll({
 		include: [
@@ -121,8 +135,8 @@ app.get("/stations", async (req, res) => {
 });
 
 app.get("/add-station", (req, res) => {
-	res.render("addUser", {
-		title: "Tilføj bruger",
+	res.render("addStation", {
+		title: "Tilføj station",
 		message: "Velkommen homie gratt gratt!",
 	});
 });

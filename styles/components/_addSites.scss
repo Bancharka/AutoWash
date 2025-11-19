@@ -1,0 +1,13 @@
+@use "../abstracts" as *;
+
+.labelTilføj {
+    @include text-label;
+}
+
+.btn-row {
+    width: 100%;
+  }
+  
+  .btn-row > * {
+    flex: 1; 
+  }
