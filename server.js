@@ -36,6 +36,7 @@ app.use((req, res, next) => {
 	res.locals.currentPath = req.path;
 	next();
 });
+app.use(express.urlencoded({ extended: true }));
 
 //Det her er basically routing som vi har gjort i
 
@@ -134,11 +135,35 @@ app.get("/stations", async (req, res) => {
 	});
 });
 
-app.get("/add-station", (req, res) => {
-	res.render("addStation", {
-		title: "Tilføj station",
-		message: "Velkommen homie gratt gratt!",
-	});
+app.get("/add-station", async (req, res) => {
+	try {
+		const companies = await db.Companies.findAll({ raw: true });
+
+		res.render("addStation", {
+			title: "Tilføj produkt",
+			message: "Velkommen homie gratt gratt!",
+			companies: companies,
+		});
+	} catch (error) {
+		console.error(error);
+		res.status(500).send("Error loading page");
+	}
+});
+
+app.post("/add-station", async (req, res) => {
+	try {
+		console.log("Received data:", req.body);
+		await db.Stations.create({
+			address: req.body.address,
+			postalCode: req.body.postalCode,
+			city: req.body.city,
+			companyId: req.body.companyId,
+		});
+		res.redirect("/stations");
+	} catch (error) {
+		console.error(error);
+		res.status(500).send("Error");
+	}
 });
 
 Handlebars.registerHelper("buttonVariant", function (variant) {
@@ -159,6 +184,8 @@ Handlebars.registerHelper("buttonVariant", function (variant) {
 // vi skal have en const HOST = process.env.HOST || '0.0.0.0';
 // her skal vi have HOST på app.listen(PORT, HOST, () => { console.log('Server running on http://${HOST}:${PORT}'); })
 app.listen(PORT);
+
+//Vi skal måske have en js side dedikeret til CRUD metoder, her prøves det lige af:::
 
 //Her er en test funktion for at se om der er hul igennem til databasen. Den trækker alt fra en tabel, her er det Users, og laver det om til en json string, null her betyder at den skal vise alt som det er, og 2 er den indentation den skal bruge.! :D
 // async function testDatabase() {

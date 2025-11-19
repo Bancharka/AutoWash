@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-xl">
+{{!-- <div class="flex flex-col gap-xl">
     <h1>{{title}}</h1>
     <div class="flex flex-col gap-lg">
         <div class="flex flex-col gap-md">
@@ -24,3 +24,28 @@
     </div>
     {{> footerNav}}
 </div>
+ --}}
+
+<form class="add-station" action="/add-station" method="POST">
+
+	<label for="address">Indtast adresse</label>
+	<input type="text" id="address" name="address" />
+
+	<label for="postalCode">Indtast postnummer</label>
+	<input type="text" id="postalCode" name="postalCode" />
+
+	<label for="address">Indtast by</label>
+	<input type="text" id="city" name="city" />
+
+	<label for="companyId">Stations navn</label>
+	<select name="companyId" id="companyId" required>
+
+		{{#each companies}}
+
+			<option value="{{id}}">{{name}}</option>
+
+		{{/each}}
+
+	</select>
+	<button class="button--primary" type="submit">Tilføj station</button>
+</form>
