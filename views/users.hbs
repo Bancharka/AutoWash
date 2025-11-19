@@ -2,19 +2,6 @@
     <h1>{{title}}</h1>
         <div class="flex flex-col gap-lg">
     {{>button type="button" text="Tilføj personale" variant="secondary"}}
-            {{>dashboard-display dashtitle="Gitte Nielsen" variant="edit"}}
-        </div>
-        <div class="flex flex-col gap-lg">
-            {{>dashboard-display dashtitle="Peter Petersen" variant="edit"}}
-        </div>
-        <div class="flex flex-col gap-lg">
-            {{>dashboard-display dashtitle="Søren Sørensen" variant="edit"}}
-        </div>
-    {{>footerNav}}
-</div>
-
-
-
 
 {{#each users}}
 
@@ -23,6 +10,7 @@
 		<img src="../assets/icons/edit.svg" alt="">
 	</div>
 
-	{{!-- <p> {{firstName}} {{lastName}} har emailen: <br /> {{this.email}}</p> --}}
-
 {{/each}}
+
+    {{>footerNav}}
+</div>
