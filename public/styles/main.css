@@ -486,19 +486,47 @@ header button {
 }
 
 .button-box {
-  display: flex;
-  justify-content: space-between;
-  background-color: #ffffff;
   padding: 1rem;
   background-color: #ffffff;
   color: #030817;
   border-radius: 0.5rem;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.button-box__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 .button-box__title {
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.25;
   color: #0d2673;
+}
+.button-box__date {
+  color: #667399;
+  font-size: 0.875rem;
+}
+.button-box__adress {
+  color: #667399;
+  font-size: 0.875rem;
+}
+.button-box__postal {
+  color: #667399;
+  font-size: 0.875rem;
+}
+.button-box__link {
+  color: #667399;
+  display: flex;
+  font-size: 1.5rem;
+  align-items: center;
+}
+.button-box:hover {
+  cursor: pointer;
 }
 
 .container {

@@ -2,19 +2,6 @@
     <h1>{{title}}</h1>
         <div class="flex flex-col gap-lg">
     {{>button type="button" text="Tilføj personale" variant="secondary"}}
-            {{>dashboard-display dashtitle="Gitte Nielsen" variant="edit"}}
-        </div>
-        <div class="flex flex-col gap-lg">
-            {{>dashboard-display dashtitle="Peter Petersen" variant="edit"}}
-        </div>
-        <div class="flex flex-col gap-lg">
-            {{>dashboard-display dashtitle="Søren Sørensen" variant="edit"}}
-        </div>
-    {{>footerNav}}
-</div>
-
-
-
 
 {{#each users}}
 
@@ -26,3 +13,6 @@
 	</div>
 
 {{/each}}
+
+    {{>footerNav}}
+</div>
