@@ -57,13 +57,13 @@ app.get("/", async (req, res) => {
 			value4: "Example",
 			testItems: ["Test1", "Test2", "Test3"],
 		});
-	} catch (error) {}
+	} catch (error) { }
 });
 
 app.get("/dashboard", (req, res) => {
 	res.render("dashboard", {
 		title: "Dashboard",
-		message: "Velkommen homie gratt gratt!",
+		seperator: "Fuldført"
 	});
 });
 
