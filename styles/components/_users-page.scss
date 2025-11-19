@@ -1,0 +1,15 @@
+@use "../abstracts" as *;
+
+.button-box {
+	display: flex;
+	justify-content: space-between;
+	background-color: $color-surface;
+	@include box;
+
+	&__title {
+		font-size: 0.875rem;
+		font-weight: 500;
+		line-height: 1.25;
+		color: #0d2673;
+	}
+}

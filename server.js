@@ -55,7 +55,7 @@ app.get("/", async (req, res) => {
       value2: "Example",
       value3: "Example",
       value4: "Example",
-      testItems: ["Test1", "Test2", "Test3"]
+      testItems: ["Test1", "Test2", "Test3"],
     });
   } catch (error) { }
 });
@@ -74,10 +74,12 @@ app.get("/new-cleaning", (req, res) => {
   });
 });
 
-app.get("/users", (req, res) => {
+app.get("/users", async (req, res) => {
+  const users = await db.Users.findAll({ raw: true });
+
   res.render("users", {
     title: "Personale",
-    dashtitle: "Gitte Nielsen"
+    users: users,
   });
 });
 
@@ -129,13 +131,13 @@ Handlebars.registerHelper("buttonVariant", function (variant) {
 app.listen(PORT);
 
 //Her er en test funktion for at se om der er hul igennem til databasen. Den trækker alt fra en tabel, her er det Users, og laver det om til en json string, null her betyder at den skal vise alt som det er, og 2 er den indentation den skal bruge.! :D
-async function testDatabase() {
-  try {
-    const results = await db.Users.findAll();
-    console.log("Brugere fra databasen:", JSON.stringify(results, null, 2));
-  } catch (error) {
-    console.error("Database fejl:", error);
-  }
-}
+// async function testDatabase() {
+// 	try {
+// 		const results = await db.Users.findAll();
+// 		console.log("Brugere fra databasen:", JSON.stringify(results, null, 2));
+// 	} catch (error) {
+// 		console.error("Database fejl:", error);
+// 	}
+// }
 
-testDatabase();
+// testDatabase();

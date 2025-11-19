@@ -2,25 +2,11 @@
 
 {{#each users}}
 
-	<p> {{firstName}} {{lastName}} har emailen: <br /> {{this.email}}</p>
+	<div>
+		<div class="title"> {{firstName}} {{lastName}} </div>
+		<div>icon</div>
+	</div>
+
+	{{!-- <p> {{firstName}} {{lastName}} har emailen: <br /> {{this.email}}</p> --}}
 
 {{/each}}
-{{> input}}
-    {{> seperator}}
-    {{> addPhoto}}
-    
-   
-    {{> dashboard-display}}
-    {{> station-item}}
-    {{> comment}}
-      {{> button type="button" text="Hej"}}
-      {{> button type="button" text="Hej" variant="primary"}}
-      {{> button type="button" text="Hej" variant="secondary"}}
-      {{> button href="/" text="Hej" variant="outline"}}
-      {{> button type="button" text="Hej" variant="ghost"}}
-      {{> button type="button" text="Hej" variant="destructive"}}
-      {{> destructiveEntry name="Kalkfjerner" amount="2" unit="liter"}}
-      {{> dropdownSearch id ="testDropDown" label="Det her er en test" placeholder="Søg efter produkter" items=testItems}}
-      {{> dropdown id="input" label="Vælg produkt" placeholder="Søg efter produkter"}}
-    </div>
-    {{>footerNav}}
