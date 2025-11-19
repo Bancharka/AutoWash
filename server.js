@@ -38,31 +38,26 @@ app.use((req, res, next) => {
 });
 
 //Det her er basically routing som vi har gjort i
-app.get("/", (req, res) => {
-  res.render("login", {
-    title: "Hjem",
-    message: "Velkommen homie gratt gratt!",
-    seperator: "Før billeder",
-    placeholderText: "Dynamisk placeholder",
-    label: "Placeholder",
-    value: "Example",
-    value1: "Example",
-    value2: "Example",
-    value3: "Example",
-    value4: "Example",
-    testItems: ["Test1", "Test2", "Test3"]
-  });
-app.get("/", async (req, res) => {
-	try {
-		const users = await db.Users.findAll({ raw: true });
 
-		res.render("login", {
-			title: "Hjem",
-			message: "Velkommen homie gratt gratt!",
-			seperator: "Før billeder",
-			users: users,
-		});
-	} catch (error) {}
+app.get("/", async (req, res) => {
+  try {
+    const users = await db.Users.findAll({ raw: true });
+
+    res.render("login", {
+      title: "Hjem",
+      message: "Velkommen homie gratt gratt!",
+      seperator: "Før billeder",
+      users: users,
+      placeholderText: "Dynamisk placeholder",
+      label: "Placeholder",
+      value: "Example",
+      value1: "Example",
+      value2: "Example",
+      value3: "Example",
+      value4: "Example",
+      testItems: ["Test1", "Test2", "Test3"]
+    });
+  } catch (error) { }
 });
 
 app.get("/dashboard", (req, res) => {
@@ -135,12 +130,12 @@ app.listen(PORT);
 
 //Her er en test funktion for at se om der er hul igennem til databasen. Den trækker alt fra en tabel, her er det Users, og laver det om til en json string, null her betyder at den skal vise alt som det er, og 2 er den indentation den skal bruge.! :D
 async function testDatabase() {
-	try {
-		const results = await db.Users.findAll();
-		console.log("Brugere fra databasen:", JSON.stringify(results, null, 2));
-	} catch (error) {
-		console.error("Database fejl:", error);
-	}
+  try {
+    const results = await db.Users.findAll();
+    console.log("Brugere fra databasen:", JSON.stringify(results, null, 2));
+  } catch (error) {
+    console.error("Database fejl:", error);
+  }
 }
 
 testDatabase();
