@@ -26,26 +26,26 @@
 </div>
  --}}
 
-<form class="add-station" action="/add-station" method="POST">
+<form class="add-form" action="/add-station" method="POST">
 
-	<label for="address">Indtast adresse</label>
-	<input type="text" id="address" name="address" />
+  <label for="address">Indtast adresse</label>
+  <input type="text" id="address" name="address" />
 
-	<label for="postalCode">Indtast postnummer</label>
-	<input type="text" id="postalCode" name="postalCode" />
+  <label for="postalCode">Indtast postnummer</label>
+  <input type="text" id="postalCode" name="postalCode" />
 
-	<label for="address">Indtast by</label>
-	<input type="text" id="city" name="city" />
+  <label for="address">Indtast by</label>
+  <input type="text" id="city" name="city" />
 
-	<label for="companyId">Stations navn</label>
-	<select name="companyId" id="companyId" required>
+  <label for="companyId">Stations navn</label>
+  <select name="companyId" id="companyId" required>
 
-		{{#each companies}}
+    {{#each companies}}
 
-			<option value="{{id}}">{{name}}</option>
+      <option value="{{id}}">{{name}}</option>
 
-		{{/each}}
+    {{/each}}
 
-	</select>
-	<button class="button--primary" type="submit">Tilføj station</button>
+  </select>
+  <button class="button--primary" type="submit">Tilføj station</button>
 </form>
