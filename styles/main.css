@@ -234,42 +234,6 @@ header button {
   width: fit-content;
 }
 
-.dashboard-display {
-  padding: 1rem;
-  background-color: #ffffff;
-  color: #030817;
-  border-radius: 0.5rem;
-  background-color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-}
-.dashboard-display__content {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-.dashboard-display__title {
-  font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 1.25;
-  color: #0d2673;
-}
-.dashboard-display__date {
-  color: #667399;
-  font-size: 0.875rem;
-}
-.dashboard-display__link {
-  color: #667399;
-  display: flex;
-  font-size: 1.5rem;
-  align-items: center;
-}
-.dashboard-display:hover {
-  cursor: pointer;
-}
-
 .station-item {
   padding: 1rem;
   background-color: #ffffff;
@@ -484,6 +448,58 @@ header button {
   text-align: center;
 }
 
+.button-box {
+  padding: 1rem;
+  background-color: #ffffff;
+  color: #030817;
+  border-radius: 0.5rem;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.button-box__title-icon {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+}
+.button-box__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.button-box__title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: #0d2673;
+}
+.button-box__date {
+  color: #667399;
+  font-size: 0.875rem;
+}
+.button-box__adress {
+  color: #667399;
+  font-size: 0.875rem;
+}
+.button-box__postal {
+  color: #667399;
+  font-size: 0.875rem;
+}
+.button-box__link {
+  color: #667399;
+  display: flex;
+  font-size: 1.5rem;
+  align-items: center;
+}
+.button-box:hover {
+  cursor: pointer;
+}
+
 .label-add {
   font-size: 0.875rem;
   font-weight: 500;
@@ -496,6 +512,18 @@ header button {
 
 .btn-row > * {
   flex: 1;
+}
+
+.add-station {
+  display: flex;
+  flex-direction: column;
+}
+.add-station input {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  color: #030817;
+  border-radius: 0.5rem;
 }
 
 .label {

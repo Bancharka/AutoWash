@@ -28,16 +28,16 @@
 
 <form class="add-station" action="/add-station" method="POST">
 
-	<label for="address">Indtast adresse</label>
+	<label class="label-add" for="address">Indtast adresse</label>
 	<input type="text" id="address" name="address" />
 
-	<label for="postalCode">Indtast postnummer</label>
+	<label class="label-add" for="postalCode">Indtast postnummer</label>
 	<input type="text" id="postalCode" name="postalCode" />
 
-	<label for="address">Indtast by</label>
+	<label class="label-add" for="address">Indtast by</label>
 	<input type="text" id="city" name="city" />
 
-	<label for="companyId">Stations navn</label>
+	<label class="label-add" for="companyId">Stations navn</label>
 	<select name="companyId" id="companyId" required>
 
 		{{#each companies}}
