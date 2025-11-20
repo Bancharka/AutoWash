@@ -1,0 +1,27 @@
+<div class="flex flex-col gap-xl">
+    <h1>{{title}}</h1>
+        <div class="flex flex-col gap-lg">
+    {{>button type="button" text="Tilføj personale" variant="secondary"}}
+
+{{#each stations}}
+
+	<div class="button-box">
+        
+        <div class="button-box__title-icon">
+            <div class="button-box__title">
+                {{Companies.name}}
+            </div>
+            <img src="../assets/icons/edit.svg" alt="">
+        </div>
+	
+   <div>
+        <div class="button-box__adress">{{address}}</div>
+        <div class="button-box__postal">{{postalCode}}, {{city}}</div>
+   </div>
+</div>
+
+
+{{/each}}
+
+    {{>footerNav}}
+</div>
