@@ -83,28 +83,23 @@ input {
   flex-shrink: 0;
   cursor: pointer;
 }
-
 .button--primary {
   background-color: #0d2673;
   color: #ffffff;
 }
-
 .button--secondary {
   background-color: #bac9f7;
   color: #030817;
 }
-
 .button--outline {
   border: 1px solid #0d2673;
   background-color: transparent;
   color: #030817;
 }
-
 .button--ghost {
   background-color: transparent;
   color: #0d2673;
 }
-
 .button--destructive {
   background-color: transparent;
   border: 1px solid #e31919;
@@ -117,7 +112,6 @@ input {
   max-width: 100%;
   height: 3rem;
 }
-
 .destructive-entry__box {
   padding: 1rem;
   background-color: #ffffff;
@@ -131,7 +125,6 @@ input {
   gap: 0.5rem;
   width: 100%;
 }
-
 .destructive-entry__button {
   display: flex;
   align-items: center;
@@ -142,11 +135,9 @@ input {
   flex-shrink: 0;
   cursor: pointer;
 }
-
 .destructive-entry__label {
   white-space: nowrap;
 }
-
 .destructive-entry__name {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -177,7 +168,6 @@ input {
   width: 100%;
   left: 0;
 }
-
 .footerNav a {
   display: flex;
   flex-direction: column;
@@ -187,19 +177,15 @@ input {
   padding: 0.5rem;
   opacity: 0.5;
 }
-
 .footerNav li {
   list-style: none;
 }
-
 .footerNav__icon {
   color: #ffffff;
 }
-
 .footerNav__text {
   color: #ffffff;
 }
-
 .footerNav__buttonIcon {
   max-height: 1.5rem;
 }
@@ -211,14 +197,12 @@ input {
   width: 100%;
   justify-content: center;
 }
-
 .bob hr {
   border-top: 3px solid #667399;
   padding: 0 1.5rem;
   border-radius: 5px;
   width: 30%;
 }
-
 .bob div {
   padding: 0 0.5rem;
   color: #667399;
@@ -244,10 +228,8 @@ header {
   justify-content: space-between;
   height: 4rem;
 }
-
 header button {
   cursor: pointer;
-  width: -moz-fit-content;
   width: fit-content;
 }
 
@@ -262,25 +244,21 @@ header button {
   justify-content: space-between;
   gap: 0.5rem;
 }
-
 .station-item__content {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
-
 .station-item__text {
   color: #667399;
   font-size: 0.875rem;
 }
-
 .station-item__close {
   color: #667399;
   display: flex;
   font-size: 1rem;
   align-items: center;
 }
-
 .station-item:hover {
   cursor: pointer;
 }
@@ -290,38 +268,28 @@ header button {
   flex-direction: column;
   gap: 0.5rem;
 }
-
 .comment__label {
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.25;
   color: #030817;
 }
-
 .comment__input {
   padding: 1rem;
   background-color: #ffffff;
   color: #030817;
   border-radius: 0.5rem;
   font-size: 0.875rem;
+}
+.comment__input::placeholder {
+  opacity: 0.5;
+}
+.comment__input {
   width: 100%;
   min-height: 8rem;
   resize: none;
   outline: none;
 }
-
-.comment__input::-moz-placeholder {
-  opacity: 0.5;
-}
-
-.comment__input::placeholder {
-  opacity: 0.5;
-}
-
-.comment__input::-moz-placeholder {
-  color: #667399;
-}
-
 .comment__input::placeholder {
   color: #667399;
 }
@@ -332,7 +300,6 @@ header button {
   flex-direction: column;
   gap: 0.5rem;
 }
-
 .dropdown__content {
   display: flex;
   position: absolute;
@@ -347,7 +314,6 @@ header button {
   border-radius: 0.5rem;
   overflow-y: scroll;
 }
-
 .dropdown__item {
   color: #667399;
   font-size: 0.875rem;
@@ -361,38 +327,30 @@ header button {
   white-space: nowrap;
   cursor: pointer;
 }
-
 .dropdown__item:hover {
   background-color: #edf0f7;
   border-radius: 0.5rem;
 }
-
 .dropdown__label {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 .dropdown__search {
   font-size: 0.875rem;
+}
+.dropdown__search::placeholder {
+  opacity: 0.5;
+}
+.dropdown__search {
   display: flex;
   align-items: center;
   padding: 0.5rem;
   height: 2.5rem;
 }
-
-.dropdown__search::-moz-placeholder {
-  opacity: 0.5;
-}
-
-.dropdown__search::placeholder {
-  opacity: 0.5;
-}
-
 .dropdown__search:focus {
   outline: none;
 }
-
 .dropdown__trigger {
   padding: 1rem;
   background-color: #ffffff;
@@ -415,30 +373,24 @@ header button {
   flex-direction: column;
   gap: 0.5rem;
 }
-
 .dropdownSearch__search {
   padding: 1rem;
   background-color: #ffffff;
   color: #030817;
   border-radius: 0.5rem;
   font-size: 0.875rem;
+}
+.dropdownSearch__search::placeholder {
+  opacity: 0.5;
+}
+.dropdownSearch__search {
   display: flex;
   align-items: center;
   width: 100%;
 }
-
-.dropdownSearch__search::-moz-placeholder {
-  opacity: 0.5;
-}
-
-.dropdownSearch__search::placeholder {
-  opacity: 0.5;
-}
-
 .dropdownSearch__search:focus {
   outline: none;
 }
-
 .dropdownSearch__content {
   display: none;
   position: absolute;
@@ -453,11 +405,9 @@ header button {
   z-index: 1000;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
 .dropdownSearch__content--show {
   display: flex;
 }
-
 .dropdownSearch__group {
   display: flex;
   flex-direction: column;
@@ -465,7 +415,6 @@ header button {
   max-height: 8.5rem;
   overflow-y: auto;
 }
-
 .dropdownSearch__item {
   color: #667399;
   font-size: 0.875rem;
@@ -481,12 +430,10 @@ header button {
   text-decoration: none;
   color: inherit;
 }
-
 .dropdownSearch__item:hover {
   background-color: #edf0f7;
   border-radius: 0.5rem;
 }
-
 .dropdownSearch__no-results {
   color: #667399;
   font-size: 0.875rem;
@@ -506,7 +453,6 @@ header button {
   justify-content: space-between;
   gap: 0.5rem;
 }
-
 .button-box__title-icon {
   display: flex;
   flex-direction: row;
@@ -514,42 +460,35 @@ header button {
   align-items: flex-end;
   width: 100%;
 }
-
 .button-box__content {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
-
 .button-box__title {
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.25;
   color: #0d2673;
 }
-
 .button-box__date {
   color: #667399;
   font-size: 0.875rem;
 }
-
 .button-box__adress {
   color: #667399;
   font-size: 0.875rem;
 }
-
 .button-box__postal {
   color: #667399;
   font-size: 0.875rem;
 }
-
 .button-box__link {
   color: #667399;
   display: flex;
   font-size: 1.5rem;
   align-items: center;
 }
-
 .button-box:hover {
   cursor: pointer;
 }
@@ -568,12 +507,11 @@ header button {
   flex: 1;
 }
 
-.add-station {
+.add-form {
   display: flex;
   flex-direction: column;
 }
-
-.add-station input {
+.add-form input {
   margin-bottom: 2rem;
   padding: 1rem;
   background-color: #ffffff;
@@ -585,6 +523,13 @@ header button {
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.25;
+}
+
+.list-items {
+  padding: 1rem;
+  background-color: #ffffff;
+  color: #030817;
+  border-radius: 0.5rem;
 }
 
 .container {
@@ -631,6 +576,6 @@ header button {
 
 .grid-cols-2 {
   grid-template-columns: 2;
-} 
+}
 
 /*# sourceMappingURL=main.css.map */
