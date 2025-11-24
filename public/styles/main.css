@@ -568,7 +568,7 @@ header button {
 }
 
 .grid-cols-2 {
-  grid-template-columns: 2;
+  grid-template-columns: 1fr 1fr;
 }
 
 /*# sourceMappingURL=main.css.map */

@@ -1,0 +1,23 @@
+<div class="flex flex-col gap-md">
+  <form action="/users/{{user.id}}" method="POST" class="flex flex-col gap-lg">
+    <div class="flex flex-col gap-md">
+      {{> label text="Fornavn"}}
+      {{> input name="first-name" value=user.firstName}}
+    </div>
+    <div class="flex flex-col gap-md">
+      {{> label text="Efternavn" }}
+      {{> input name="last-name" value=user.lastName}}
+    </div>
+    <div class="flex flex-col gap-md">
+      {{> label text="Email"}}
+      {{> input name="email" value=user.email}}
+    </div>
+    {{> button type="submit" text="Gem"}}
+  </form>
+  <div class="grid grid-cols-2 gap-md">
+    <form action="/users/{{user.id}}/delete" method="POST" onsubmit="return confirm('Er du sikker på at du vil slette denne bruger?')">
+      {{> button type="submit" variant="destructive" text="Slet bruger"}}
+    </form>
+    {{> button variant="outline" href="/users" text="Annuller"}}
+  </div>
+</div>

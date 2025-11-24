@@ -58,7 +58,29 @@ app.get("/", async (req, res) => {
 			value4: "Example",
 			testItems: ["Test1", "Test2", "Test3"],
 		});
-	} catch (error) {}
+	} catch (error) { }
+});
+
+app.get("/create-user", async (req, res) => {
+	res.render("createUser", {
+		title: "Opret bruger",
+	});
+});
+
+app.post("/create-user", async (req, res) => {
+	try {
+		await db.Users.create({
+			firstName: req.body.firstName,
+			lastName: req.body.lastName,
+			email: req.body.email,
+			password: req.body.password,
+			isAdmin: false,
+		});
+		res.redirect("/");
+	} catch (error) {
+		console.error(error);
+		res.status(500).send("Error");
+	}
 });
 
 app.get("/dashboard", (req, res) => {
@@ -91,6 +113,61 @@ app.get("/add-user", (req, res) => {
 	});
 });
 
+app.get("/users/:id", async (req, res) => {
+	const { id } = req.params;
+
+	const user = await db.Users.findByPk(id, { raw: true });
+
+	if (!user) return res.status(404).send("Bruger ikke fundet");
+
+	res.render("editUser", {
+		title: "Rediger bruger",
+		message: "Velkommen homie gratt gratt!",
+		user,
+	});
+});
+
+app.post("/users/:id", async (req, res) => {
+	const { id } = req.params;
+
+	try {
+		const { "first-name": firstName, "last-name": lastName, email } = req.body;
+
+		if (!firstName || !lastName || !email) {
+			return res.status(400).send("Alle felter skal udfyldes");
+		}
+
+		await db.Users.update(
+			{
+				firstName,
+				lastName,
+				email,
+			},
+			{ where: { id } }
+		);
+
+		res.redirect("/users");
+	} catch (err) {
+		console.error(err);
+		res.status(500).send("Fejl ved opdatering af bruger");
+	}
+});
+
+app.post("/users/:id/delete", async (req, res) => {
+	const { id } = req.params;
+
+	try {
+		const deleted = await db.Users.destroy({ where: { id } });
+
+		if (!deleted) return res.status(404).send("Bruger ikke fundet");
+
+		res.redirect("/users");
+	} catch (err) {
+		console.error(err);
+		res.status(500).send("Fejl ved sletning af bruger");
+	}
+});
+
 app.get("/products", async (req, res) => {
 	const products = await db.Products.findAll({ raw: true });
 
@@ -98,13 +175,6 @@ app.get("/products", async (req, res) => {
 		title: "Produkter",
 		message: "Velkommen homie gratt gratt!",
 		products: products,
-	});
-});
-
-app.get("/add-product", (req, res) => {
-	res.render("addProduct", {
-		title: "Tilføj produkt",
-		message: "Velkommen homie gratt gratt!",
 	});
 });
 
@@ -152,7 +222,6 @@ app.get("/add-station", async (req, res) => {
 
 app.post("/add-station", async (req, res) => {
 	try {
-		console.log("Received data:", req.body);
 		await db.Stations.create({
 			address: req.body.address,
 			postalCode: req.body.postalCode,
@@ -160,6 +229,32 @@ app.post("/add-station", async (req, res) => {
 			companyId: req.body.companyId,
 		});
 		res.redirect("/stations");
+	} catch (error) {
+		console.error(error);
+		res.status(500).send("Error");
+	}
+});
+
+app.get("/add-companies", async (req, res) => {
+	try {
+		const companies = await db.Companies.findAll({ raw: true });
+
+		res.render("add-companies", {
+			title: "Tilføj firma",
+			companies: companies,
+		});
+	} catch (error) {
+		console.error(error);
+		res.status("Error getting companies");
+	}
+});
+
+app.post("/add-companies", async (req, res) => {
+	try {
+		await db.Companies.create({
+			name: req.body.name,
+		});
+		res.redirect("/add-companies");
 	} catch (error) {
 		console.error(error);
 		res.status(500).send("Error");
