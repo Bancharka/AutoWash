@@ -1,51 +1,27 @@
-{{!-- <div class="flex flex-col gap-xl">
-    <h1>{{title}}</h1>
-    <div class="flex flex-col gap-lg">
-        <div class="flex flex-col gap-md">
-            <p class="label-add">Navn</p>
-            {{> input}}
-        </div>
-        <div class="flex flex-col gap-md">
-            <p class="label-add">Adresse</p>
-            {{> input}}
-        </div>
-        <div class="flex flex-col gap-md">
-            <p class="label-add">Postnummer</p>
-            {{> input}}
-        </div>
-        <div class="flex flex-col gap-md">
-            <p class="label-add">By</p>
-            {{> input}}
-        </div>
-    </div>
-    <div class="flex gap-md btn-row">
-        {{> button href="/" text="Annuller" variant="outline"}}
-        {{> button type="button" text="Tilføj" variant="primary"}}
-    </div>
-    {{> footerNav}}
-</div>
- --}}
-
+<h1>{{title}}</h1>
 <form class="add-form" action="/add-station" method="POST">
 
-  <label class="label-add" for="address">Indtast adresse</label>
-  <input type="text" id="address" name="address" />
+	<label class="label-add" for="address">Indtast adresse</label>
+	<input type="text" id="address" name="address" />
 
-  <label for="postalCode">Indtast postnummer</label>
-  <input type="text" id="postalCode" name="postalCode" />
+	<label for="postalCode">Indtast postnummer</label>
+	<input type="text" id="postalCode" name="postalCode" />
 
-  <label for="address">Indtast by</label>
-  <input type="text" id="city" name="city" />
+	<label for="address">Indtast by</label>
+	<input type="text" id="city" name="city" />
 
-  <label for="companyId">Stations navn</label>
-  <select name="companyId" id="companyId" required>
+	<label for="companyId">Stations navn</label>
+	<select name="companyId" id="companyId" required>
 
-    {{#each companies}}
+		{{#each companies}}
 
-      <option value="{{id}}">{{name}}</option>
+			<option value="{{id}}">{{name}}</option>
 
-    {{/each}}
+		{{/each}}
 
-  </select>
-  <button class="button--primary" type="submit">Tilføj station</button>
+	</select>
+	<div class="grid grid-cols-2 gap-md">
+		{{> button variant="outline" href="/stations" text="Annuller"}}
+		{{> button variant="primary" type="submit"  text="Tilføj station"}}
+	</div>
 </form>

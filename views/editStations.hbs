@@ -1,0 +1,42 @@
+<div class="flex flex-col gap-md">
+	<h1>{{title}}</h1>
+	<form action="/stations/{{station.id}}" method="POST" class="flex flex-col gap-lg">
+
+		<div class="flex flex-col gap-md">
+		{{> label text="Adresse"}}
+		{{> input name="address" value=station.address}}
+		</div>
+
+		<div class="flex flex-col gap-md">
+		{{> label text="Postnummer" }}
+		{{> input name="postalCode" value=station.postalCode}}
+		</div>
+
+		<div class="flex flex-col gap-md">
+		{{> label text="By"}}
+		{{> input name="city" value=station.city}}
+		</div>
+
+		<div class="flex flex-col gap-md">
+			{{>label text="Vælg firma"}}
+			<select class="dropdown" name="companyId" id="companyId" required>
+
+				{{#each companies}}
+
+					<option class="dropdown__item" value="{{id}}">{{name}}</option>
+
+				{{/each}}
+
+			</select>
+		</div>
+
+		{{> button type="submit" text="Gem"}}
+	</form>
+
+	<div class="grid grid-cols-2 gap-md">
+		<form action="/stations/{{station.id}}/delete" method="POST" onsubmit="return confirm('Er du sikker på at du vil slette denne station?')">
+		{{> button type="submit" variant="destructive" text="Slet station"}}
+		</form>
+		{{> button variant="outline" href="/stations" text="Annuller"}}
+	</div>
+</div>
