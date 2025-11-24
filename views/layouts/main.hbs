@@ -6,8 +6,10 @@
     <link rel="stylesheet" href="/styles/main.css" />
   </head>
   <body>
+   {{#if showgraphic}}
+      <img class="graphic" src="/assets/img/logobg.png" alt="grafik" />
+    {{/if}}
     <div class="mobile-container">
-      {{> header}}
       {{! Det er her vores forskellige views skal sættes ind }}
       {{{body}}}
     

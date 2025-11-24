@@ -507,11 +507,15 @@ header button {
   flex: 1;
 }
 
-.add-station {
+.checkbox {
+  margin: 0;
+}
+
+.add-form {
   display: flex;
   flex-direction: column;
 }
-.add-station input {
+.add-form input {
   margin-bottom: 2rem;
   padding: 1rem;
   background-color: #ffffff;
@@ -523,6 +527,11 @@ header button {
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.25;
+}
+
+.graphic {
+  margin: auto;
+  top: 0;
 }
 
 .container {
@@ -569,6 +578,10 @@ header button {
 
 .grid-cols-2 {
   grid-template-columns: 1fr 1fr;
+}
+
+.align {
+  align-items: center;
 }
 
 /*# sourceMappingURL=main.css.map */

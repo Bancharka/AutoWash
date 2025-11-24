@@ -45,18 +45,8 @@ app.get("/", async (req, res) => {
 		const users = await db.Users.findAll({ raw: true });
 
 		res.render("login", {
-			title: "Hjem",
-			message: "Velkommen homie gratt gratt!",
-			seperator: "Før billeder",
-			users: users,
-			placeholderText: "Dynamisk placeholder",
-			label: "Placeholder",
-			value: "Example",
-			value1: "Example",
-			value2: "Example",
-			value3: "Example",
-			value4: "Example",
-			testItems: ["Test1", "Test2", "Test3"],
+			title: "Log ind",
+			showgraphic: true,
 		});
 	} catch (error) { }
 });
@@ -64,6 +54,7 @@ app.get("/", async (req, res) => {
 app.get("/create-user", async (req, res) => {
 	res.render("createUser", {
 		title: "Opret bruger",
+		showgraphic: true,
 	});
 });
 

@@ -1,12 +1,16 @@
-<p>{{message}}</p>
+<form class="add-form" action="/create-user" method="POST">
 
-{{#each users}}
+  <label for="email">Email</label>
+  <input type="email" id="email" name="email" required />
 
-	<div>
-		<div class="title"> {{firstName}} {{lastName}} </div>
-		<div>icon</div>
-	</div>
-
-	{{!-- <p> {{firstName}} {{lastName}} har emailen: <br /> {{this.email}}</p> --}}
-
-{{/each}}
+  <label for="password">Kodeord</label>
+  <input type="passsword" id="password" name="password" required />
+<div class="flex checkbox">
+  <input class="checkbox" type="checkbox" id="remember" name="remember">
+  <label for="remember">Husk mig</label>
+</div>
+<div class="flex flex-col gap-sm">
+    {{>button type="submit" text="Log ind" variant="primary"}}
+	{{>button type="submit" text="Opret bruger" variant="outline"}}
+</div>
+</form>
