@@ -69,12 +69,16 @@ app.get("/create-user", async (req, res) => {
 });
 
 app.post("/create-user", async (req, res) => {
+	// Jeg tror at vi skal have disse const her:
+	//	const saltRounds = 12;
+	//	const hashedPassword = await bcrypt.hash(password, saltRounds);
+	// og så bruge hasedpassword::
 	try {
 		await db.Users.create({
 			firstName: req.body.firstName,
 			lastName: req.body.lastName,
 			email: req.body.email,
-			password: req.body.password,
+			password: req.body.password, //her
 			isAdmin: false,
 		});
 		res.redirect("/");
