@@ -84,7 +84,6 @@ app.get("/dashboard", (req, res) => {
 app.get("/new-cleaning", (req, res) => {
 	res.render("newCleaning", {
 		title: "Ny rengøring",
-		message: "Velkommen homie gratt gratt!",
 	});
 });
 
@@ -266,6 +265,8 @@ Handlebars.registerHelper("buttonVariant", function (variant) {
 			return "button--primary";
 	}
 });
+
+
 
 // vi skal have en const HOST = process.env.HOST || '0.0.0.0';
 // her skal vi have HOST på app.listen(PORT, HOST, () => { console.log('Server running on http://${HOST}:${PORT}'); })

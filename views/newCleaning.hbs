@@ -1,0 +1,16 @@
+<div class="flex flex-col gap-lg">
+  <h1>{{title}}</h1>
+  <div class="flex flex-col gap-md">
+  {{>seperator text="Før billeder"}}
+  {{>addPhoto}}
+  {{>seperator text="Efter billeder"}}
+  <div class="flex flex-col gap-lg">
+  {{>addPhoto}}
+  {{>label text="Rengøringsopgaver"}}
+  {{>dropdownSearch placeholder="Søg efter opgaver" id=tasks}}
+  {{>comment}}
+  {{>label text="Vælg station"}}
+  {{>dropdown}}
+</div>
+</div>
+</div>

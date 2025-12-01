@@ -190,20 +190,20 @@ input {
   max-height: 1.5rem;
 }
 
-.bob {
+.seperator {
   margin-top: 20px;
   display: flex;
   align-items: center;
   width: 100%;
   justify-content: center;
 }
-.bob hr {
+.seperator hr {
   border-top: 3px solid #667399;
   padding: 0 1.5rem;
   border-radius: 5px;
   width: 30%;
 }
-.bob div {
+.seperator div {
   padding: 0 0.5rem;
   color: #667399;
 }
