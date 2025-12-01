@@ -232,6 +232,7 @@ header {
 }
 header button {
   cursor: pointer;
+  width: -moz-fit-content;
   width: fit-content;
 }
 
@@ -282,15 +283,19 @@ header button {
   color: #030817;
   border-radius: 0.5rem;
   font-size: 0.875rem;
-}
-.comment__input::placeholder {
-  opacity: 0.5;
-}
-.comment__input {
   width: 100%;
   min-height: 8rem;
   resize: none;
   outline: none;
+}
+.comment__input::-moz-placeholder {
+  opacity: 0.5;
+}
+.comment__input::placeholder {
+  opacity: 0.5;
+}
+.comment__input::-moz-placeholder {
+  color: #667399;
 }
 .comment__input::placeholder {
   color: #667399;
@@ -340,15 +345,16 @@ header button {
 }
 .dropdown__search {
   font-size: 0.875rem;
-}
-.dropdown__search::placeholder {
-  opacity: 0.5;
-}
-.dropdown__search {
   display: flex;
   align-items: center;
   padding: 0.5rem;
   height: 2.5rem;
+}
+.dropdown__search::-moz-placeholder {
+  opacity: 0.5;
+}
+.dropdown__search::placeholder {
+  opacity: 0.5;
 }
 .dropdown__search:focus {
   outline: none;
@@ -381,14 +387,15 @@ header button {
   color: #030817;
   border-radius: 0.5rem;
   font-size: 0.875rem;
-}
-.dropdownSearch__search::placeholder {
-  opacity: 0.5;
-}
-.dropdownSearch__search {
   display: flex;
   align-items: center;
   width: 100%;
+}
+.dropdownSearch__search::-moz-placeholder {
+  opacity: 0.5;
+}
+.dropdownSearch__search::placeholder {
+  opacity: 0.5;
 }
 .dropdownSearch__search:focus {
   outline: none;
@@ -578,6 +585,4 @@ header button {
 
 .grid-cols-2 {
   grid-template-columns: 1fr 1fr;
-}
-
-/*# sourceMappingURL=main.css.map */
+}/*# sourceMappingURL=main.css.map */
