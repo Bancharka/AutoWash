@@ -166,9 +166,7 @@ input {
   position: fixed;
   bottom: 0;
   width: 100%;
-  max-width: 400px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
 }
 .footerNav a {
   display: flex;
@@ -515,6 +513,13 @@ header button {
 }
 .add-form input {
   margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  color: #030817;
+  border-radius: 0.5rem;
+}
+
+.option-dropdown {
   padding: 1rem;
   background-color: #ffffff;
   color: #030817;
