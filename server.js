@@ -80,6 +80,7 @@ app.get("/create-user", async (req, res) => {
 });
 
 app.get("/dashboard", async (req, res) => {
+  const { id } = req.session.user.id;
   const logs = await db.Logs.findByPk(
     id,
     {
@@ -87,7 +88,6 @@ app.get("/dashboard", async (req, res) => {
         {
           model: db.Stations,
           as: "stations",
-          through: { attributes: [] },
           include: [
             {
               model: db.Companies,
