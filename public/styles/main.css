@@ -295,6 +295,16 @@ header button {
 }
 
 .dropdown {
+  padding: 1rem;
+  background-color: #ffffff;
+  color: #030817;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+.dropdown::placeholder {
+  opacity: 0.5;
+}
+.dropdown {
   display: flex;
   position: relative;
   flex-direction: column;

@@ -1,6 +1,8 @@
 @use "../abstracts" as *;
 
 .dropdown {
+  @include box;
+  @include text-input;
   display: flex;
   position: relative;
   flex-direction: column;
