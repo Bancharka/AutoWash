@@ -99,7 +99,7 @@ app.get("/dashboard", async (req, res) => {
     raw: false,
   });
 
-  const rawLogs = logs;
+  const rawLogs = logs.map((log) => log.toJSON());
 
   res.render("dashboard", {
     title: "Dashboard",
