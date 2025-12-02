@@ -94,14 +94,33 @@ app.get("/add-user", (req, res) => {
 app.get("/users/:id", async (req, res) => {
   const { id } = req.params;
 
-  const user = await db.Users.findByPk(id, { raw: true });
+  const user = await db.Users.findByPk(id, {
+    include: [
+      {
+        model: db.Stations,
+        as: "stations",
+        through: { attributes: [] },
+        include: [
+          {
+            model: db.Companies,
+            as: "companies",
+            attributes: ["name"],
+          },
+        ],
+      },
+    ],
+    raw: false,
+  });
 
   if (!user) return res.status(404).send("Bruger ikke fundet");
+
+  const rawUser = user.toJSON();
 
   res.render("editUser", {
     title: "Rediger bruger",
     message: "Velkommen homie gratt gratt!",
-    user,
+    user: rawUser,
+    backUrl: "/users",
   });
 });
 
@@ -168,7 +187,7 @@ app.get("/stations", async (req, res) => {
     include: [
       {
         model: db.Companies,
-        as: "Companies",
+        as: "companies",
       },
     ],
     raw: false,

@@ -20,4 +20,7 @@
     </form>
     {{> button variant="outline" href="/users" text="Annuller"}}
   </div>
+  {{#each user.stations}}
+    {{companies.name}}, {{address}}, {{postalCode}}
+  {{/each}}
 </div>
