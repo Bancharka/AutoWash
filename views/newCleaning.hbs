@@ -9,8 +9,16 @@
   {{>label text="Rengøringsopgaver"}}
   {{>dropdownSearch placeholder="Søg efter opgaver" id=tasks}}
   {{>comment}}
-  {{>label text="Vælg station"}}
+  {{>label text="Station"}}
   {{>dropdown}}
+  <div class="flex flex-col gap-lg">
+  {{>label text="Produkter"}}
+  {{>dropdownSearch}}
+  <div class="grid grid-cols-2">
+  {{>button type="submit" variant="outline" text="Annuller"}}
+  {{>button type="submit" text="Tilføj"}}
+  </div>
+</div>
 </div>
 </div>
 </div>
