@@ -1,5 +1,6 @@
 const express = require("express");
 const { engine } = require("express-handlebars");
+const session = require("express-session");
 const { type } = require("os");
 const path = require("path");
 const helpers = require("./helpers/helpers");
@@ -40,6 +41,22 @@ app.use((req, res, next) => {
 app.use(express.urlencoded({ extended: true }));
 
 app.use(authRoutes);
+
+app.use(
+  session({
+    secret: "Det her skal vi have i env fil", //husk env fil
+    cookie: {
+      secure: false, // i env fil
+      maxAge: 1000 * 60 * 60 * 24,
+    },
+  })
+);
+
+app.use((req, res, next) => {
+  res.locals.user = req.session.user || null;
+  console.log(req.session);
+  next();
+});
 
 //Det her er basically routing som vi har gjort i
 

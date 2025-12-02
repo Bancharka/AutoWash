@@ -26,29 +26,33 @@ router.post("/create-user", async (req, res) => {
 });
 
 router.post("/", isNotAuthenticated, async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        const user = await db.Users.findOne({
-            where: {email: email}, 
-            raw: true,
-        });
-        if (!user){
-            req.session.error = "Forkert email eller adgangskode";
-            return res.redirect("/");
-        }
-
-
-        const isValidPassword = await bcrypt.compare(password, user.password);
-        if (!isValidPassword){
-            req.session.error = "Forkert email eller adgangskode";
-            return res.redirect("/");
-        }
-    res.redirect("/dashboard");
+  try {
+    const { email, password } = req.body;
+    const user = await db.Users.findOne({
+      where: { email: email },
+      raw: true,
+    });
+    if (!user) {
+      req.session.error = "Forkert email eller adgangskode";
+      return res.redirect("/");
     }
-    catch (error) {
+
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+      req.session.error = "Forkert email eller adgangskode";
+      return res.redirect("/");
+    }
+
+    req.session.user = {
+      id: user.id,
+      email: user.email,
+    };
+
+    res.redirect("/dashboard");
+  } catch (error) {
     console.error("login fejl", error);
     res.redirect("/");
-    }
+  }
 });
 
 module.exports = router;
