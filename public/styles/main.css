@@ -163,10 +163,10 @@ input {
   justify-content: space-around;
   background-color: #0d2673;
   padding: 0.5rem;
+  width: 100%;
+  position: absolute;
   position: fixed;
   bottom: 0;
-  width: 100%;
-  left: 0;
 }
 .footerNav a {
   display: flex;
@@ -179,6 +179,7 @@ input {
 }
 .footerNav li {
   list-style: none;
+  font-size: 0.75rem;
 }
 .footerNav__icon {
   color: #ffffff;
