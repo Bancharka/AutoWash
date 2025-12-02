@@ -80,28 +80,26 @@ app.get("/create-user", async (req, res) => {
 });
 
 app.get("/dashboard", async (req, res) => {
-  const { id } = req.session.user.id;
-  const logs = await db.Logs.findByPk(
-    id,
-    {
-      include: [
-        {
-          model: db.Stations,
-          as: "stations",
-          include: [
-            {
-              model: db.Companies,
-              as: "companies",
-              attributes: ["name"],
-            },
-          ],
-        },
-      ],
-    },
-    { raw: false }
-  );
+  const id = req.session.user.id;
+  const logs = await db.Logs.findAll({
+    where: { userId: id },
+    include: [
+      {
+        model: db.Stations,
+        as: "stations",
+        include: [
+          {
+            model: db.Companies,
+            as: "companies",
+            attributes: ["name"],
+          },
+        ],
+      },
+    ],
+    raw: false,
+  });
 
-  const rawLogs = logs.toJSON();
+  const rawLogs = logs;
 
   res.render("dashboard", {
     title: "Dashboard",
