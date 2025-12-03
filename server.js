@@ -35,6 +35,7 @@ app.set("views", "./views/");
 
 // Bestemmer hvor vi henter static filer fra (f.eks CSS)
 app.use(express.static(path.join(__dirname, "public")));
+app.use('/image-uploads', express.static(path.join(__dirname, "image-uploads")));
 
 // Middleware der giver hver route adgang til currentPath, som bruges til at se hvilken url man er på
 app.use((req, res, next) => {
@@ -54,6 +55,12 @@ app.use(
     },
   })
 );
+
+app.use((req, res, next) => {
+  res.locals.user = req.session.user || null;
+  res.locals.currentPath = req.path;
+  next();
+});
 
 app.use(authRoutes);
 app.use((req, res, next) => {
@@ -115,6 +122,41 @@ app.get("/new-cleaning", (req, res) => {
   res.render("newCleaning", {
     title: "Ny rengøring",
   });
+});
+
+app.post("/new-cleaning", upload.array('images', 16), async (req, res) => {
+  try {
+    const userId = req.session.user.id;
+
+    const newLog = await db.Logs.create({
+      stationId: req.body.stationId,
+      comment: req.body.comment,
+      userId: userId,
+    });
+
+    if (req.files && req.files.length > 0) {
+      for (const file of req.files) {
+        const resizedFilename = `resized-${file.filename}`;
+        const resizedPath = path.join(__dirname, 'image-uploads', resizedFilename);
+
+        await sharp(file.path)
+          .resize(800, 600, { fit: 'inside' })
+          .jpeg({ quality: 80 })
+          .toFile(resizedPath);
+
+        fs.unlinkSync(file.path);
+
+        await db.Images.create({
+          logId: newLog.id,
+          path: `image-uploads/${resizedFilename}`
+        });
+      }
+    }
+    res.redirect(`/dashboard`);
+  } catch (error) {
+    console.error('Upload fejl:', error);
+    res.status(500).send('Fejl ved upload af billeder');
+  }
 });
 
 app.get("/users", async (req, res) => {
