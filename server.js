@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require("express");
 const { engine } = require("express-handlebars");
 const session = require("express-session");
@@ -8,10 +10,13 @@ const Handlebars = require("handlebars");
 const { Sequelize, Model, DataTypes } = require("sequelize");
 const db = require("./models");
 const authRoutes = require("./routes/auth");
+const fs = require("fs");
+const sharp = require("sharp");
+const upload = require("./multer");
 
 const app = express();
 
-const PORT = 3000;
+const PORT = process.env.PORT;
 
 app.engine(
   "hbs",
@@ -32,6 +37,7 @@ app.set("views", "./views/");
 
 // Bestemmer hvor vi henter static filer fra (f.eks CSS)
 app.use(express.static(path.join(__dirname, "public")));
+app.use('/image-uploads', express.static(path.join(__dirname, "image-uploads")));
 
 // Middleware der giver hver route adgang til currentPath, som bruges til at se hvilken url man er på
 app.use((req, res, next) => {
@@ -42,11 +48,11 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   session({
-    secret: "Det her skal vi have i env fil", //husk env fil
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
-      secure: false, // i env fil
+      secure: process.env.SECURE,
       maxAge: 1000 * 60 * 60 * 24,
     },
   })
@@ -59,8 +65,6 @@ app.use((req, res, next) => {
   next();
 });
 
-//Det her er basically routing som vi har gjort i
-
 app.get("/", async (req, res) => {
   try {
     const users = await db.Users.findAll({ raw: true });
@@ -69,7 +73,7 @@ app.get("/", async (req, res) => {
       title: "Log ind",
       showgraphic: true,
     });
-  } catch (error) {}
+  } catch (error) { }
 });
 
 app.get("/create-user", async (req, res) => {
@@ -117,6 +121,40 @@ app.get("/new-cleaning", (req, res) => {
   res.render("newCleaning", {
     title: "Ny rengøring",
   });
+});
+
+app.post("/new-cleaning/:id/upload", upload.array('images', 16), async (req, res) => {
+  try {
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).send('Ingen filer uploaded.');
+    }
+    const imagePaths = [];
+    for (const file of req.files) {
+      const resizedFilename = `uploads/resized-${file.filename}`;
+      const resizedPath = path.join(__dirname, 'image-uploads', resizedFilename);
+      await sharp(file.path)
+        .resize(800, 600, {
+          fit: 'inside'
+        })
+      jpeg({
+        quality: 80
+      })
+      toFile(resizedPath);
+
+      fs.unlinkSync(file.path); //sørger for at fjerne det uploadede billede til fordel for det komprimerede 
+      imagePaths.push(resizedPath);
+    }
+    for (const imagePath of imagePaths) {
+      await db.Images.create({
+        logId: logId,
+        path: imagePath
+      });
+    }
+    res.redirect(`/dashboard`);
+  } catch (error) {
+    console.error('Upload fejl:', error);
+    res.status(500).send('Fejl ved upload af billeder');
+  }
 });
 
 app.get("/users", async (req, res) => {

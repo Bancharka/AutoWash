@@ -14,3 +14,19 @@
 </div>
 </div>
 </div>
+
+<form action="/new-cleaning/{{logId}}/upload" method="POST" enctype="multipart/form-data">
+  <div>
+    <label for="images">Upload billeder (max 16 billeder, 5MB hver):</label>
+    <input 
+      type="file" 
+      id="images" 
+      name="images" 
+      accept="image/*" 
+      multiple
+      required
+    >
+  </div>
+  
+  {{> button type="submit" text="Upload billeder" variant="primary"}}
+</form>
