@@ -7,7 +7,7 @@ const db = require("../models");
 const { raw } = require("mysql2");
 
 router.post("/create-user", async (req, res) => {
-  const saltRounds = 12; //skal i en env fil
+  const saltRounds = process.env.BCRYPT_ROUNDS;
   const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
 
   try {
