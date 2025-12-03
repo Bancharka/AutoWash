@@ -100,6 +100,11 @@ app.get("/dashboard", async (req, res) => {
   });
 
   const rawLogs = logs.map((log) => log.toJSON());
+  rawLogs.forEach((log) => {
+    log.createdAtFormatted = new Date(log.createdAt).toLocaleDateString(
+      "en-GB"
+    );
+  });
 
   res.render("dashboard", {
     title: "Dashboard",
