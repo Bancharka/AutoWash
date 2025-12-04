@@ -293,15 +293,6 @@ app.get("/stations", async (req, res) => {
     include: [
       {
         model: db.Companies,
-        as: "companies",
-      },
-    ],
-    raw: false,
-  });
-  const stations = await db.Stations.findAll({
-    include: [
-      {
-        model: db.Companies,
         as: "Companies",
       },
     ],
