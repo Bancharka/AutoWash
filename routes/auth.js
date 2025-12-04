@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require("express");
 const bcrypt = require("bcrypt");
 const router = express.Router();
@@ -7,7 +9,7 @@ const db = require("../models");
 const { raw } = require("mysql2");
 
 router.post("/create-user", async (req, res) => {
-  const saltRounds = process.env.BCRYPT_ROUNDS;
+  const saltRounds = parseInt(process.env.SALT_ROUNDS);
   const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
 
   try {

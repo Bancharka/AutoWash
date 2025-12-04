@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       isBefore: DataTypes.BOOLEAN,
       logId: DataTypes.INTEGER,
+      path: DataTypes.STRING,
     },
     {
       sequelize,

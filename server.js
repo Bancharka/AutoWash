@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require("express");
 const { engine } = require("express-handlebars");
 const session = require("express-session");
@@ -69,7 +71,7 @@ app.use((req, res, next) => {
   next();
 });
 
-//Det her er basically routing som vi har gjort i
+
 
 app.get("/", async (req, res) => {
   try {
