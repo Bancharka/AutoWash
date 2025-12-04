@@ -51,11 +51,11 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   session({
-    secret: "Det her skal vi have i env fil", //husk env fil
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
-      secure: false, // i env fil
+      secure: process.env.SECURE == true,
       maxAge: 1000 * 60 * 60 * 24,
     },
   })
@@ -76,13 +76,11 @@ app.use((req, res, next) => {
 
 app.get("/", async (req, res) => {
   try {
-    const users = await db.Users.findAll({ raw: true });
-
     res.render("login", {
       title: "Log ind",
       showgraphic: true,
     });
-  } catch (error) {}
+  } catch (error) { }
 });
 
 app.get("/create-user", async (req, res) => {
@@ -148,8 +146,8 @@ app.get("/new-cleaning", async (req, res) => {
 app.post(
   "/new-cleaning",
   upload.fields([
-    { name: "beforeImages", maxCount: 16 },
-    { name: "afterImages", maxCount: 16 },
+    { name: "beforeImages", maxCount: 8 },
+    { name: "afterImages", maxCount: 8 },
   ]),
   async (req, res) => {
     try {
@@ -190,7 +188,7 @@ app.post(
       await uploadImages(req.files.beforeImages, true);
       await uploadImages(req.files.afterImages, false);
 
-      res.redirect(`/dashboard`);
+      res.redirect(`/new-cleaning`);
     } catch (error) {
       console.error("Upload fejl:", error);
       res.status(500).send("Fejl ved upload af billeder");
@@ -291,7 +289,7 @@ app.get("/stations", async (req, res) => {
     include: [
       {
         model: db.Companies,
-        as: "Companies",
+        as: "companies",
       },
     ],
     raw: false,

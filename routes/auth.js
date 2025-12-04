@@ -50,7 +50,7 @@ router.post("/", async (req, res) => {
       email: user.email,
     };
 
-    res.redirect("/new-cleaning");
+    res.redirect("/dashboard");
   } catch (error) {
     console.error("login fejl", error);
     res.redirect("/");
