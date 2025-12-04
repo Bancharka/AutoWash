@@ -1,33 +1,55 @@
-<div class="flex flex-col gap-lg">
+<div class="flex flex-col gap-xl">
   <h1>{{title}}</h1>
-  <div class="flex flex-col gap-md">
-  {{>seperator text="Før billeder"}}
-  {{>addPhoto}}
-  {{>seperator text="Efter billeder"}}
-  <div class="flex flex-col gap-lg">
-  {{>addPhoto}}
-  {{>label text="Rengøringsopgaver"}}
-  {{>dropdownSearch placeholder="Søg efter opgaver" id=tasks}}
-  {{>comment}}
-  {{>label text="Vælg station"}}
-  {{>dropdown}}
-</div>
-</div>
-</div>
-
-
-<form action="/new-cleaning" method="POST" enctype="multipart/form-data">
-  <div>
-    <label for="images">Upload billeder (max 16 billeder, 5MB hver):</label>
-    <input 
-      type="file" 
-      id="images" 
-      name="images" 
-      accept="image/*" 
-      multiple
-      required
-    >
-  </div>
   
-  {{> button type="submit" text="Upload billeder" variant="primary"}}
-</form>
+  <form action="/new-cleaning" method="POST" enctype="multipart/form-data">
+    <div class="flex flex-col gap-md">
+      
+      <!-- Station dropdown -->
+      <div>
+        <label for="stationId">Vælg station *</label>
+        <select id="stationId" name="stationId" required>
+          <option value="">Vælg en station</option>
+          {{!-- You need to pass stations from your route --}}
+          {{#each stations}}
+            <option value="{{id}}">{{address}}, {{city}}</option>
+          {{/each}}
+        </select>
+      </div>
+
+      <!-- Comment textarea -->
+      <div>
+        <label for="comment">Kommentar *</label>
+        <textarea 
+          id="comment" 
+          name="comment" 
+          rows="4"
+          placeholder="Skriv en kommentar om rengøringen..."
+          required
+        ></textarea>
+      </div>
+
+      <!-- Image upload -->
+      <div>
+        <label for="images-before">Upload billeder (valgfrit, max 16 billeder á 5MB)</label>
+        <input 
+          type="file" 
+          id="images-before" 
+          name="images" 
+          accept="image/*" 
+          multiple
+        >
+      </div>
+      <div>
+        <label for="images-after">Upload billeder (valgfrit, max 16 billeder á 5MB)</label>
+        <input 
+          type="file" 
+          id="images-after" 
+          name="images" 
+          accept="image/*" 
+          multiple
+        >
+      </div>
+      {{> button type="submit" text="Opret rengøring" variant="primary"}}
+    </div>
+  </form>
+</div>

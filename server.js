@@ -120,21 +120,47 @@ app.get("/dashboard", async (req, res) => {
   });
 });
 
-app.get("/new-cleaning", (req, res) => {
-  res.render("newCleaning", {
-    title: "Ny rengøring",
-  });
+app.get("/new-cleaning", async (req, res) => {
+  try {
+    const stations = await db.Stations.findAll({
+      include: [
+        {
+          model: db.Companies,
+          as: "companies",
+        },
+      ],
+      raw: false,
+    });
+
+    const plainStations = stations.map((station) => station.toJSON());
+
+    res.render("newCleaning", {
+      title: "Ny rengøring",
+      stations: plainStations,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error loading page");
+  }
 });
 
-app.post("/new-cleaning", upload.array('images', 16), async (req, res) => {
+app.post("/new-cleaning", upload.array('images-before' && 'images-after', 8), async (req, res) => {
   try {
     const userId = req.session.user.id;
+    const { stationId, comment } = req.body;
+
+    // Validate required fields
+    if (!stationId) {
+      return res.status(400).send('Station og kommentar er påkrævet');
+    }
 
     const newLog = await db.Logs.create({
       stationId: req.body.stationId,
       comment: req.body.comment,
       userId: userId,
     });
+
+    console.log("New log created:", newLog.id);
 
     if (req.files && req.files.length > 0) {
       for (const file of req.files) {
@@ -150,7 +176,8 @@ app.post("/new-cleaning", upload.array('images', 16), async (req, res) => {
 
         await db.Images.create({
           logId: newLog.id,
-          path: `image-uploads/${resizedFilename}`
+          path: `image-uploads/${resizedFilename}`,
+          isBefore: 1,
         });
       }
     }
