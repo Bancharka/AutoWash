@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 
 const express = require("express");
 const { engine } = require("express-handlebars");
@@ -37,7 +37,10 @@ app.set("views", "./views/");
 
 // Bestemmer hvor vi henter static filer fra (f.eks CSS)
 app.use(express.static(path.join(__dirname, "public")));
-app.use('/image-uploads', express.static(path.join(__dirname, "image-uploads")));
+app.use(
+  "/image-uploads",
+  express.static(path.join(__dirname, "image-uploads"))
+);
 
 // Middleware der giver hver route adgang til currentPath, som bruges til at se hvilken url man er på
 app.use((req, res, next) => {
@@ -71,8 +74,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
-
 app.get("/", async (req, res) => {
   try {
     const users = await db.Users.findAll({ raw: true });
@@ -81,7 +82,7 @@ app.get("/", async (req, res) => {
       title: "Log ind",
       showgraphic: true,
     });
-  } catch (error) { }
+  } catch (error) {}
 });
 
 app.get("/create-user", async (req, res) => {
@@ -144,49 +145,58 @@ app.get("/new-cleaning", async (req, res) => {
   }
 });
 
-app.post("/new-cleaning", upload.array('images-before' && 'images-after', 8), async (req, res) => {
-  try {
-    const userId = req.session.user.id;
-    const { stationId, comment } = req.body;
+app.post(
+  "/new-cleaning",
+  upload.fields([
+    { name: "beforeImages", maxCount: 16 },
+    { name: "afterImages", maxCount: 16 },
+  ]),
+  async (req, res) => {
+    try {
+      const userId = req.session.user.id;
 
-    // Validate required fields
-    if (!stationId) {
-      return res.status(400).send('Station og kommentar er påkrævet');
+      const newLog = await db.Logs.create({
+        stationId: req.body.stationId,
+        comment: req.body.comment,
+        userId: userId,
+      });
+
+      const uploadImages = async (files, isBefore) => {
+        if (!files) return;
+
+        for (const file of files) {
+          const resizedFilename = `resized-${file.filename}`;
+          const resizedPath = path.join(
+            __dirname,
+            "image-uploads",
+            resizedFilename
+          );
+
+          await sharp(file.path)
+            .resize(800, 600, { fit: "inside" })
+            .jpeg({ quality: 80 })
+            .toFile(resizedPath);
+
+          fs.unlinkSync(file.path);
+
+          await db.Images.create({
+            logId: newLog.id,
+            path: `image-uploads/${resizedFilename}`,
+            isBefore: isBefore,
+          });
+        }
+      };
+
+      await uploadImages(req.files.beforeImages, true);
+      await uploadImages(req.files.afterImages, false);
+
+      res.redirect(`/dashboard`);
+    } catch (error) {
+      console.error("Upload fejl:", error);
+      res.status(500).send("Fejl ved upload af billeder");
     }
-
-    const newLog = await db.Logs.create({
-      stationId: req.body.stationId,
-      comment: req.body.comment,
-      userId: userId,
-    });
-
-    console.log("New log created:", newLog.id);
-
-    if (req.files && req.files.length > 0) {
-      for (const file of req.files) {
-        const resizedFilename = `resized-${file.filename}`;
-        const resizedPath = path.join(__dirname, 'image-uploads', resizedFilename);
-
-        await sharp(file.path)
-          .resize(800, 600, { fit: 'inside' })
-          .jpeg({ quality: 80 })
-          .toFile(resizedPath);
-
-        fs.unlinkSync(file.path);
-
-        await db.Images.create({
-          logId: newLog.id,
-          path: `image-uploads/${resizedFilename}`,
-          isBefore: 1,
-        });
-      }
-    }
-    res.redirect(`/dashboard`);
-  } catch (error) {
-    console.error('Upload fejl:', error);
-    res.status(500).send('Fejl ved upload af billeder');
   }
-});
+);
 
 app.get("/users", async (req, res) => {
   const users = await db.Users.findAll({ raw: true });
