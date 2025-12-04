@@ -293,7 +293,7 @@ app.get("/stations", async (req, res) => {
     include: [
       {
         model: db.Companies,
-        as: "Companies",
+        as: "companies",
       },
     ],
     order: [["postalCode", "ASC"]],
