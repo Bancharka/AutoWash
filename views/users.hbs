@@ -1,17 +1,20 @@
-<div class="flex flex-col gap-xl">
+<div class="flex flex-col gap-xl"> 
     <h1>{{title}}</h1>
         <div class="flex flex-col gap-lg">
 
-{{#each users}}
+            {{#each users}}
 
-	<div class="button-box">
-		<div class="button-box__title">
-             {{firstName}} {{lastName}} 
+                <div class="button-box">
+                    <div class="button-box__title">
+                        {{firstName}} {{lastName}} 
+                    </div>
+                    <img src="../assets/icons/edit.svg" alt="">
+                </div>
+
+            {{/each}}
+
+            {{>footerNav}}
         </div>
-		<img src="../assets/icons/edit.svg" alt="">
-	</div>
 
-{{/each}}
 
-    {{>footerNav}}
 </div>

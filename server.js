@@ -230,7 +230,11 @@ app.post("/users/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const { "first-name": firstName, "last-name": lastName, email } = req.body;
+    const {
+      "first-name": firstName,
+      "last-name": lastName,
+      email,
+    } = req.body;
 
     if (!firstName || !lastName || !email) {
       return res.status(400).send("Alle felter skal udfyldes");
@@ -294,6 +298,16 @@ app.get("/stations", async (req, res) => {
     ],
     raw: false,
   });
+  const stations = await db.Stations.findAll({
+    include: [
+      {
+        model: db.Companies,
+        as: "Companies",
+      },
+    ],
+    order: [["postalCode", "ASC"]],
+    raw: false,
+  });
 
   const plainStations = stations.map((station) => station.toJSON());
 
@@ -309,7 +323,7 @@ app.get("/add-station", async (req, res) => {
     const companies = await db.Companies.findAll({ raw: true });
 
     res.render("addStation", {
-      title: "Tilføj produkt",
+      title: "Tilføj Station",
       message: "Velkommen homie gratt gratt!",
       companies: companies,
     });
@@ -334,11 +348,75 @@ app.post("/add-station", async (req, res) => {
   }
 });
 
-app.get("/add-companies", async (req, res) => {
+app.get("/stations/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const companies = await db.Companies.findAll({ raw: true });
+
+  const station = await db.Stations.findByPk(id, { raw: true });
+
+  if (!station) return res.status(404).send("Bruger ikke fundet");
+
+  res.render("editStations", {
+    title: "Rediger station",
+    message: "Velkommen homie gratt gratt!",
+    station,
+    companies,
+  });
+});
+
+app.post("/stations/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const {
+      address: address,
+      postalCode: postalCode,
+      city: city,
+      companyId: companyId,
+    } = req.body;
+
+    if (!address || !postalCode || !city) {
+      return res.status(400).send("Alle felter skal udfyldes");
+    }
+
+    await db.Stations.update(
+      {
+        address,
+        postalCode,
+        city,
+        companyId,
+      },
+      { where: { id } }
+    );
+
+    res.redirect("/stations");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Fejl ved opdatering af bruger");
+  }
+});
+
+app.post("/stations/:id/delete", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deleted = await db.Stations.destroy({ where: { id } });
+
+    if (!deleted) return res.status(404).send("Station ikke fundet");
+
+    res.redirect("/stations");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Fejl ved sletning af station");
+  }
+});
+
+app.get("/addCompanies", async (req, res) => {
   try {
     const companies = await db.Companies.findAll({ raw: true });
 
-    res.render("add-companies", {
+    res.render("addCompanies", {
       title: "Tilføj firma",
       companies: companies,
     });
@@ -348,12 +426,12 @@ app.get("/add-companies", async (req, res) => {
   }
 });
 
-app.post("/add-companies", async (req, res) => {
+app.post("/addCompanies", async (req, res) => {
   try {
     await db.Companies.create({
       name: req.body.name,
     });
-    res.redirect("/add-companies");
+    res.redirect("/addCompanies");
   } catch (error) {
     console.error(error);
     res.status(500).send("Error");
