@@ -133,9 +133,15 @@ app.get("/new-cleaning", async (req, res) => {
 
     const plainStations = stations.map((station) => station.toJSON());
 
+    const stationOptions = plainStations.map((station) => ({
+      value: station.id,
+      text: `${station.address}, ${station.city}`,
+    }));
+
     res.render("newCleaning", {
       title: "Ny rengøring",
       stations: plainStations,
+      stationOptions: stationOptions,
     });
   } catch (error) {
     console.error(error);

@@ -1,4 +1,14 @@
 <div class="dropdown">
-  <select name="{{name}}" id="{{id}}">
+  <select
+    class="dropdown__content"
+    name="{{name}}"
+    id="{{id}}"
+    required="{{required}}"
+  >
+    <option value="">{{placeholder}}</option>
+
+    {{#each options}}
+      <option class="dropdown__item" value="{{value}}">{{text}}</option>
+    {{/each}}
   </select>
 </div>

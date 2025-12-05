@@ -6,12 +6,12 @@
 	align-items: center;
 	width: 100%;
 	justify-content: center;
+	font-size: $font-size-xs;
 
 	hr {
-		border-top: 3px solid $color-muted;
-		padding: 0 1.5rem;
+		border-top: 1px solid $color-muted;
 		border-radius: 5px;
-		width: 30%;
+		width: 35%;
 	}
 
 	div {
