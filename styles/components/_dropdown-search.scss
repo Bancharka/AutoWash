@@ -1,6 +1,6 @@
 @use "../abstracts" as *;
 
-.dropdownSearch {
+.dropdown-search {
     display: flex;
     position: relative;
     flex-direction: column;
@@ -69,5 +69,16 @@
         @include text-label-body;
         padding: $spacing-xs;
         text-align: center;
+    }
+
+    &__selected-items {
+        @include text-label-body;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__item-tag {
+        margin-top: $spacing-xs;
+        @include box;
     }
 }

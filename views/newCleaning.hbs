@@ -1,6 +1,9 @@
 <div class="flex flex-col gap-xl">
   <h1>{{title}}</h1>
+  </div>
+  <form action="/new-cleaning" method="POST" enctype="multipart/form-data">
   {{>seperator text="Før billeder"}}
+    <div class="flex flex-col gap-md">
       <div>
         <label for="images-before">Upload billeder (valgfrit, max 8 billeder á 5MB)</label>
         <input 
@@ -22,12 +25,13 @@
           multiple
         >
       </div>
-  <form action="/new-cleaning" method="POST" enctype="multipart/form-data">
-    <div class="flex flex-col gap-md">
+
+      {{>label for="taskId" text="Opgaver"}}
+      {{>dropdownSearch placeholder="Søg efter opgaver..." id="taskId" items=taskOptions}}
       {{>label for=comment text="Kommentar"}}
       {{>comment}}
-      </div>
-      {{>label for="stationId" text="Vælg station"}}
+      
+      {{>label for="stationId" text="Station"}}
       <div>
         {{>dropdown
           name="stationId"
@@ -36,12 +40,14 @@
           required=true
           options=stationOptions
         }}
-      <div>
+      </div>
 
-      {{>label for="products" text="Vælg produkter"}}
+      {{>label for="productId" text="Produkter"}}
+      {{>dropdownSearch placeholder="Søg efter produkter..." id="productId" items=productOptions}}
     
-
+  
       {{> button type="submit" text="Opret rengøring" variant="primary"}}
-    </div>
+      </div>
+    
   </form>
 </div>

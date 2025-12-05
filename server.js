@@ -131,17 +131,30 @@ app.get("/new-cleaning", async (req, res) => {
       raw: false,
     });
 
-    const plainStations = stations.map((station) => station.toJSON());
-
-    const stationOptions = plainStations.map((station) => ({
+    const stationOptions = stations.map((station) => ({
       value: station.id,
       text: `${station.address}, ${station.city}`,
     }));
 
+    const products = await db.Products.findAll({ raw: true });
+
+    const productOptions = products.map((product) => ({
+      value: product.id,
+      text: product.name,
+    }))
+
+    const tasks = await db.Tasks.findAll({ raw: true });
+
+    const taskOptions = tasks.map((task) => ({
+      value: task.id,
+      text: task.name,
+    }))
+
     res.render("newCleaning", {
       title: "Ny rengøring",
-      stations: plainStations,
       stationOptions: stationOptions,
+      productOptions: productOptions,
+      taskOptions: taskOptions,
     });
   } catch (error) {
     console.error(error);
@@ -164,6 +177,16 @@ app.post(
         comment: req.body.comment,
         userId: userId,
       });
+
+      const productIds = req.body.productIds;
+      if (productIds && productIds.length > 0) {
+        for (const productId of productIds) {
+          await db.UsedProducts.create({
+            logId: newLog.id,
+            productId: productId
+          });
+        }
+      }
 
       const uploadImages = async (files, isBefore) => {
         if (!files) return;
