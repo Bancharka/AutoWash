@@ -79,14 +79,16 @@ app.get("/", async (req, res) => {
     res.render("login", {
       title: "Log ind",
       showgraphic: true,
+      hideHeader: true,
     });
-  } catch (error) { }
+  } catch (error) {}
 });
 
 app.get("/create-user", async (req, res) => {
   res.render("createUser", {
     title: "Opret bruger",
     showgraphic: true,
+    hideHeader: true,
   });
 });
 
@@ -116,6 +118,7 @@ app.get("/dashboard", async (req, res) => {
     title: "Dashboard",
     seperator: "Fuldført",
     logs: rawLogs,
+    logout: true,
   });
 });
 
@@ -136,6 +139,7 @@ app.get("/new-cleaning", async (req, res) => {
     res.render("newCleaning", {
       title: "Ny rengøring",
       stations: plainStations,
+      backUrl: "/dashboard",
     });
   } catch (error) {
     console.error(error);
@@ -202,6 +206,7 @@ app.get("/users", async (req, res) => {
   res.render("users", {
     title: "Personale",
     users: users,
+    logout: true,
   });
 });
 
@@ -249,11 +254,7 @@ app.post("/users/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const {
-      "first-name": firstName,
-      "last-name": lastName,
-      email,
-    } = req.body;
+    const { "first-name": firstName, "last-name": lastName, email } = req.body;
 
     if (!firstName || !lastName || !email) {
       return res.status(400).send("Alle felter skal udfyldes");
@@ -297,6 +298,7 @@ app.get("/products", async (req, res) => {
     title: "Produkter",
     message: "Velkommen homie gratt gratt!",
     products: products,
+    logout: true,
   });
 });
 
@@ -304,6 +306,7 @@ app.get("/add-product", (req, res) => {
   res.render("addProduct", {
     title: "Tilføj produkt",
     message: "Velkommen homie gratt gratt!",
+    backUrl: "/products",
   });
 });
 
@@ -325,6 +328,7 @@ app.get("/stations", async (req, res) => {
     title: "Stationer",
     message: "Velkommen homie gratt gratt!",
     stations: plainStations,
+    logout: true,
   });
 });
 
@@ -336,6 +340,7 @@ app.get("/add-station", async (req, res) => {
       title: "Tilføj Station",
       message: "Velkommen homie gratt gratt!",
       companies: companies,
+      backUrl: "/stations",
     });
   } catch (error) {
     console.error(error);
@@ -372,6 +377,7 @@ app.get("/stations/:id", async (req, res) => {
     message: "Velkommen homie gratt gratt!",
     station,
     companies,
+    backUrl: "/stations",
   });
 });
 
