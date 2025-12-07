@@ -19,17 +19,17 @@ const app = express();
 const PORT = 3000;
 
 app.engine(
-  "hbs",
-  engine({
-    extname: "hbs",
-    defaultLayout: "main",
-    layoutsDir: "./views/layouts",
-    helpers: {
-      eq: function (a, b) {
-        return a === b;
-      },
-    },
-  })
+	"hbs",
+	engine({
+		extname: "hbs",
+		defaultLayout: "main",
+		layoutsDir: "./views/layouts",
+		helpers: {
+			eq: function (a, b) {
+				return a === b;
+			},
+		},
+	})
 );
 
 app.set("view engine", "hbs");
@@ -38,430 +38,456 @@ app.set("views", "./views/");
 // Bestemmer hvor vi henter static filer fra (f.eks CSS)
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
-  "/image-uploads",
-  express.static(path.join(__dirname, "image-uploads"))
+	"/image-uploads",
+	express.static(path.join(__dirname, "image-uploads"))
 );
 
 // Middleware der giver hver route adgang til currentPath, som bruges til at se hvilken url man er på
 app.use((req, res, next) => {
-  res.locals.currentPath = req.path;
-  next();
+	res.locals.currentPath = req.path;
+	next();
 });
 app.use(express.urlencoded({ extended: true }));
 
 app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      secure: process.env.SECURE == true,
-      maxAge: 1000 * 60 * 60 * 24,
-    },
-  })
+	session({
+		secret: process.env.SESSION_SECRET,
+		resave: false,
+		saveUninitialized: true,
+		cookie: {
+			secure: process.env.SECURE == true,
+			maxAge: 1000 * 60 * 60 * 24,
+		},
+	})
 );
 
 app.use((req, res, next) => {
-  res.locals.user = req.session.user || null;
-  res.locals.currentPath = req.path;
-  next();
+	res.locals.user = req.session.user || null;
+	res.locals.currentPath = req.path;
+	next();
 });
 
 app.use(authRoutes);
 app.use((req, res, next) => {
-  res.locals.user = req.session.user || null;
-  console.log(req.session);
-  next();
+	res.locals.user = req.session.user || null;
+	console.log(req.session);
+	next();
 });
 
 app.get("/", async (req, res) => {
-  try {
-    res.render("login", {
-      title: "Log ind",
-      showgraphic: true,
-    });
-  } catch (error) { }
+	try {
+		res.render("login", {
+			title: "Log ind",
+			showgraphic: true,
+		});
+	} catch (error) {}
 });
 
 app.get("/create-user", async (req, res) => {
-  res.render("createUser", {
-    title: "Opret bruger",
-    showgraphic: true,
-  });
+	res.render("createUser", {
+		title: "Opret bruger",
+		showgraphic: true,
+	});
 });
 
 app.get("/dashboard", async (req, res) => {
-  const id = req.session.user.id;
-  const logs = await db.Logs.findAll({
-    where: { userId: id },
-    include: [
-      {
-        model: db.Stations,
-        as: "stations",
-        include: [
-          {
-            model: db.Companies,
-            as: "companies",
-            attributes: ["name"],
-          },
-        ],
-      },
-    ],
-    raw: false,
-  });
+	const id = req.session.user.id;
+	const logs = await db.Logs.findAll({
+		where: { userId: id },
+		include: [
+			{
+				model: db.Stations,
+				as: "stations",
+				include: [
+					{
+						model: db.Companies,
+						as: "companies",
+						attributes: ["name"],
+					},
+				],
+			},
+		],
+		raw: false,
+	});
 
-  const rawLogs = logs.map((log) => log.toJSON());
+	const rawLogs = logs.map((log) => log.toJSON());
 
-  res.render("dashboard", {
-    title: "Dashboard",
-    seperator: "Fuldført",
-    logs: rawLogs,
-  });
+	res.render("dashboard", {
+		title: "Dashboard",
+		seperator: "Fuldført",
+		logs: rawLogs,
+	});
 });
 
 app.get("/new-cleaning", async (req, res) => {
-  try {
-    const stations = await db.Stations.findAll({
-      include: [
-        {
-          model: db.Companies,
-          as: "companies",
-        },
-      ],
-      raw: false,
-    });
+	try {
+		const stations = await db.Stations.findAll({
+			include: [
+				{
+					model: db.Companies,
+					as: "companies",
+				},
+			],
+			raw: false,
+		});
 
-    const plainStations = stations.map((station) => station.toJSON());
+		const plainStations = stations.map((station) => station.toJSON());
 
-    res.render("newCleaning", {
-      title: "Ny rengøring",
-      stations: plainStations,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error loading page");
-  }
+		res.render("newCleaning", {
+			title: "Ny rengøring",
+			stations: plainStations,
+		});
+	} catch (error) {
+		console.error(error);
+		res.status(500).send("Error loading page");
+	}
 });
 
 app.post(
-  "/new-cleaning",
-  upload.fields([
-    { name: "beforeImages", maxCount: 8 },
-    { name: "afterImages", maxCount: 8 },
-  ]),
-  async (req, res) => {
-    try {
-      const userId = req.session.user.id;
+	"/new-cleaning",
+	upload.fields([
+		{ name: "beforeImages", maxCount: 8 },
+		{ name: "afterImages", maxCount: 8 },
+	]),
+	async (req, res) => {
+		try {
+			const userId = req.session.user.id;
 
-      const newLog = await db.Logs.create({
-        stationId: req.body.stationId,
-        comment: req.body.comment,
-        userId: userId,
-      });
+			const newLog = await db.Logs.create({
+				stationId: req.body.stationId,
+				comment: req.body.comment,
+				userId: userId,
+			});
 
-      const uploadImages = async (files, isBefore) => {
-        if (!files) return;
+			const uploadImages = async (files, isBefore) => {
+				if (!files) return;
 
-        for (const file of files) {
-          const resizedFilename = `resized-${file.filename}`;
-          const resizedPath = path.join(
-            __dirname,
-            "image-uploads",
-            resizedFilename
-          );
+				for (const file of files) {
+					const resizedFilename = `resized-${file.filename}`;
+					const resizedPath = path.join(
+						__dirname,
+						"image-uploads",
+						resizedFilename
+					);
 
-          await sharp(file.path)
-            .resize(800, 600, { fit: "inside" })
-            .jpeg({ quality: 80 })
-            .toFile(resizedPath);
+					await sharp(file.path)
+						.resize(800, 600, { fit: "inside" })
+						.jpeg({ quality: 80 })
+						.toFile(resizedPath);
 
-          fs.unlinkSync(file.path);
+					fs.unlinkSync(file.path);
 
-          await db.Images.create({
-            logId: newLog.id,
-            path: `image-uploads/${resizedFilename}`,
-            isBefore: isBefore,
-          });
-        }
-      };
+					await db.Images.create({
+						logId: newLog.id,
+						path: `image-uploads/${resizedFilename}`,
+						isBefore: isBefore,
+					});
+				}
+			};
 
-      await uploadImages(req.files.beforeImages, true);
-      await uploadImages(req.files.afterImages, false);
+			await uploadImages(req.files.beforeImages, true);
+			await uploadImages(req.files.afterImages, false);
 
-      res.redirect(`/new-cleaning`);
-    } catch (error) {
-      console.error("Upload fejl:", error);
-      res.status(500).send("Fejl ved upload af billeder");
-    }
-  }
+			res.redirect(`/new-cleaning`);
+		} catch (error) {
+			console.error("Upload fejl:", error);
+			res.status(500).send("Fejl ved upload af billeder");
+		}
+	}
 );
 
 app.get("/users", async (req, res) => {
-  const users = await db.Users.findAll({ raw: true });
+	const users = await db.Users.findAll({ raw: true });
 
-  res.render("users", {
-    title: "Personale",
-    users: users,
-  });
+	res.render("users", {
+		title: "Personale",
+		users: users,
+	});
 });
 
 app.get("/add-user", (req, res) => {
-  res.render("addUser", {
-    title: "Tilføj bruger",
-    message: "Velkommen homie gratt gratt!",
-  });
+	res.render("addUser", {
+		title: "Tilføj bruger",
+		message: "Velkommen homie gratt gratt!",
+	});
 });
 
 app.get("/users/:id", async (req, res) => {
-  const { id } = req.params;
+	const { id } = req.params;
 
-  const user = await db.Users.findByPk(id, {
-    include: [
-      {
-        model: db.Stations,
-        as: "stations",
-        through: { attributes: [] },
-        include: [
-          {
-            model: db.Companies,
-            as: "companies",
-            attributes: ["name"],
-          },
-        ],
-      },
-    ],
-    raw: false,
-  });
+	const user = await db.Users.findByPk(id, {
+		include: [
+			{
+				model: db.Stations,
+				as: "stations",
+				through: { attributes: [] },
+				include: [
+					{
+						model: db.Companies,
+						as: "companies",
+						attributes: ["name"],
+					},
+				],
+			},
+		],
+		raw: false,
+	});
 
-  if (!user) return res.status(404).send("Bruger ikke fundet");
+	if (!user) return res.status(404).send("Bruger ikke fundet");
 
-  const rawUser = user.toJSON();
+	const rawUser = user.toJSON();
 
-  res.render("editUser", {
-    title: "Rediger bruger",
-    message: "Velkommen homie gratt gratt!",
-    user: rawUser,
-    backUrl: "/users",
-  });
+	res.render("editUser", {
+		title: "Rediger bruger",
+		message: "Velkommen homie gratt gratt!",
+		user: rawUser,
+		backUrl: "/users",
+	});
 });
 
 app.post("/users/:id", async (req, res) => {
-  const { id } = req.params;
+	const { id } = req.params;
 
-  try {
-    const {
-      "first-name": firstName,
-      "last-name": lastName,
-      email,
-    } = req.body;
+	try {
+		const {
+			"first-name": firstName,
+			"last-name": lastName,
+			email,
+		} = req.body;
 
-    if (!firstName || !lastName || !email) {
-      return res.status(400).send("Alle felter skal udfyldes");
-    }
+		if (!firstName || !lastName || !email) {
+			return res.status(400).send("Alle felter skal udfyldes");
+		}
 
-    await db.Users.update(
-      {
-        firstName,
-        lastName,
-        email,
-      },
-      { where: { id } }
-    );
+		await db.Users.update(
+			{
+				firstName,
+				lastName,
+				email,
+			},
+			{ where: { id } }
+		);
 
-    res.redirect("/users");
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Fejl ved opdatering af bruger");
-  }
+		res.redirect("/users");
+	} catch (err) {
+		console.error(err);
+		res.status(500).send("Fejl ved opdatering af bruger");
+	}
 });
 
 app.post("/users/:id/delete", async (req, res) => {
-  const { id } = req.params;
+	const { id } = req.params;
 
-  try {
-    const deleted = await db.Users.destroy({ where: { id } });
+	try {
+		const deleted = await db.Users.destroy({ where: { id } });
 
-    if (!deleted) return res.status(404).send("Bruger ikke fundet");
+		if (!deleted) return res.status(404).send("Bruger ikke fundet");
 
-    res.redirect("/users");
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Fejl ved sletning af bruger");
-  }
+		res.redirect("/users");
+	} catch (err) {
+		console.error(err);
+		res.status(500).send("Fejl ved sletning af bruger");
+	}
 });
 
 app.get("/products", async (req, res) => {
-  const products = await db.Products.findAll({ raw: true });
+	const products = await db.Products.findAll({ raw: true });
 
-  res.render("products", {
-    title: "Produkter",
-    message: "Velkommen homie gratt gratt!",
-    products: products,
-  });
+	res.render("products", {
+		title: "Produkter",
+		message: "Velkommen homie gratt gratt!",
+		products: products,
+	});
 });
 
 app.get("/add-product", (req, res) => {
-  res.render("addProduct", {
-    title: "Tilføj produkt",
-    message: "Velkommen homie gratt gratt!",
-  });
+	res.render("addProduct", {
+		title: "Tilføj produkt",
+		message: "Velkommen homie gratt gratt!",
+	});
 });
 
 app.get("/stations", async (req, res) => {
-  const stations = await db.Stations.findAll({
-    include: [
-      {
-        model: db.Companies,
-        as: "companies",
-      },
-    ],
-    order: [["postalCode", "ASC"]],
-    raw: false,
-  });
+	const stations = await db.Stations.findAll({
+		include: [
+			{
+				model: db.Companies,
+				as: "companies",
+			},
+		],
+		order: [["postalCode", "ASC"]],
+		raw: false,
+	});
 
-  const plainStations = stations.map((station) => station.toJSON());
+	const plainStations = stations.map((station) => station.toJSON());
 
-  res.render("stations", {
-    title: "Stationer",
-    message: "Velkommen homie gratt gratt!",
-    stations: plainStations,
-  });
+	res.render("stations", {
+		title: "Stationer",
+		message: "Velkommen homie gratt gratt!",
+		stations: plainStations,
+	});
 });
 
 app.get("/add-station", async (req, res) => {
-  try {
-    const companies = await db.Companies.findAll({ raw: true });
+	try {
+		const companies = await db.Companies.findAll({ raw: true });
 
-    res.render("addStation", {
-      title: "Tilføj Station",
-      message: "Velkommen homie gratt gratt!",
-      companies: companies,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error loading page");
-  }
+		res.render("addStation", {
+			title: "Tilføj Station",
+			message: "Velkommen homie gratt gratt!",
+			companies: companies,
+		});
+	} catch (error) {
+		console.error(error);
+		res.status(500).send("Error loading page");
+	}
 });
 
 app.post("/add-station", async (req, res) => {
-  try {
-    await db.Stations.create({
-      address: req.body.address,
-      postalCode: req.body.postalCode,
-      city: req.body.city,
-      companyId: req.body.companyId,
-    });
-    res.redirect("/stations");
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error");
-  }
+	try {
+		await db.Stations.create({
+			address: req.body.address,
+			postalCode: req.body.postalCode,
+			city: req.body.city,
+			companyId: req.body.companyId,
+		});
+		res.redirect("/stations");
+	} catch (error) {
+		console.error(error);
+		res.status(500).send("Error");
+	}
 });
 
 app.get("/stations/:id", async (req, res) => {
-  const { id } = req.params;
+	const { id } = req.params;
 
-  const companies = await db.Companies.findAll({ raw: true });
+	const companies = await db.Companies.findAll({ raw: true });
 
-  const station = await db.Stations.findByPk(id, { raw: true });
+	const station = await db.Stations.findByPk(id, { raw: true });
 
-  if (!station) return res.status(404).send("Bruger ikke fundet");
+	if (!station) return res.status(404).send("Bruger ikke fundet");
 
-  res.render("editStations", {
-    title: "Rediger station",
-    message: "Velkommen homie gratt gratt!",
-    station,
-    companies,
-  });
+	res.render("editStations", {
+		title: "Rediger station",
+		message: "Velkommen homie gratt gratt!",
+		station,
+		companies,
+	});
 });
 
 app.post("/stations/:id", async (req, res) => {
-  const { id } = req.params;
+	const { id } = req.params;
 
-  try {
-    const {
-      address: address,
-      postalCode: postalCode,
-      city: city,
-      companyId: companyId,
-    } = req.body;
+	try {
+		const {
+			address: address,
+			postalCode: postalCode,
+			city: city,
+			companyId: companyId,
+		} = req.body;
 
-    if (!address || !postalCode || !city) {
-      return res.status(400).send("Alle felter skal udfyldes");
-    }
+		if (!address || !postalCode || !city) {
+			return res.status(400).send("Alle felter skal udfyldes");
+		}
 
-    await db.Stations.update(
-      {
-        address,
-        postalCode,
-        city,
-        companyId,
-      },
-      { where: { id } }
-    );
+		await db.Stations.update(
+			{
+				address,
+				postalCode,
+				city,
+				companyId,
+			},
+			{ where: { id } }
+		);
 
-    res.redirect("/stations");
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Fejl ved opdatering af bruger");
-  }
+		res.redirect("/stations");
+	} catch (err) {
+		console.error(err);
+		res.status(500).send("Fejl ved opdatering af bruger");
+	}
 });
 
 app.post("/stations/:id/delete", async (req, res) => {
-  const { id } = req.params;
+	const { id } = req.params;
 
-  try {
-    const deleted = await db.Stations.destroy({ where: { id } });
+	try {
+		const deleted = await db.Stations.destroy({ where: { id } });
 
-    if (!deleted) return res.status(404).send("Station ikke fundet");
+		if (!deleted) return res.status(404).send("Station ikke fundet");
 
-    res.redirect("/stations");
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Fejl ved sletning af station");
-  }
+		res.redirect("/stations");
+	} catch (err) {
+		console.error(err);
+		res.status(500).send("Fejl ved sletning af station");
+	}
 });
 
 app.get("/addCompanies", async (req, res) => {
-  try {
-    const companies = await db.Companies.findAll({ raw: true });
+	try {
+		const companies = await db.Companies.findAll({ raw: true });
 
-    res.render("addCompanies", {
-      title: "Tilføj firma",
-      companies: companies,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status("Error getting companies");
-  }
+		res.render("addCompanies", {
+			title: "Tilføj firma",
+			companies: companies,
+		});
+	} catch (error) {
+		console.error(error);
+		res.status("Error getting companies");
+	}
 });
 
 app.post("/addCompanies", async (req, res) => {
-  try {
-    await db.Companies.create({
-      name: req.body.name,
-    });
-    res.redirect("/addCompanies");
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error");
-  }
+	try {
+		await db.Companies.create({
+			name: req.body.name,
+		});
+		res.redirect("/addCompanies");
+	} catch (error) {
+		console.error(error);
+		res.status(500).send("Error");
+	}
 });
 
 Handlebars.registerHelper("buttonVariant", function (variant) {
-  switch (variant) {
-    case "secondary":
-      return "button--secondary";
-    case "outline":
-      return "button--outline";
-    case "ghost":
-      return "button--ghost";
-    case "destructive":
-      return "button--destructive";
-    default:
-      return "button--primary";
-  }
+	switch (variant) {
+		case "secondary":
+			return "button--secondary";
+		case "outline":
+			return "button--outline";
+		case "ghost":
+			return "button--ghost";
+		case "destructive":
+			return "button--destructive";
+		default:
+			return "button--primary";
+	}
 });
+
+const nodemailer = require("nodemailer");
+
+// Create a test account or replace with real credentials.
+const transporter = nodemailer.createTransport({
+	host: "smtp.gmail.com",
+	port: 587,
+	secure: false, // true for 465, false for other ports
+	auth: {
+		user: "op7486684@gmail.com",
+		pass: "adkt itnm aecf bfee",
+	},
+});
+
+// Wrap in an async IIFE so we can use await.
+(async () => {
+	const info = await transporter.sendMail({
+		from: '"Maddison Foo Koch" <maddison53@ethereal.email>',
+		to: "olipet101@gmail.com",
+		subject: "Hello ✔",
+		text: "Hello world?", // plain‑text body
+		html: "<b>Hello world?</b>", // HTML body
+	});
+
+	console.log("Message sent:", info.messageId);
+})();
 
 // vi skal have en const HOST = process.env.HOST || '0.0.0.0';
 // her skal vi have HOST på app.listen(PORT, HOST, () => { console.log('Server running on http://${HOST}:${PORT}'); })
