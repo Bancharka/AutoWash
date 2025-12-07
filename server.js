@@ -13,6 +13,7 @@ const Handlebars = require("handlebars");
 const { Sequelize, Model, DataTypes } = require("sequelize");
 const db = require("./models");
 const authRoutes = require("./routes/auth");
+const { raw } = require("mysql2");
 
 const app = express();
 
@@ -159,6 +160,24 @@ app.post(
 				userId: userId,
 			});
 
+			// henter info til emailen:
+
+			const station = await db.Stations.findByPk(req.body.stationId, {
+				include: [
+					{
+						model: db.Companies,
+						as: "companies",
+					},
+				],
+				raw: false,
+			});
+
+			const user = await db.Users.findByPk(userId, { raw: true });
+
+			const plainStation = station.toJSON();
+
+			const imagePaths = [];
+
 			const uploadImages = async (files, isBefore) => {
 				if (!files) return;
 
@@ -182,6 +201,12 @@ app.post(
 						path: `image-uploads/${resizedFilename}`,
 						isBefore: isBefore,
 					});
+
+					imagePaths.push({
+						filename: resizedFilename,
+						path: resizedPath,
+						cid: resizedFilename,
+					});
 				}
 			};
 
@@ -197,22 +222,41 @@ app.post(
 				secure: false, // true for 465, false for other ports
 				auth: {
 					user: "op7486684@gmail.com",
-					pass: proces.env.EMAIL_PASS_SECRET,
+					pass: process.env.EMAIL_PASS_SECRET,
 				},
 			});
 
-			// Wrap in an async IIFE so we can use await.
-			(async () => {
-				const info = await transporter.sendMail({
-					from: '"Maddison Foo Koch" <maddison53@ethereal.email>',
-					to: "olipet101@gmail.com", // her skal vi have dynamisk email
-					subject: "Station rengjort",
-					text: `Station ${adress} rengjort`, // plain‑text body
-					html: "<b>Her skal så stå hvilken station er rengjort, hvordan den er rengjort og nogle billeder</b>", // HTML body
-				});
+			//Her laver vi en const med alt infoen som skal være i emailen
 
-				console.log("Message sent:", info.messageId);
-			})();
+			let emailHTML = `
+			<h2>Station rengjort </h2> <br>
+			<p> <strong>Station:</strong> 
+			${plainStation.address}, 
+			${plainStation.postalCode}, 
+			${plainStation.city} </p>
+			<p> <strong>Firma:</strong> ${plainStation.companies?.name}</p>
+			<p> <strong>Rengjort af:</strong> ${user.name || user.email}</p>
+			<p> <strong>Kommentarer:</strong> ${
+				req.body.comment || "Ingen kommentar tilknyttet"
+			}</p>
+			<p> <strong>Dato for rengøring:</strong> 
+			${new Date().toLocaleDateString("da-DK")}
+			</p>`;
+
+			imagePaths.forEach((img) => {
+				emailHTML += `<img src="cid:${img.cid}" style="max-width: 400px; margin: 10px;" /><br>`;
+			});
+
+			await transporter.sendMail({
+				from: '"AutoWash System" <op7486684@gmail.com>',
+				to: "olipet101@gmail.com",
+				subject: `Station rengjort: ${plainStation.address}`,
+				text: `Station med adresse: ${plainStation.address} rengjort`,
+				html: emailHTML,
+				attachments: imagePaths,
+			});
+
+			console.log(" <br Email sendt <br>");
 
 			res.redirect(`/new-cleaning`);
 		} catch (error) {
