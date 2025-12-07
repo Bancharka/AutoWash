@@ -188,6 +188,32 @@ app.post(
 			await uploadImages(req.files.beforeImages, true);
 			await uploadImages(req.files.afterImages, false);
 
+			const nodemailer = require("nodemailer");
+
+			// Create a test account or replace with real credentials.
+			const transporter = nodemailer.createTransport({
+				host: "smtp.gmail.com",
+				port: 587,
+				secure: false, // true for 465, false for other ports
+				auth: {
+					user: "op7486684@gmail.com",
+					pass: proces.env.EMAIL_PASS_SECRET,
+				},
+			});
+
+			// Wrap in an async IIFE so we can use await.
+			(async () => {
+				const info = await transporter.sendMail({
+					from: '"Maddison Foo Koch" <maddison53@ethereal.email>',
+					to: "olipet101@gmail.com", // her skal vi have dynamisk email
+					subject: "Station rengjort",
+					text: `Station ${adress} rengjort`, // plain‑text body
+					html: "<b>Her skal så stå hvilken station er rengjort, hvordan den er rengjort og nogle billeder</b>", // HTML body
+				});
+
+				console.log("Message sent:", info.messageId);
+			})();
+
 			res.redirect(`/new-cleaning`);
 		} catch (error) {
 			console.error("Upload fejl:", error);
@@ -462,32 +488,6 @@ Handlebars.registerHelper("buttonVariant", function (variant) {
 			return "button--primary";
 	}
 });
-
-const nodemailer = require("nodemailer");
-
-// Create a test account or replace with real credentials.
-const transporter = nodemailer.createTransport({
-	host: "smtp.gmail.com",
-	port: 587,
-	secure: false, // true for 465, false for other ports
-	auth: {
-		user: "op7486684@gmail.com",
-		pass: "adkt itnm aecf bfee",
-	},
-});
-
-// Wrap in an async IIFE so we can use await.
-(async () => {
-	const info = await transporter.sendMail({
-		from: '"Maddison Foo Koch" <maddison53@ethereal.email>',
-		to: "olipet101@gmail.com",
-		subject: "Hello ✔",
-		text: "Hello world?", // plain‑text body
-		html: "<b>Hello world?</b>", // HTML body
-	});
-
-	console.log("Message sent:", info.messageId);
-})();
 
 // vi skal have en const HOST = process.env.HOST || '0.0.0.0';
 // her skal vi have HOST på app.listen(PORT, HOST, () => { console.log('Server running on http://${HOST}:${PORT}'); })
