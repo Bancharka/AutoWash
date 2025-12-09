@@ -1,16 +1,18 @@
-<form class="add-form" action="/" method="POST">
-
-  <label for="email">Email</label>
-  <input type="email" id="email" name="email" required />
-
-  <label for="password">Kodeord</label>
-  <input type="passsword" id="password" name="password" required />
-<div class="flex checkbox">
-  <input class="checkbox" type="checkbox" id="remember" name="remember">
-  <label for="remember">Husk mig</label>
+<div class="login">
+  <form class="add-form" action="/" method="POST">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required />
+    <label for="password">Kodeord</label>
+    <div class="login__container flex">
+      <input type="password" id="password" name="password" required />
+    </div>
+    <div class="flex login__checkbox">
+      <input class="checkbox" type="checkbox" id="remember" name="remember">
+      <label for="remember">Husk mig</label>
+    </div>
+    <div class="flex flex-col gap-sm">
+      {{>button type="submit" text="Log ind" variant="primary"}}
+	    {{>button href="/create-user" text="Opret bruger" variant="outline"}}
+    </div>
+  </form>
 </div>
-<div class="flex flex-col gap-sm">
-  {{>button type="submit" text="Log ind" variant="primary"}}
-	{{>button href="/create-user" text="Opret bruger" variant="outline"}}
-</div>
-</form>

@@ -1,36 +1,11 @@
 <div class="flex flex-col gap-xl">
   <h1>{{title}}</h1>
-  
+  </div>
   <form action="/new-cleaning" method="POST" enctype="multipart/form-data">
+  {{>seperator text="Før billeder"}}
     <div class="flex flex-col gap-md">
-      
-      <!-- Station dropdown -->
       <div>
-        <label for="stationId">Vælg station *</label>
-        <select id="stationId" name="stationId" required>
-          <option value="">Vælg en station</option>
-          {{!-- You need to pass stations from your route --}}
-          {{#each stations}}
-            <option value="{{id}}">{{address}}, {{city}}</option>
-          {{/each}}
-        </select>
-      </div>
-
-      <!-- Comment textarea -->
-      <div>
-        <label for="comment">Kommentar *</label>
-        <textarea 
-          id="comment" 
-          name="comment" 
-          rows="4"
-          placeholder="Skriv en kommentar om rengøringen..."
-          required
-        ></textarea>
-      </div>
-
-      <!-- Image upload -->
-      <div>
-        <label for="images-before">Upload billeder (valgfrit, max 16 billeder á 5MB)</label>
+        <label for="images-before">Upload billeder (valgfrit, max 8 billeder á 5MB)</label>
         <input 
           type="file" 
           id="images-before" 
@@ -39,8 +14,9 @@
           multiple
         >
       </div>
+      {{>seperator text="Efter billeder"}}
       <div>
-        <label for="images-after">Upload billeder (valgfrit, max 16 billeder á 5MB)</label>
+        <label for="images-after">Upload billeder (valgfrit, max 8 billeder á 5MB)</label>
         <input 
           type="file" 
           id="images-after" 
@@ -49,7 +25,30 @@
           multiple
         >
       </div>
+      
+
+      {{>label for="taskId" text="Opgaver"}}
+      {{>dropdownSearch placeholder="Søg efter opgaver..." id="taskId" items=taskOptions}}
+      {{>label for=comment text="Kommentar"}}
+      {{>comment}}
+      
+      {{>label for="stationId" text="Station"}}
+      <div>
+        {{>dropdown
+          name="stationId"
+          id="stationId"
+          placeholder="Vælg en station"
+          required=true
+          options=stationOptions
+        }}
+      </div>
+
+      {{>label for="productId" text="Produkter"}}
+      {{>dropdownSearch placeholder="Søg efter produkter..." id="productId" items=productOptions}}
+    
+  
       {{> button type="submit" text="Opret rengøring" variant="primary"}}
-    </div>
+      </div>
+    
   </form>
 </div>
