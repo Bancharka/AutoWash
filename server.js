@@ -14,6 +14,7 @@ const { Sequelize, Model, DataTypes } = require("sequelize");
 const db = require("./models");
 const authRoutes = require("./routes/auth");
 const { raw } = require("mysql2");
+const crypto = require("crypto");
 
 const app = express();
 
@@ -235,7 +236,7 @@ app.post(
 
 			const emailHTML = `
 			<h2>Station rengjort </h2> <br>
-			<p> <a href="${viewLink}> color="blue" </a> Tryk her for at se rengøringsrapport </p>
+			<p> <a href="${viewLink}"> Tryk her for at se rengøringsrapport </a>  </p>
 			`;
 
 			await transporter.sendMail({
@@ -254,6 +255,64 @@ app.post(
 		}
 	}
 );
+
+app.get("/view-cleaning/:token", async (req, res) => {
+	try {
+		const { token } = req.params;
+
+		const log = await db.Logs.findOne({
+			where: {
+				viewToken: token,
+				tokenUsed: false,
+			},
+			include: [
+				{
+					model: db.Stations,
+					as: "stations",
+					include: [
+						{
+							model: db.Companies,
+							as: "companies",
+						},
+					],
+				},
+				{
+					model: db.Users,
+				},
+				{
+					model: db.Images,
+				},
+			],
+		});
+
+		if (!log) {
+			return res
+				.status(404)
+				.send(
+					"Dette link er ugyldigt eller er allerede åbnet, og brugt"
+				);
+		}
+
+		await log.update({ tokenUsed: true });
+
+		const plainLog = log.toJSON();
+
+		const beforeImages = plainLog.Images.filter((img) => img.isBefore);
+		const afterImages = plainLog.Images.filter((img) => !img.isBefore);
+
+		res.render("viewCleaning", {
+			title: "Rengøringsrapport",
+			log: plainLog,
+			station: plainLog.Station,
+			user: plainLog.User,
+			beforeImages: beforeImages,
+			afterImages: afterImages,
+		});
+	} catch (error) {
+		console.error(error);
+		res.status(500).send("Fejl ved indlæsning");
+	}
+});
 
 app.get("/users", async (req, res) => {
 	const users = await db.Users.findAll({ raw: true });
