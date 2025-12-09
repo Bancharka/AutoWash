@@ -103,10 +103,39 @@ document.addEventListener("DOMContentLoaded", function () {
                 selectedContainer.appendChild(hiddenInput);
 
                 // Add visible tag
-                const tag = document.createElement("span");
+                // const tag = document.createElement("div");
+                // tag.className = "dropdown-search__item-tag";
+                // const deleteTag = document.createElement("div");
+                // deleteTag.className = "dropdown-search__delete-tag"
+                // tag.innerHTML = `${itemName} <button class="dropdown-search__delete-button type="button" onclick="removeItem(${itemId}, '${dropdownId}')"><img src="./assets/icons/delete.svg" alt=""></button>`;
+                // selectedList.appendChild(tag);
+
+                const tag = document.createElement("div");
                 tag.className = "dropdown-search__item-tag";
-                tag.innerHTML = `${itemName} <button type="button" onclick="removeItem(${itemId}, '${dropdownId}')">×</button>`;
+                tag.dataset.itemId = itemId;
+
+                // text
+                const text = document.createElement("span");
+                text.className = "dropdown-search__item-text";
+                text.textContent = itemName;
+
+                // delete button
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "dropdown-search__delete-button";
+                button.onclick = () => removeItem(itemId, dropdownId);
+
+                const img = document.createElement("img");
+                img.src = "./assets/icons/delete.svg";
+                img.alt = "Slet";
+
+                button.appendChild(img);
+
+                // assemble
+                tag.appendChild(text);
+                tag.appendChild(button);
                 selectedList.appendChild(tag);
+
 
                 // Clear search
                 input.value = "";
@@ -118,20 +147,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Remove selected item
 function removeItem(itemId, dropdownId) {
+    // remove hidden input
     const hiddenInput = document.getElementById(`item-${itemId}`);
-    if (hiddenInput) {
-        hiddenInput.remove();
-    }
+    if (hiddenInput) hiddenInput.remove();
 
+    // remove visual tag
     const selectedList = document.getElementById(`${dropdownId}-list`);
-    const tags = selectedList.getElementsByClassName("item-tag");
-    for (let tag of tags) {
-        if (tag.innerHTML.includes(`removeItem(${itemId}`)) {
-            tag.remove();
-            break;
-        }
-    }
+    const tag = selectedList.querySelector(
+        `.dropdown-search__item-tag[data-item-id="${itemId}"]`
+    );
+
+    if (tag) tag.remove();
 }
+
 
 
 document.addEventListener("click", function (event) {

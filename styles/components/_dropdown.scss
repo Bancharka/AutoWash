@@ -2,15 +2,13 @@
 
 .dropdown {
   @include text-label-body;
+  @include box;
   display: flex;
   position: relative;
   flex-direction: column;
 
   &__content {
     @include text-label-body;
-
-    margin-top: $spacing-xs;
-    padding: $spacing-xs;
     background-color: $color-surface;
     border-radius: $border-radius;
   }

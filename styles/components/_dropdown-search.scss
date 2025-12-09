@@ -75,10 +75,27 @@
         @include text-label-body;
         display: flex;
         flex-direction: column;
+        position: relative;
     }
 
     &__item-tag {
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
         margin-top: $spacing-xs;
+    }
+
+    &__item-text {
         @include box;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        color: $color-muted;
+    }
+
+    &__delete-button {
+        @include box;
+        display: flex;
+        cursor: pointer;
     }
 }

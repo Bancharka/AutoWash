@@ -297,6 +297,10 @@ header button {
 .dropdown {
   color: #667399;
   font-size: 0.875rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  color: #030817;
+  border-radius: 0.5rem;
   display: flex;
   position: relative;
   flex-direction: column;
@@ -304,8 +308,6 @@ header button {
 .dropdown__content {
   color: #667399;
   font-size: 0.875rem;
-  margin-top: 0.5rem;
-  padding: 0.5rem;
   background-color: #ffffff;
   border-radius: 0.5rem;
 }
@@ -396,13 +398,31 @@ header button {
   font-size: 0.875rem;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 .dropdown-search__item-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   margin-top: 0.5rem;
+}
+.dropdown-search__item-text {
   padding: 1rem;
   background-color: #ffffff;
   color: #030817;
   border-radius: 0.5rem;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  color: #667399;
+}
+.dropdown-search__delete-button {
+  padding: 1rem;
+  background-color: #ffffff;
+  color: #030817;
+  border-radius: 0.5rem;
+  display: flex;
+  cursor: pointer;
 }
 
 .button-box {
