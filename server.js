@@ -230,18 +230,7 @@ app.post(
 
 			let emailHTML = `
 			<h2>Station rengjort </h2> <br>
-			<p> <strong>Station:</strong> 
-			${plainStation.address}, 
-			${plainStation.postalCode}, 
-			${plainStation.city} </p>
-			<p> <strong>Firma:</strong> ${plainStation.companies?.name}</p>
-			<p> <strong>Rengjort af:</strong> ${user.name || user.email}</p>
-			<p> <strong>Kommentarer:</strong> ${
-				req.body.comment || "Ingen kommentar tilknyttet"
-			}</p>
-			<p> <strong>Dato for rengøring:</strong> 
-			${new Date().toLocaleDateString("da-DK")}
-			</p>`;
+			`;
 
 			imagePaths.forEach((img) => {
 				emailHTML += `<img src="cid:${img.cid}" style="max-width: 400px; margin: 10px;" /><br>`;
