@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 
 const express = require("express");
 const bcrypt = require("bcrypt");
@@ -48,9 +48,16 @@ router.post("/", async (req, res) => {
     req.session.user = {
       id: user.id,
       email: user.email,
+      isAdmin: user.isAdmin,
+      firstName: user.firstName,
+      lastName: user.lastName,
     };
 
-    res.redirect("/dashboard");
+    if (user.isAdmin) {
+      return res.redirect("/users");
+    } else {
+      return res.redirect("/dashboard");
+    }
   } catch (error) {
     console.error("login fejl", error);
     res.redirect("/");

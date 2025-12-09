@@ -4,12 +4,12 @@
 
             {{#each users}}
 
-                <div class="button-box">
+                <a href="/users/{{id}}" class="button-box block">
                     <div class="button-box__title">
                         {{firstName}} {{lastName}} 
                     </div>
                     <img src="../assets/icons/edit.svg" alt="">
-                </div>
+                </a>
 
             {{/each}}
 
