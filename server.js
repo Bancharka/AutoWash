@@ -153,11 +153,14 @@ app.post(
 	async (req, res) => {
 		try {
 			const userId = req.session.user.id;
+			const viewToken = crypto.randomBytes(32).toString("hex");
 
 			const newLog = await db.Logs.create({
 				stationId: req.body.stationId,
 				comment: req.body.comment,
 				userId: userId,
+				viewToken: viewToken,
+				tokenUsed: false,
 			});
 
 			// henter info til emailen:
@@ -228,26 +231,23 @@ app.post(
 
 			//Her laver vi en const med alt infoen som skal være i emailen
 
-			let emailHTML = `
-			<h2>Station rengjort </h2> <br>
-			`;
+			const viewLink = `http://localhost:3000/view-cleaning/${viewToken}`;
 
-			imagePaths.forEach((img) => {
-				emailHTML += `<img src="cid:${img.cid}" style="max-width: 400px; margin: 10px;" /><br>`;
-			});
+			const emailHTML = `
+			<h2>Station rengjort </h2> <br>
+			<p> <a href="${viewLink}> color="blue" </a> Tryk her for at se rengøringsrapport </p>
+			`;
 
 			await transporter.sendMail({
 				from: '"AutoWash System" <op7486684@gmail.com>',
 				to: "olipet101@gmail.com",
 				subject: `Station rengjort: ${plainStation.address}`,
-				text: `Station med adresse: ${plainStation.address} rengjort`,
 				html: emailHTML,
-				attachments: imagePaths,
 			});
 
 			console.log(" <br Email sendt <br>");
 
-			res.redirect(`/new-cleaning`);
+			res.redirect(`/dashboard`);
 		} catch (error) {
 			console.error("Upload fejl:", error);
 			res.status(500).send("Fejl ved upload af billeder");
