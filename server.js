@@ -13,6 +13,7 @@ const Handlebars = require("handlebars");
 const { Sequelize, Model, DataTypes } = require("sequelize");
 const db = require("./models");
 const authRoutes = require("./routes/auth");
+const { isAuthenticated, isNotAuthenticated, isAdmin } = require("./middleware/auth");
 
 const app = express();
 
@@ -90,7 +91,7 @@ app.get("/create-user", async (req, res) => {
   });
 });
 
-app.get("/dashboard", async (req, res) => {
+app.get("/dashboard", isAuthenticated, async (req, res) => {
   const id = req.session.user.id;
   const logs = await db.Logs.findAll({
     where: { userId: id },
@@ -119,7 +120,7 @@ app.get("/dashboard", async (req, res) => {
   });
 });
 
-app.get("/new-cleaning", async (req, res) => {
+app.get("/new-cleaning", isAuthenticated, async (req, res) => {
   try {
     const stations = await db.Stations.findAll({
       include: [
@@ -144,7 +145,7 @@ app.get("/new-cleaning", async (req, res) => {
 });
 
 app.post(
-  "/new-cleaning",
+  "/new-cleaning", isAuthenticated,
   upload.fields([
     { name: "beforeImages", maxCount: 8 },
     { name: "afterImages", maxCount: 8 },
@@ -196,7 +197,7 @@ app.post(
   }
 );
 
-app.get("/users", async (req, res) => {
+app.get("/users", isAdmin, async (req, res) => {
   const users = await db.Users.findAll({ raw: true });
 
   res.render("users", {
@@ -205,14 +206,14 @@ app.get("/users", async (req, res) => {
   });
 });
 
-app.get("/add-user", (req, res) => {
+app.get("/add-user", isAdmin, (req, res) => {
   res.render("addUser", {
     title: "Tilføj bruger",
     message: "Velkommen homie gratt gratt!",
   });
 });
 
-app.get("/users/:id", async (req, res) => {
+app.get("/users/:id", isAdmin, async (req, res) => {
   const { id } = req.params;
 
   const user = await db.Users.findByPk(id, {
@@ -245,7 +246,7 @@ app.get("/users/:id", async (req, res) => {
   });
 });
 
-app.post("/users/:id", async (req, res) => {
+app.post("/users/:id", isAdmin, async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -275,7 +276,7 @@ app.post("/users/:id", async (req, res) => {
   }
 });
 
-app.post("/users/:id/delete", async (req, res) => {
+app.post("/users/:id/delete", isAdmin, async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -290,7 +291,7 @@ app.post("/users/:id/delete", async (req, res) => {
   }
 });
 
-app.get("/products", async (req, res) => {
+app.get("/products", isAdmin, async (req, res) => {
   const products = await db.Products.findAll({ raw: true });
 
   res.render("products", {
@@ -300,14 +301,14 @@ app.get("/products", async (req, res) => {
   });
 });
 
-app.get("/add-product", (req, res) => {
+app.get("/add-product", isAdmin, (req, res) => {
   res.render("addProduct", {
     title: "Tilføj produkt",
     message: "Velkommen homie gratt gratt!",
   });
 });
 
-app.get("/stations", async (req, res) => {
+app.get("/stations", isAdmin, async (req, res) => {
   const stations = await db.Stations.findAll({
     include: [
       {
@@ -328,7 +329,7 @@ app.get("/stations", async (req, res) => {
   });
 });
 
-app.get("/add-station", async (req, res) => {
+app.get("/add-station", isAdmin, async (req, res) => {
   try {
     const companies = await db.Companies.findAll({ raw: true });
 
@@ -343,7 +344,7 @@ app.get("/add-station", async (req, res) => {
   }
 });
 
-app.post("/add-station", async (req, res) => {
+app.post("/add-station", isAdmin, async (req, res) => {
   try {
     await db.Stations.create({
       address: req.body.address,
@@ -358,7 +359,7 @@ app.post("/add-station", async (req, res) => {
   }
 });
 
-app.get("/stations/:id", async (req, res) => {
+app.get("/stations/:id", isAdmin, async (req, res) => {
   const { id } = req.params;
 
   const companies = await db.Companies.findAll({ raw: true });
@@ -375,7 +376,7 @@ app.get("/stations/:id", async (req, res) => {
   });
 });
 
-app.post("/stations/:id", async (req, res) => {
+app.post("/stations/:id", isAdmin, async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -407,7 +408,7 @@ app.post("/stations/:id", async (req, res) => {
   }
 });
 
-app.post("/stations/:id/delete", async (req, res) => {
+app.post("/stations/:id/delete", isAdmin, async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -422,7 +423,7 @@ app.post("/stations/:id/delete", async (req, res) => {
   }
 });
 
-app.get("/addCompanies", async (req, res) => {
+app.get("/addCompanies", isAdmin, async (req, res) => {
   try {
     const companies = await db.Companies.findAll({ raw: true });
 
@@ -436,7 +437,7 @@ app.get("/addCompanies", async (req, res) => {
   }
 });
 
-app.post("/addCompanies", async (req, res) => {
+app.post("/addCompanies", isAdmin, async (req, res) => {
   try {
     await db.Companies.create({
       name: req.body.name,
