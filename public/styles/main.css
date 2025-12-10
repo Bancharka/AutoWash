@@ -432,6 +432,7 @@ header button {
   color: #030817;
   border-radius: 0.5rem;
   flex: 1;
+  min-width: 0;
   display: flex;
   align-items: center;
   color: #667399;
@@ -443,6 +444,22 @@ header button {
   border-radius: 0.5rem;
   display: flex;
   cursor: pointer;
+}
+.dropdown-search__amount-input, .dropdown-search__unit-select {
+  padding: 1rem;
+  background-color: #ffffff;
+  color: #030817;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+.dropdown-search__amount-input::placeholder, .dropdown-search__unit-select::placeholder {
+  opacity: 0.5;
+}
+.dropdown-search__amount-input, .dropdown-search__unit-select {
+  padding: 0.5rem 1rem;
+  height: 2.5rem;
+  flex: 1;
+  min-width: 0;
 }
 
 .button-box {

@@ -88,6 +88,7 @@
     &__item-text {
         @include box;
         flex: 1;
+        min-width: 0;
         display: flex;
         align-items: center;
         color: $color-muted;
@@ -98,4 +99,15 @@
         display: flex;
         cursor: pointer;
     }
+
+    &__amount-input,
+    &__unit-select {
+        @include box;
+        @include text-input;
+        padding: $spacing-xs $spacing-sm;
+        height: 2.5rem;
+        flex: 1; // ← Both inputs share equal space
+        min-width: 0; // ← Allows them to shrink
+    }
+
 }
