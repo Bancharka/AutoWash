@@ -24,11 +24,7 @@ app.engine(
     extname: "hbs",
     defaultLayout: "main",
     layoutsDir: "./views/layouts",
-    helpers: {
-      eq: function (a, b) {
-        return a === b;
-      },
-    },
+    helpers: helpers,
   })
 );
 
@@ -116,7 +112,6 @@ app.get("/dashboard", async (req, res) => {
 
   res.render("dashboard", {
     title: "Dashboard",
-    seperator: "Fuldført",
     logs: rawLogs,
     logout: true,
   });
@@ -254,7 +249,7 @@ app.post("/users/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const { "first-name": firstName, "last-name": lastName, email } = req.body;
+    const { firstName, lastName, email } = req.body;
 
     if (!firstName || !lastName || !email) {
       return res.status(400).send("Alle felter skal udfyldes");
@@ -451,21 +446,6 @@ app.post("/addCompanies", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send("Error");
-  }
-});
-
-Handlebars.registerHelper("buttonVariant", function (variant) {
-  switch (variant) {
-    case "secondary":
-      return "button--secondary";
-    case "outline":
-      return "button--outline";
-    case "ghost":
-      return "button--ghost";
-    case "destructive":
-      return "button--destructive";
-    default:
-      return "button--primary";
   }
 });
 

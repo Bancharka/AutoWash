@@ -1,25 +1,14 @@
 <div class="flex flex-col gap-xl">
     <h1>{{title}}</h1>
-        <div class="flex flex-col gap-lg">
-    {{>button href="/new-cleaning" text="Tilføj rengøring" variant="secondary"}}
-    {{>seperator}}
-
-{{#each logs}}
-
-	<div class="button-box">
-        <div>
-		<div class="button-box__title">
-             {{stations.companies.name}}
+    <div class="flex flex-col gap-lg">
+        {{>button href="/new-cleaning" text="Tilføj rengøring" variant="secondary"}}
+        <div class="flex flex-col gap-md">
+            {{>separator text="Fuldført"}}
+            <div class="flex flex-col gap-sm">
+                {{#each logs}}
+                    {{>itemCard href="#" title=(concat stations.companies.name ", " stations.address) body=(formatDate createdAt)}}
+                {{/each}}
+            </div>
         </div>
-            <div>
-        <div class="button-box__adress">{{stations.address}}</div>
-        <div class="button-box__postal">{{stations.postalCode}}, {{stations.city}}</div>
-        <div class="button-box__postal">{{createdAtFormatted}}</div>
-        </div>
-        </div>
-		<img src="../assets/icons/edit.svg" alt=""> {{!-- ændrer til pil --}}
-	</div>
-
-{{/each}}
-
+    </div>
 </div>

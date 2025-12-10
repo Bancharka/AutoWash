@@ -1,0 +1,18 @@
+@use "../abstracts" as *;
+
+.separator {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+
+  &__line {
+    flex-grow: 1;
+    border-top: $border-width solid $color-muted;
+  }
+
+  &__text {
+    @include text-label;
+
+    color: $color-muted;
+  }
+}

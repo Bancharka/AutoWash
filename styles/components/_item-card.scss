@@ -1,0 +1,35 @@
+@use "../abstracts" as *;
+
+.item-card {
+  @include box;
+
+  display: flex;
+  align-items: center;
+
+  &__body {
+    @include text-label-body;
+
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+
+  &__content {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+
+  &__icon {
+    align-self: flex-start;
+    width: $icon-size;
+    height: $icon-size;
+  }
+
+  &__title {
+    @include text-label;
+
+    color: $color-primary;
+  }
+}

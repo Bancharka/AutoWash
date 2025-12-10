@@ -1,8 +1,9 @@
 <input
-  type="text"
+  type="{{type}}"
   id="{{id}}"
   name="{{name}}"
-  placeholder="{{placeholderText}}"
+  placeholder="{{placeholder}}"
   value="{{value}}"
   class="input"
+  {{#if required}}required{{/if}}
 />

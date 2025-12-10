@@ -1,20 +1,26 @@
 <div class="flex flex-col gap-xl"> 
     <h1>{{title}}</h1>
-        <div class="flex flex-col gap-lg">
-
-            {{#each users}}
-
-                <div class="button-box">
-                    <div class="button-box__title">
-                        {{firstName}} {{lastName}} 
-                    </div>
-                    <img src="../assets/icons/edit.svg" alt="">
-                </div>
-
-            {{/each}}
-
-            {{>footerNav}}
+    <div class="flex flex-col gap-lg">
+        <div class="flex flex-col gap-md">
+            {{>separator text="Admin"}}
+            <div class="flex flex-col gap-sm">
+                {{#each users}}
+                    {{#if isAdmin}}
+                        {{>itemCard href=(concat "/users/" id) title=(concat firstName " " lastName)}}
+                    {{/if}}
+                {{/each}}
+            </div>
         </div>
-
-
+        <div class="flex flex-col gap-md">
+            {{>separator text="Personale"}}
+            <div class="flex flex-col gap-sm">
+                {{#each users}}
+                    {{#unless isAdmin}}
+                        {{>itemCard href=(concat "/users/" id) title=(concat firstName " " lastName)}}
+                    {{/unless}}
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    {{>footerNav}}
 </div>
