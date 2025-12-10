@@ -56,7 +56,9 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: {
-      secure: process.env.SECURE == true,
+      secure: process.env.NODE_ENV === "production",
+	  httpOnly: true,
+	  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       maxAge: 1000 * 60 * 60 * 24,
     },
   })
@@ -75,7 +77,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", async (req, res) => {
+app.get("/", isNotAuthenticated, async (req, res) => {
   try {
     res.render("login", {
       title: "Log ind",
