@@ -221,6 +221,26 @@ input {
   cursor: pointer;
 }
 
+.image-upload {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.thumbnails {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.thumbnail {
+  width: 5rem;
+  height: 5rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  border: 1px solid #0d2673;
+}
+
 header {
   display: flex;
   flex-direction: row;
@@ -516,6 +536,39 @@ header button {
 .graphic {
   margin: auto;
   top: 0;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.overlay.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal {
+  height: 7rem;
+  min-width: 20rem;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  display: flex;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+.modal__text {
+  margin: auto;
 }
 
 .container {

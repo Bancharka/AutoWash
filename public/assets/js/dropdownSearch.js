@@ -1,4 +1,5 @@
 console.log("script running...");
+
 function showDropdown(dropdownId) {
     const dropdown = document.getElementById(dropdownId);
     const items = dropdown.getElementsByClassName("dropdown-search__item");
@@ -11,6 +12,7 @@ function showDropdown(dropdownId) {
         }
     }
 }
+
 function filterDropdown(dropdownId) {
     const input = document.getElementById(dropdownId + "-search");
     const searchText = input.value.trim();
@@ -18,6 +20,7 @@ function filterDropdown(dropdownId) {
     const dropdown = document.getElementById(dropdownId);
     const group = dropdown.querySelector(".dropdown-search__group");
     const items = dropdown.getElementsByClassName("dropdown-search__item");
+
     if (searchText === "") {
         for (let i = 0; i < items.length; i++) {
             if (i < 3) {
@@ -32,6 +35,7 @@ function filterDropdown(dropdownId) {
         }
         return;
     }
+
     let visibleCount = 0;
     for (let i = 0; i < items.length; i++) {
         const text = items[i].textContent || items[i].innerText;
@@ -42,6 +46,7 @@ function filterDropdown(dropdownId) {
             items[i].style.display = "none";
         }
     }
+
     const existingNoResults = dropdown.querySelector(".dropdown-search__no-results");
     if (visibleCount === 0) {
         if (!existingNoResults) {
@@ -56,23 +61,17 @@ function filterDropdown(dropdownId) {
         }
     }
 }
+
 document.addEventListener("DOMContentLoaded", function () {
     const dropdowns = document.querySelectorAll(".dropdown-search");
 
     dropdowns.forEach(function (dropdownContainer) {
         const items = dropdownContainer.querySelectorAll(".dropdown-search__item");
         const input = dropdownContainer.querySelector(".dropdown-search__search");
-        const dropdownId = dropdownContainer.querySelector(".dropdown-search__content").id;
+        const dropdownContent = dropdownContainer.querySelector(".dropdown-search__content");
+        const dropdownId = dropdownContent.id;
 
-        let selectedContainer = document.getElementById(`${dropdownId}-selected`);
-        if (!selectedContainer) {
-            selectedContainer = document.createElement("div");
-            selectedContainer.id = `${dropdownId}-selected`;
-            selectedContainer.style.display = "none";
-            dropdownContainer.appendChild(selectedContainer);
-        }
-
-        // Create a visible list to show selected items
+        // Create selected list container
         let selectedList = document.getElementById(`${dropdownId}-list`);
         if (!selectedList) {
             selectedList = document.createElement("div");
@@ -89,57 +88,88 @@ document.addEventListener("DOMContentLoaded", function () {
                 const itemName = item.textContent.trim();
 
                 // Check if already selected
-                if (document.getElementById(`item-${itemId}`)) {
+                if (document.getElementById(`item-tag-${itemId}`)) {
                     alert("Dette er allerede valgt");
                     return;
                 }
 
-                // Add hidden input for form submission
-                const hiddenInput = document.createElement("input");
-                hiddenInput.type = "hidden";
-                hiddenInput.name = "itemIds[]";
-                hiddenInput.value = itemId;
-                hiddenInput.id = `item-${itemId}`;
-                selectedContainer.appendChild(hiddenInput);
-
-                // Add visible tag
-                // const tag = document.createElement("div");
-                // tag.className = "dropdown-search__item-tag";
-                // const deleteTag = document.createElement("div");
-                // deleteTag.className = "dropdown-search__delete-tag"
-                // tag.innerHTML = `${itemName} <button class="dropdown-search__delete-button type="button" onclick="removeItem(${itemId}, '${dropdownId}')"><img src="./assets/icons/delete.svg" alt=""></button>`;
-                // selectedList.appendChild(tag);
-
                 const tag = document.createElement("div");
                 tag.className = "dropdown-search__item-tag";
+                tag.id = `item-tag-${itemId}`;
                 tag.dataset.itemId = itemId;
 
-                // text
+                // Hidden input for product ID
+                const hiddenInput = document.createElement("input");
+                hiddenInput.type = "hidden";
+                hiddenInput.name = "productIds[]";
+                hiddenInput.value = itemId;
+
+                // Product name
                 const text = document.createElement("span");
                 text.className = "dropdown-search__item-text";
                 text.textContent = itemName;
 
-                // delete button
+                tag.appendChild(hiddenInput);
+                tag.appendChild(text);
+
+                // If this is the product dropdown, add amount and unit inputs
+                if (dropdownId === "productId") {
+                    // Amount input
+                    const amountInput = document.createElement("input");
+                    amountInput.type = "number";
+                    amountInput.name = "productAmounts[]"; // Changed to array
+                    amountInput.min = "0";
+                    amountInput.step = "0.01";
+                    amountInput.placeholder = "Mængde";
+                    amountInput.required = true;
+                    amountInput.className = "dropdown-search__amount-input";
+
+                    // Unit select
+                    const unitSelect = document.createElement("select");
+                    unitSelect.name = "productUnits[]"; // Changed to array
+                    unitSelect.required = true;
+                    unitSelect.className = "dropdown-search__unit-select";
+
+                    // Add default option
+                    const defaultOption = document.createElement("option");
+                    defaultOption.value = "";
+                    defaultOption.textContent = "Vælg enhed";
+                    unitSelect.appendChild(defaultOption);
+
+                    // Get units from the script tag
+                    const unitsData = document.getElementById("unitData");
+                    if (unitsData) {
+                        const units = JSON.parse(unitsData.textContent);
+                        units.forEach((unit) => {
+                            const option = document.createElement("option");
+                            option.value = unit.value;
+                            option.textContent = unit.text;
+                            unitSelect.appendChild(option);
+                        });
+                    }
+
+                    tag.appendChild(amountInput);
+                    tag.appendChild(unitSelect);
+                }
+
+                // Delete button
                 const button = document.createElement("button");
                 button.type = "button";
                 button.className = "dropdown-search__delete-button";
                 button.onclick = () => removeItem(itemId, dropdownId);
 
                 const img = document.createElement("img");
-                img.src = "./assets/icons/delete.svg";
+                img.src = "/assets/icons/delete.svg";
                 img.alt = "Slet";
-
                 button.appendChild(img);
 
-                // assemble
-                tag.appendChild(text);
                 tag.appendChild(button);
                 selectedList.appendChild(tag);
 
-
-                // Clear search
+                // Clear search and close dropdown
                 input.value = "";
                 filterDropdown(dropdownId);
+                dropdownContent.classList.remove("dropdown-search__content--show");
             });
         });
     });
@@ -147,20 +177,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Remove selected item
 function removeItem(itemId, dropdownId) {
-    // remove hidden input
-    const hiddenInput = document.getElementById(`item-${itemId}`);
-    if (hiddenInput) hiddenInput.remove();
-
-    // remove visual tag
-    const selectedList = document.getElementById(`${dropdownId}-list`);
-    const tag = selectedList.querySelector(
-        `.dropdown-search__item-tag[data-item-id="${itemId}"]`
-    );
-
-    if (tag) tag.remove();
+    const tag = document.getElementById(`item-tag-${itemId}`);
+    if (tag) {
+        tag.remove();
+    }
 }
-
-
 
 document.addEventListener("click", function (event) {
     const dropdowns = document.querySelectorAll(".dropdown-search");

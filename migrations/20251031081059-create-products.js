@@ -14,7 +14,8 @@ module.exports = {
         type: Sequelize.STRING,
       },
       unitId: {
-        allowNull: false,
+        allowNull: true,
+        defaultValue: 1,
         type: Sequelize.INTEGER,
         references: {
           model: "Units",

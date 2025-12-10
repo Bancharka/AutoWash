@@ -1,4 +1,4 @@
-<div class="dropdown-search">
+{{!-- <div class="dropdown-search">
   <input
     type="text"
     placeholder="{{placeholder}}"
@@ -18,4 +18,34 @@
       {{/each}}
     </div>
   </div>
+</div> --}}
+
+<div class="dropdown-search" id="dropdown-{{id}}">
+  <!-- Search input -->
+  <input
+    type="text"
+    class="dropdown-search__search"
+    id="{{id}}-search"
+    placeholder="{{placeholder}}"
+    oninput="filterDropdown('{{id}}')"
+    onclick="showDropdown('{{id}}')"
+    autocomplete="off"
+  />
+
+  <!-- Dropdown list -->
+  <div class="dropdown-search__content" id="{{id}}">
+    <div class="dropdown-search__group">
+      {{#each items}}
+        <div class="dropdown-search__item" data-value="{{this.value}}">
+          {{this.text}}
+        </div>
+      {{/each}}
+    </div>
+  </div>
+
+  <!-- Container for hidden inputs (used by JS) -->
+  <div id="{{id}}-selected" style="display: none;"></div>
+
+  <!-- Container for selected tags -->
+  <div id="{{id}}-list" class="dropdown-search__selected-items"></div>
 </div>
