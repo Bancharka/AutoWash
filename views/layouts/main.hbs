@@ -10,9 +10,11 @@
       <img class="graphic" src="/assets/img/logobg.png" alt="grafik" />
     {{/if}}
     <div class="mobile-container">
+      {{> header backUrl=backUrl logout=logout isHidden=hideHeader}}
       {{! Det er her vores forskellige views skal sættes ind }}
-      {{{body}}}
-    
+      <main class="page-container">
+        {{{body}}}
+      </main>
     <script src="/assets/js/dropdownSearch.js"></script>
   </body>
 </html>

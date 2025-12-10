@@ -1,16 +1,16 @@
 <div class="flex flex-col gap-md">
   <form action="/users/{{user.id}}" method="POST" class="flex flex-col gap-lg">
     <div class="flex flex-col gap-md">
-      {{> label text="Fornavn"}}
-      {{> input name="first-name" value=user.firstName}}
+      {{> label for="first-name" text="Fornavn"}}
+      {{> input type="text" id="first-name" name="firstName" value=user.firstName}}
     </div>
     <div class="flex flex-col gap-md">
-      {{> label text="Efternavn" }}
-      {{> input name="last-name" value=user.lastName}}
+      {{> label for="last-name" text="Efternavn" }}
+      {{> input type="text" id="last-name" name="lastName" value=user.lastName}}
     </div>
     <div class="flex flex-col gap-md">
-      {{> label text="Email"}}
-      {{> input name="email" value=user.email}}
+      {{> label for="email" text="Email"}}
+      {{> input type="text" id="email" name="email" value=user.email}}
     </div>
     {{> button type="submit" text="Gem"}}
   </form>

@@ -2,14 +2,18 @@
 
 .container {
   margin: auto;
-  padding: 2rem $spacing-md 6rem;
+  padding: 0 $spacing-md;
 }
 
 .mobile-container {
   margin: auto;
-  padding: 2rem $spacing-md 6rem;
+  padding: 0 $spacing-md;
   display: flex;
   flex-direction: column;
-  gap: $spacing-md;
   max-width: 400px;
+}
+
+.page-container {
+  padding-top: 2rem;
+  padding-bottom: 6rem;
 }

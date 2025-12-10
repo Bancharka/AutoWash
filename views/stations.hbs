@@ -1,28 +1,12 @@
 <div class="flex flex-col gap-xl"> 
     <h1>{{title}}</h1>
-    {{>button href="/add-station" type="button" text="Tilføj station" variant="secondary"}}
-        <div class="flex flex-col gap-lg">
-
-
+    <div class="flex flex-col gap-lg">
+        {{>button href="/add-station" type="button" text="Tilføj station" variant="secondary"}}
+        <div class="flex flex-col gap-sm">
             {{#each stations}}
-
-                <a href="/stations/{{id}}" class="button-box">
-                    
-                    <div class="button-box__title-icon">
-                        <div class="button-box__title">
-                            {{companies.name}}
-                        </div>
-                        <img src="../assets/icons/edit.svg" alt="">
-                    </div>
-                
-                    <div>
-                        <div class="button-box__adress">{{address}}</div>
-                        <div class="button-box__postal">{{postalCode}}, {{city}}</div>
-                    </div>
-                </a>
-
+                {{>itemCard href=(concat "/stations/" id) title=companies.name body=(array address (concat postalCode ", " city))}}
             {{/each}}
-
-            {{>footerNav}}
         </div>
+    </div>
+    {{>footerNav}}
 </div>

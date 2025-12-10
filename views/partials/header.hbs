@@ -1,11 +1,18 @@
-<header>
-	<button onclick="history.back()">
-		<img src="/assets/icons/backArrowsvg.svg" alt="" />
-	</button>
-
-	<div></div>
-
-	<button>
-		<img src="/assets/icons/logout.svg" alt="" />
-	</button>
-</header>
+{{#unless isHidden}}
+  <header class="header">
+    <div>
+      {{#if backUrl}}
+        <a href="{{backUrl}}" class="header__item">
+          <img src="/assets/icons/backArrowsvg.svg" alt="" />
+        </a>
+      {{/if}}
+    </div>
+    <div>
+      {{#if logout}}
+        <button class="header__item">
+          <img src="/assets/icons/logout.svg" alt="" />
+        </button>
+      {{/if}}
+    </div>
+  </header>
+{{/unless}}

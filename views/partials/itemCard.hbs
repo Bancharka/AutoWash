@@ -1,0 +1,13 @@
+<a href="{{href}}" class="item-card">
+  <div class="item-card__content">
+    <div class="item-card__title">{{title}}</div>
+    {{#if body}}
+      <div class="item-card__body">
+        {{#each (toArray body)}}
+          <div>{{this}}</div>
+        {{/each}}
+      </div>
+    {{/if}}
+  </div>
+  <img src="assets/icons/edit.svg" alt="" class="item-card__icon" />
+</a>
