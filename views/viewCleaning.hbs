@@ -1,4 +1,69 @@
-<h1>
+{{! Vi skal bruge:
+station rengjort, både companyname adresse, postnummer og by
+kommentar,
+username ud fra userid,
 
-	Fungerer det her? !!
-</h1>
+
+ }}
+ 
+ <div
+	class="flex flex-col gap-md"
+>
+	<h1>{{stations.companies.name}}</h1>
+
+	<div>
+
+		<div class="button-box__adress">
+			{{stations.address}}
+		</div>
+
+		<div class="button-box__postal">
+			{{stations.postalCode}},
+			{{stations.city}}
+		</div>
+
+		<div class="button-box__postal">
+			<strong> Rengjort af </strong>{{user.firstName}}
+		</div>
+
+	</div>
+
+
+	{{>seperator text="Før"}}
+	
+
+	<div class="flex flex-wrap gap-md">
+		{{#each beforeImages}}
+			<img src="/{{path}}" alt="Before" style="max-width: 80px;" />
+		{{/each}}
+	</div>
+
+	
+	{{>seperator text="Efter"}}
+
+	<div class="flex flex-wrap gap-md">
+		{{#each afterImages}}
+			<img src="/{{path}}" alt="After" style="max-width: 80px;" />
+		{{/each}}
+	</div>
+
+	<div class="flex flex-col gap-md">
+		{{>label text="Rengøringsopgaver"}}
+		<div class="button-box">
+			
+			Her skal alle færdige opgaver være
+
+		</div>
+	</div>
+
+	<div class="flex flex-col gap-md">
+		{{>label text="Kommentar"}}
+		<div class="button-box">
+			
+			{{log.comment}}
+
+		</div>
+	</div>
+
+	{{>label text="Produkter"}}
+</div>
