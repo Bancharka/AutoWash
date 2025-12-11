@@ -3,6 +3,7 @@
 .highlight {
   opacity: 1 !important;
 }
+
 .footerNav {
   display: flex;
   justify-content: space-around;
@@ -26,12 +27,15 @@
   li {
     list-style: none;
   }
+
   &__icon {
     color: $color-primary-foreground;
   }
+
   &__text {
     color: $color-primary-foreground;
   }
+
   &__buttonIcon {
     max-height: $icon-size;
   }

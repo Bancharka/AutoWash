@@ -14,12 +14,18 @@ module.exports = (sequelize, DataTypes) => {
       UsedProducts.belongsTo(models.Products, {
         foreignKey: "productId",
       });
+      UsedProducts.belongsTo(models.Units, {
+        foreignKey: "unitId",
+        as: "unit",
+      });
     }
   }
   UsedProducts.init(
     {
       productId: DataTypes.INTEGER,
       logId: DataTypes.INTEGER,
+      amount: DataTypes.FLOAT,
+      unitId: DataTypes.INTEGER,
     },
     {
       sequelize,

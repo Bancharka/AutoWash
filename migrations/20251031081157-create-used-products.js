@@ -37,6 +37,15 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
+      unitId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 1,  // default unit ID
+        references: {
+          model: 'Units',
+          key: 'id'
+        }
+      },
     });
   },
   async down(queryInterface, Sequelize) {

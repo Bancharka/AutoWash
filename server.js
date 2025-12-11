@@ -13,6 +13,7 @@ const Handlebars = require("handlebars");
 const { Sequelize, Model, DataTypes } = require("sequelize");
 const db = require("./models");
 const authRoutes = require("./routes/auth");
+const { text } = require("stream/consumers");
 
 const app = express();
 
@@ -30,6 +31,11 @@ app.engine(
 
 app.set("view engine", "hbs");
 app.set("views", "./views/");
+
+Handlebars.registerHelper('json', function (context) {
+  return JSON.stringify(context);
+});
+
 
 // Bestemmer hvor vi henter static filer fra (f.eks CSS)
 app.use(express.static(path.join(__dirname, "public")));
@@ -77,7 +83,7 @@ app.get("/", async (req, res) => {
       showgraphic: true,
       hideHeader: true,
     });
-  } catch (error) {}
+  } catch (error) { }
 });
 
 app.get("/create-user", async (req, res) => {
@@ -139,7 +145,14 @@ app.get("/new-cleaning", async (req, res) => {
     const productOptions = products.map((product) => ({
       value: product.id,
       text: product.name,
-    }));
+    }))
+
+    const units = await db.Units.findAll({ raw: true });
+
+    const unitOptions = units.map((unit) => ({
+      value: unit.id,
+      text: unit.name,
+    }))
 
     const tasks = await db.Tasks.findAll({ raw: true });
 
@@ -153,8 +166,11 @@ app.get("/new-cleaning", async (req, res) => {
       stationOptions: stationOptions,
       productOptions: productOptions,
       taskOptions: taskOptions,
+      unitOptions: unitOptions,
+      units,
       backUrl: "/dashboard",
     });
+    console.log(productOptions);
   } catch (error) {
     console.error(error);
     res.status(500).send("Error loading page");
@@ -171,22 +187,36 @@ app.post(
     try {
       const userId = req.session.user.id;
 
+      // Create the cleaning log
       const newLog = await db.Logs.create({
         stationId: req.body.stationId,
         comment: req.body.comment,
         userId: userId,
       });
 
-      const productIds = req.body.productIds;
-      if (productIds && productIds.length > 0) {
-        for (const productId of productIds) {
+      console.log("New log created:", newLog.id);
+
+      // Handle selected products with amounts and units
+      const productIds = req.body.productIds || [];
+      const productAmounts = req.body.productAmounts || [];
+      const productUnits = req.body.productUnits || [];
+
+      console.log("Product data:", { productIds, productAmounts, productUnits });
+
+      if (productIds.length > 0) {
+        for (let i = 0; i < productIds.length; i++) {
           await db.UsedProducts.create({
             logId: newLog.id,
-            productId: productId,
+            productId: productIds[i],
+            amount: parseFloat(productAmounts[i]),
+            unitId: parseInt(productUnits[i])
           });
+
+          console.log(`Saved product ${productIds[i]} with amount ${productAmounts[i]} and unit ${productUnits[i]}`);
         }
       }
 
+      // Upload images
       const uploadImages = async (files, isBefore) => {
         if (!files) return;
 
@@ -216,10 +246,11 @@ app.post(
       await uploadImages(req.files.beforeImages, true);
       await uploadImages(req.files.afterImages, false);
 
-      res.redirect(`/new-cleaning`);
+      console.log("Cleaning log created successfully!");
+      res.redirect(`/dashboard`);
     } catch (error) {
       console.error("Upload fejl:", error);
-      res.status(500).send("Fejl ved upload af billeder");
+      res.status(500).send("Fejl ved upload af billeder: " + error.message);
     }
   }
 );

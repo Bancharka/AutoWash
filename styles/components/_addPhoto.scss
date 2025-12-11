@@ -9,3 +9,23 @@
 	justify-content: center;
 	cursor: pointer;
 }
+
+.image-upload {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+}
+
+.thumbnails {
+	display: flex;
+	gap: 0.75rem;
+	flex-wrap: wrap;
+}
+
+.thumbnail {
+	width: 5rem;
+	height: 5rem;
+	object-fit: cover;
+	border-radius: $border-radius;
+	border: 1px solid $color-border;
+}

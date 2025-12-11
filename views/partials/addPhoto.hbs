@@ -1,5 +1,11 @@
-<button class="addphotobox">
-	<div>
-		<img src="/assets/icons/plus.svg" alt="" />
-	</div>
-</button>
+<label class="addphotobox">
+  <input
+    type="file"
+    name="{{name}}"
+    accept="image/*"
+    multiple
+    hidden
+    data-preview-target="{{previewTarget}}"
+  />
+  <img src="/assets/icons/plus.svg" alt="Upload billede" />
+</label>
