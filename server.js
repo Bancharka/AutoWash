@@ -260,16 +260,24 @@ app.post(
 						.jpeg({ quality: 80 })
 						.toFile(resizedPath);
 
-					try {
-						fs.unlinkSync(file.path);
-					} catch (unlinkError) {
-						console.warn(
-							"Could not delete temp file:",
-							file.path,
-							unlinkError.message
+					await new Promise((resolve) => setTimeout(resolve, 500));
+
+					await fs.promises
+						.unlink(file.path)
+						.catch((err) =>
+							console.warn("Delete failed:", err.message)
 						);
-						// Continue anyway - the temp file will be cleaned up eventually
-					}
+
+					// try {
+					// 	fs.unlinkSync(file.path);
+					// } catch (unlinkError) {
+					// 	console.warn(
+					// 		"Could not delete temp file:",
+					// 		file.path,
+					// 		unlinkError.message
+					// 	);
+					// 	// Continue anyway - the temp file will be cleaned up eventually
+					// }
 
 					await db.Images.create({
 						logId: newLog.id,
@@ -374,7 +382,7 @@ app.get("/view-cleaning/:token", async (req, res) => {
 		res.render("viewCleaning", {
 			title: "Rengøringsrapport",
 			log: plainLog,
-			station: plainLog.Station,
+			stations: plainLog.stations,
 			user: plainLog.User,
 			beforeImages: beforeImages,
 			afterImages: afterImages,

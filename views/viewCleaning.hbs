@@ -1,10 +1,4 @@
- {{! Vi skal bruge:
-station rengjort, både companyname adresse, postnummer og by
-kommentar,
-username ud fra userid,
 
-
- }}
  
  <div
     class="flex flex-col gap-md"
@@ -23,13 +17,13 @@ username ud fra userid,
         </div>
 
         <div class="button-box__postal">
-            <strong> Rengjort af </strong>{{user.firstName}}
+            Rengjort af {{user.firstName}} {{user.lastName}}
         </div>
 
     </div>
 
 
-    {{>seperator text="Før"}}
+    {{>separator text="Før"}}
     
 
     <div class="flex flex-wrap gap-md">
@@ -39,7 +33,7 @@ username ud fra userid,
     </div>
 
     
-    {{>seperator text="Efter"}}
+    {{>separator text="Efter"}}
 
     <div class="flex flex-wrap gap-md">
         {{#each afterImages}}
