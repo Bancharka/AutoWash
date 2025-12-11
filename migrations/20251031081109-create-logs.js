@@ -20,7 +20,7 @@ module.exports = {
 				onDelete: "CASCADE",
 			},
 			comment: {
-				allowNull: false,
+				allowNull: true,
 				type: Sequelize.TEXT,
 			},
 			userId: {
