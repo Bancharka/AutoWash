@@ -1,8 +1,9 @@
 <div class="flex flex-col gap-xl"> 
     <h1>{{title}}</h1>
-    <div class="flex flex-col gap-lg">
-        {{>button href="/add-station" type="button" text="Tilføj station" variant="secondary"}}
-        <div class="flex flex-col gap-sm">
+        <div class="flex flex-col gap-lg">
+            {{>button href="/add-station" type="button" text="Tilføj station" variant="secondary"}}
+            {{>button href="/addCompanies" type="button" text="Tilføj firma" variant="secondary"}}
+
             {{#each stations}}
                 {{>itemCard href=(concat "/stations/" id) title=companies.name body=(array address (concat postalCode ", " city))}}
             {{/each}}

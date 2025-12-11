@@ -17,7 +17,14 @@
 			{{>label id="company" text="Vælg firma"}}
 			<select class="dropdown" name="companyId" id="company" required>
 				{{#each companies}}
-					<option class="dropdown__item" value="{{id}}">{{name}}</option>
+
+					<option class="dropdown__item" 
+						value="{{id}}"
+						{{#if (eq id ../station.companyId)}}selected{{/if}}
+						>
+						{{name}}
+					</option>
+
 				{{/each}}
 			</select>
 		</div>
