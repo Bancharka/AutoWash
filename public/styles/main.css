@@ -423,28 +423,27 @@ input {
   position: relative;
 }
 .dropdown-search__item-tag {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
   gap: 0.5rem;
-  margin-top: 0.5rem;
 }
 .dropdown-search__item-text {
   padding: 1rem;
   background-color: #ffffff;
   color: #030817;
   border-radius: 0.5rem;
-  flex: 1;
-  min-width: 0;
+  grid-column: span 3/span 3;
   display: flex;
   align-items: center;
   color: #667399;
 }
 .dropdown-search__delete-button {
+  grid-column-start: 4;
   padding: 1rem;
   background-color: #ffffff;
   color: #030817;
   border-radius: 0.5rem;
-  display: flex;
   cursor: pointer;
 }
 .dropdown-search__amount-input, .dropdown-search__unit-select {
@@ -460,8 +459,15 @@ input {
 .dropdown-search__amount-input, .dropdown-search__unit-select {
   padding: 0.5rem 1rem;
   height: 2.5rem;
-  flex: 1;
-  min-width: 0;
+}
+.dropdown-search__amount-input {
+  grid-column: span 2/span 2;
+  grid-row-start: 2;
+}
+.dropdown-search__unit-select {
+  grid-column: span 2/span 2;
+  grid-column-start: 3;
+  grid-row-start: 2;
 }
 
 .button-box {

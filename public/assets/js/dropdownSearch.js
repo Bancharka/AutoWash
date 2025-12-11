@@ -98,26 +98,39 @@ document.addEventListener("DOMContentLoaded", function () {
                 tag.id = `item-tag-${itemId}`;
                 tag.dataset.itemId = itemId;
 
-                // Hidden input for product ID
+                // 1. Hidden input for product ID
                 const hiddenInput = document.createElement("input");
                 hiddenInput.type = "hidden";
                 hiddenInput.name = "productIds[]";
                 hiddenInput.value = itemId;
 
-                // Product name
+                // 2. Product name
                 const text = document.createElement("span");
                 text.className = "dropdown-search__item-text";
                 text.textContent = itemName;
 
+                // 3. Delete button
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "dropdown-search__delete-button";
+                button.onclick = () => removeItem(itemId, dropdownId);
+
+                const img = document.createElement("img");
+                img.src = "/assets/icons/delete.svg";
+                img.alt = "Slet";
+                button.appendChild(img);
+
+                // Add first row: hidden input, text, delete button
                 tag.appendChild(hiddenInput);
                 tag.appendChild(text);
+                tag.appendChild(button);
 
-                // If this is the product dropdown, add amount and unit inputs
+                // 4. If this is the product dropdown, add amount and unit inputs (second row)
                 if (dropdownId === "productId") {
                     // Amount input
                     const amountInput = document.createElement("input");
                     amountInput.type = "number";
-                    amountInput.name = "productAmounts[]"; // Changed to array
+                    amountInput.name = "productAmounts[]";
                     amountInput.min = "0";
                     amountInput.step = "0.01";
                     amountInput.placeholder = "Mængde";
@@ -126,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     // Unit select
                     const unitSelect = document.createElement("select");
-                    unitSelect.name = "productUnits[]"; // Changed to array
+                    unitSelect.name = "productUnits[]";
                     unitSelect.required = true;
                     unitSelect.className = "dropdown-search__unit-select";
 
@@ -148,22 +161,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         });
                     }
 
+                    // Add second row: amount and unit
                     tag.appendChild(amountInput);
                     tag.appendChild(unitSelect);
                 }
 
-                // Delete button
-                const button = document.createElement("button");
-                button.type = "button";
-                button.className = "dropdown-search__delete-button";
-                button.onclick = () => removeItem(itemId, dropdownId);
-
-                const img = document.createElement("img");
-                img.src = "/assets/icons/delete.svg";
-                img.alt = "Slet";
-                button.appendChild(img);
-
-                tag.appendChild(button);
                 selectedList.appendChild(tag);
 
                 // Clear search and close dropdown

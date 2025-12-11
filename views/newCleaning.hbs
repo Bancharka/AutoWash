@@ -5,7 +5,7 @@
   {{>separator text="Før billeder"}}
     <div class="flex flex-col gap-md">
       <div>
-        <label for="images-before">Upload billeder (valgfrit, max 8 billeder á 5MB)</label>
+        <label for="images-before">Upload billeder (valgfrit, max 8 billeder á 10MB)</label>
         <input 
           type="file" 
           id="images-before" 
@@ -16,7 +16,7 @@
       </div>
       {{>separator text="Efter billeder"}}
       <div>
-        <label for="images-after">Upload billeder (valgfrit, max 8 billeder á 5MB)</label>
+        <label for="images-after">Upload billeder (valgfrit, max 8 billeder á 10MB)</label>
         <input 
           type="file" 
           id="images-after" 
@@ -26,20 +26,6 @@
         >
       </div> 
       
-      {{!-- {{>seperator text="Før billeder"}}
-      <div class="image-upload">
-        <div class="thumbnails" id="beforePreview">
-          {{>addPhoto name="beforeImages" previewTarget="beforePreview"}}
-        </div>
-      </div>
-      
-      {{>seperator text="Efter billeder"}}
-      <div class="image-upload">
-        <div class="thumbnails" id="beforePreview">
-          {{>addPhoto name="afterImages" previewTarget="afterPreview"}}
-        </div>
-      </div> --}}
-
       {{>label for="taskId" text="Opgaver"}}
       {{>dropdownSearch placeholder="Søg efter opgaver..." id="taskId" items=taskOptions}}
       {{>label for=comment text="Kommentar"}}
