@@ -26,19 +26,7 @@
         >
       </div> 
       
-      {{!-- {{>seperator text="Før billeder"}}
-      <div class="image-upload">
-        <div class="thumbnails" id="beforePreview">
-          {{>addPhoto name="beforeImages" previewTarget="beforePreview"}}
-        </div>
-      </div>
-      
-      {{>seperator text="Efter billeder"}}
-      <div class="image-upload">
-        <div class="thumbnails" id="beforePreview">
-          {{>addPhoto name="afterImages" previewTarget="afterPreview"}}
-        </div>
-      </div> --}}
+
 
       {{>label for="taskId" text="Opgaver"}}
       {{>dropdownSearch placeholder="Søg efter opgaver..." id="taskId" items=taskOptions}}
@@ -61,7 +49,7 @@
       <div id="selected-products" class="product-rows"></div>
     
   
-      {{> button type="submit" text="Opret rengøring" variant="primary"}}
+      {{>button type="submit" text="Opret rengøring" variant="primary"}}
       </div>
     
 <script type="application/json" id="unitData">
