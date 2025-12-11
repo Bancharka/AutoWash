@@ -256,28 +256,10 @@ app.post(
 					);
 
 					await sharp(file.path)
+						.rotate()
 						.resize(800, 600, { fit: "inside" })
 						.jpeg({ quality: 80 })
 						.toFile(resizedPath);
-
-					await new Promise((resolve) => setTimeout(resolve, 500));
-
-					await fs.promises
-						.unlink(file.path)
-						.catch((err) =>
-							console.warn("Delete failed:", err.message)
-						);
-
-					// try {
-					// 	fs.unlinkSync(file.path);
-					// } catch (unlinkError) {
-					// 	console.warn(
-					// 		"Could not delete temp file:",
-					// 		file.path,
-					// 		unlinkError.message
-					// 	);
-					// 	// Continue anyway - the temp file will be cleaned up eventually
-					// }
 
 					await db.Images.create({
 						logId: newLog.id,
@@ -334,6 +316,37 @@ app.post(
 		}
 	}
 );
+
+// Cleanup function to delete old temp files
+
+const fsPromises = require("fs").promises;
+
+// Cleanup function to delete old temp files
+async function cleanupTempFiles() {
+	try {
+		const tempDir = path.join(__dirname, "temp-image-upload");
+		const files = await fsPromises.readdir(tempDir);
+
+		let deletedCount = 0;
+		for (const file of files) {
+			try {
+				await fsPromises.unlink(path.join(tempDir, file));
+				deletedCount++;
+			} catch (err) {
+				console.warn(`Could not delete ${file}:`, err.message);
+			}
+		}
+		console.log(`Cleaned up ${deletedCount} temp files`);
+	} catch (err) {
+		console.error("Cleanup error:", err.message);
+	}
+}
+
+// Run cleanup on server start
+cleanupTempFiles();
+
+// Run cleanup every 24 hours
+setInterval(cleanupTempFiles, 24 * 60 * 60 * 1000);
 
 app.get("/view-cleaning/:token", async (req, res) => {
 	try {
