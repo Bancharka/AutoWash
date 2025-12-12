@@ -50,14 +50,6 @@
         display: flex;
         align-items: center;
         padding: 0 $spacing-xs;
-        height: 2.5rem;
-        flex-shrink: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        cursor: pointer;
-        text-decoration: none;
-        color: inherit;
 
         &:hover {
             background-color: $color-background;
@@ -80,8 +72,6 @@
 
     &__item-tag {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        grid-template-rows: repeat(5, 1fr);
         gap: $spacing-xs;
     }
 
@@ -96,7 +86,6 @@
     &__delete-button {
         grid-column-start: 4;
         @include box;
-        cursor: pointer;
     }
 
     &__amount-input,
@@ -108,12 +97,12 @@
     }
 
     &__amount-input {
-        grid-column: span 2 / span 2; // same as .div3
+        grid-column: span 2 / span 2;
         grid-row-start: 2;
     }
 
     &__unit-select {
-        grid-column: span 2 / span 2; // same as .div4
+        grid-column: span 2 / span 2;
         grid-column-start: 3;
         grid-row-start: 2;
     }

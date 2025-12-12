@@ -1,26 +1,18 @@
 @use "../abstracts" as *;
 
 .comment {
+  @include box;
+  resize: none;
   display: flex;
   flex-direction: column;
   gap: $spacing-xs;
 
-  &__label {
-    @include text-label;
-    color: $color-foreground;
-  }
-
-  &__input {
-    @include box;
-    @include text-input;
-
-    width: 100%;
-    min-height: 8rem;
+  &__textarea {
     resize: none;
-    outline: none;
+    @include text-label-body;
 
-    &::placeholder {
-      color: $color-muted;
+    &:focus {
+      outline: none;
     }
   }
 }

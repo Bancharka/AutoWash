@@ -20,7 +20,6 @@ const {
 	isNotAuthenticated,
 	isAdmin,
 } = require("./middleware/auth");
-const { text } = require("stream/consumers");
 
 const app = express();
 
@@ -91,7 +90,7 @@ app.get("/", isNotAuthenticated, async (req, res) => {
 			showgraphic: true,
 			hideHeader: true,
 		});
-	} catch (error) {}
+	} catch (error) { }
 });
 
 app.get("/create-user", async (req, res) => {
