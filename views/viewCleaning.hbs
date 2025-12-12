@@ -1,4 +1,63 @@
-<h1>
 
-	Fungerer det her? !!
-</h1>
+ 
+ <div
+    class="flex flex-col gap-md"
+>
+    <h1>{{stations.companies.name}}</h1>
+
+    <div>
+
+        <div class="button-box__adress">
+            {{stations.address}}
+        </div>
+
+        <div class="button-box__postal">
+            {{stations.postalCode}},
+            {{stations.city}}
+        </div>
+
+        <div class="button-box__postal">
+            Rengjort af {{user.firstName}} {{user.lastName}}
+        </div>
+
+    </div>
+
+
+    {{>separator text="Før"}}
+    
+
+    <div class="flex flex-wrap gap-md">
+        {{#each beforeImages}}
+            <img src="/{{path}}" alt="Before" style="max-width: 80px;" />
+        {{/each}}
+    </div>
+
+    
+    {{>separator text="Efter"}}
+
+    <div class="flex flex-wrap gap-md">
+        {{#each afterImages}}
+            <img src="/{{path}}" alt="After" style="max-width: 80px;" />
+        {{/each}}
+    </div>
+
+    <div class="flex flex-col gap-md">
+        {{>label text="Rengøringsopgaver"}}
+        <div class="button-box">
+            
+            Her skal alle færdige opgaver være
+
+        </div>
+    </div>
+
+    <div class="flex flex-col gap-md">
+        {{>label text="Kommentar"}}
+        <div class="button-box">
+            
+            {{log.comment}}
+
+        </div>
+    </div>
+
+    {{>label text="Produkter"}}
+</div> 
