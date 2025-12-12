@@ -1,67 +1,11 @@
-require("dotenv").config();
+const router = require("express").Router();
+const { isAuthenticated, isNotAuthenticated } = require("../middleware/auth");
+const authController = require("../controllers/authController");
 
-const express = require("express");
-const bcrypt = require("bcrypt");
-const router = express.Router();
-const { isAuthenticated } = require("../middleware/auth");
-const { isNotAuthenticated } = require("../middleware/auth");
-const db = require("../models");
-const { raw } = require("mysql2");
+router.get("/", isNotAuthenticated, authController.getLogin);
+router.post("/", authController.postLogin);
 
-router.post("/create-user", async (req, res) => {
-  const saltRounds = parseInt(process.env.SALT_ROUNDS);
-  const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
-
-  try {
-    await db.Users.create({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-      password: hashedPassword,
-      isAdmin: false,
-    });
-    res.redirect("/");
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error");
-  }
-});
-
-router.post("/", async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const user = await db.Users.findOne({
-      where: { email },
-      raw: true,
-    });
-    if (!user) {
-      req.session.error = "Forkert email eller adgangskode";
-      return res.redirect("/");
-    }
-
-    const isValidPassword = await bcrypt.compare(password, user.password);
-    if (!isValidPassword) {
-      req.session.error = "Forkert email eller adgangskode";
-      return res.redirect("/");
-    }
-
-    req.session.user = {
-      id: user.id,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      firstName: user.firstName,
-      lastName: user.lastName,
-    };
-
-    if (user.isAdmin) {
-      return res.redirect("/users");
-    } else {
-      return res.redirect("/dashboard");
-    }
-  } catch (error) {
-    console.error("login fejl", error);
-    res.redirect("/");
-  }
-});
+router.get("/create-user", isNotAuthenticated, authController.getCreateUser);
+router.post("/create-user", authController.postCreateUser);
 
 module.exports = router;
