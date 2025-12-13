@@ -44,9 +44,9 @@
     <div class="flex flex-col gap-md">
         {{>label text="Rengøringsopgaver"}}
         <div class="button-box">
-            
-            Her skal alle færdige opgaver være
-
+            {{#each tasks}}
+            <li>{{name}}</li>
+            {{/each}}
         </div>
     </div>
 
@@ -58,6 +58,10 @@
 
         </div>
     </div>
+    <div class="flex flex-col gap-md">
 
     {{>label text="Produkter"}}
+    {{#each products}} <p>{{product.name}}</p> <p>{{amount}}</p> <p>{{unit.name}}</p>
+    {{/each}}
+    </div>
 </div> 

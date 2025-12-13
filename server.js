@@ -196,16 +196,21 @@ app.post(
 			const userId = req.session.user.id;
 			const viewToken = crypto.randomBytes(32).toString("hex");
 
+			const taskIds = req.body.taskIds || [];
+			const taskIdsString = taskIds.join(',');
+
 			const newLog = await db.Logs.create({
 				stationId: req.body.stationId,
 				comment: req.body.comment,
 				userId: userId,
 				viewToken: viewToken,
 				tokenUsed: false,
+				taskIds: taskIdsString,
 			});
 
-			// henter info til emailen:
+			console.log("New log created:", newLog.id);
 
+			// Get station info for email
 			const station = await db.Stations.findByPk(req.body.stationId, {
 				include: [
 					{
@@ -217,32 +222,36 @@ app.post(
 			});
 
 			const user = await db.Users.findByPk(userId, { raw: true });
-
 			const plainStation = station.toJSON();
-
-			const imagePaths = [];
 
 			// Handle selected products with amounts and units
 			const productIds = req.body.productIds || [];
-			const productAmounts = req.body.productAmounts || [];
-			const productUnits = req.body.productUnits || [];
 
 			if (productIds.length > 0) {
-				for (let i = 0; i < productIds.length; i++) {
+				for (const productId of productIds) {
+					const amount = parseFloat(req.body[`productAmount_${productId}`]);
+					const unitId = parseInt(req.body[`productUnit_${productId}`]);
+
+					console.log(`Product ${productId}: amount=${amount}, unitId=${unitId}`);
+
+					// Validate before saving
+					if (isNaN(amount) || isNaN(unitId)) {
+						console.error(`Invalid data for product ${productId}`);
+						continue;
+					}
+
 					await db.UsedProducts.create({
 						logId: newLog.id,
-						productId: productIds[i],
-						amount: parseFloat(productAmounts[i]),
-						unitId: parseInt(productUnits[i]),
+						productId: productId,
+						amount: amount,
+						unitId: unitId,
 					});
 
-					console.log(
-						`Saved product ${productIds[i]} with amount ${productAmounts[i]} and unit ${productUnits[i]}`
-					);
+					console.log(`Saved product ${productId}`);
 				}
 			}
 
-			// Upload images
+
 			const uploadImages = async (files, isBefore) => {
 				if (!files) return;
 
@@ -260,16 +269,13 @@ app.post(
 						.jpeg({ quality: 80 })
 						.toFile(resizedPath);
 
+					// Delete temp file
+					fs.unlinkSync(file.path);
+
 					await db.Images.create({
 						logId: newLog.id,
 						path: `image-uploads/${resizedFilename}`,
 						isBefore: isBefore,
-					});
-
-					imagePaths.push({
-						filename: resizedFilename,
-						path: resizedPath,
-						cid: resizedFilename,
 					});
 				}
 			};
@@ -277,45 +283,42 @@ app.post(
 			await uploadImages(req.files.beforeImages, true);
 			await uploadImages(req.files.afterImages, false);
 
+			// Send email
 			const nodemailer = require("nodemailer");
 
-			// Create a test account or replace with real credentials.
 			const transporter = nodemailer.createTransport({
 				host: "smtp.gmail.com",
 				port: 587,
-				secure: false, // true for 465, false for other ports
+				secure: false,
 				auth: {
 					user: "op7486684@gmail.com",
 					pass: process.env.EMAIL_PASS_SECRET,
 				},
 			});
 
-			//Her laver vi en const med alt infoen som skal være i emailen
-
 			const viewLink = `http://localhost:3000/view-cleaning/${viewToken}`;
 
 			const emailHTML = `
-			<h2>Station rengjort </h2> <br>
-			<p> <a href="${viewLink}"> Tryk her for at se rengøringsrapport </a>  </p>
+				<h2>Station rengjort</h2>
+				<p><a href="${viewLink}">Tryk her for at se rengøringsrapport</a></p>
 			`;
 
 			await transporter.sendMail({
 				from: '"AutoWash System" <op7486684@gmail.com>',
-				to: "olipet101@gmail.com",
+				to: "denlacour@gmail.com",
 				subject: `Station rengjort: ${plainStation.address}`,
 				html: emailHTML,
 			});
 
-			console.log(" <br Email sendt <br>");
+			console.log("Email sendt!");
 
 			res.redirect(`/dashboard`);
 		} catch (error) {
 			console.error("Upload fejl:", error);
-			res.status(500).send("Fejl ved upload af billeder");
+			res.status(500).send("Fejl ved upload af billeder: " + error.message);
 		}
 	}
 );
-
 // Cleanup function to delete old temp files
 
 const fsPromises = require("fs").promises;
@@ -391,6 +394,37 @@ app.get("/view-cleaning/:token", async (req, res) => {
 		const beforeImages = plainLog.Images.filter((img) => img.isBefore);
 		const afterImages = plainLog.Images.filter((img) => !img.isBefore);
 
+		const usedProducts = await db.UsedProducts.findAll({
+			where: { logId: log.id },
+			include: [
+				{
+					model: db.Products,
+					as: "product",
+				},
+				{
+					model: db.Units,
+					as: "unit",
+				},
+			],
+			raw: false,
+		});
+
+		const plainProducts = usedProducts.map((up) => up.toJSON());
+		let plainTasks = [];
+		if (plainLog.taskIds) {
+			const taskIdArray = plainLog.taskIds.split(',').map(id => parseInt(id));
+
+			const tasks = await db.Tasks.findAll({
+				where: {
+					id: taskIdArray
+				},
+				raw: true
+			});
+
+			plainTasks = tasks;
+		}
+
+
 		res.render("viewCleaning", {
 			title: "Rengøringsrapport",
 			log: plainLog,
@@ -398,6 +432,8 @@ app.get("/view-cleaning/:token", async (req, res) => {
 			user: plainLog.User,
 			beforeImages: beforeImages,
 			afterImages: afterImages,
+			products: plainProducts,
+			tasks: plainTasks,
 		});
 	} catch (error) {
 		console.error(error);
