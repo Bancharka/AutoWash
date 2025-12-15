@@ -1,9 +1,6 @@
 <form class="flex flex-col gap-lg" action="/login" method="POST">
   {{>labeledInput type="email" id="email" name="email" label="Email" required=true}}
-  <div class="flex flex-col gap-md">
-    {{>labeledInput type="password" id="password" name="password" label="Kodeord" required=true}}
-    {{>labeledCheckbox id="remember" name="remember" label="Husk mig"}}
-  </div>
+  {{>labeledInput type="password" id="password" name="password" label="Kodeord" required=true}}
   <div class="flex flex-col gap-md">
     {{>button type="submit" text="Log ind"}}
     {{>button href="/register" text="Opret bruger" variant="outline"}}
