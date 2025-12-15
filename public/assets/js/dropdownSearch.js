@@ -1,6 +1,5 @@
 console.log("Dropdown search script running...");
 
-// Generic show dropdown function
 function showDropdown(dropdownId) {
     const dropdown = document.getElementById(dropdownId);
     if (!dropdown) return;
@@ -9,11 +8,10 @@ function showDropdown(dropdownId) {
     dropdown.classList.add("dropdown-search__content--show");
 
     for (let i = 0; i < items.length; i++) {
-        items[i].style.display = i < 3 ? "" : "none";
+        items[i].style.display = "";
     }
 }
 
-// Generic filter function
 function filterDropdown(dropdownId) {
     const input = document.getElementById(dropdownId + "-search");
     const dropdown = document.getElementById(dropdownId);
@@ -26,7 +24,7 @@ function filterDropdown(dropdownId) {
 
     if (searchText === "") {
         for (let i = 0; i < items.length; i++) {
-            items[i].style.display = i < 3 ? "" : "none";
+            items[i].style.display = "";
         }
         const noResults = dropdown.querySelector(".dropdown-search__no-results");
         if (noResults) noResults.remove();
@@ -55,18 +53,13 @@ function filterDropdown(dropdownId) {
     }
 }
 
-// Initialize dropdowns
 document.addEventListener("DOMContentLoaded", function () {
-    // ✅ CLEAR ALL SELECTIONS ON PAGE LOAD
     clearAllSelections();
 
-    // Setup for PRODUCT dropdown
     setupProductDropdown();
 
-    // Setup for TASK dropdown
     setupTaskDropdown();
 
-    // Close dropdowns when clicking outside
     document.addEventListener("click", function (event) {
         document.querySelectorAll(".dropdown-search").forEach(function (container) {
             const dropdown = container.querySelector(".dropdown-search__content");
@@ -77,7 +70,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-// Product dropdown setup
 function setupProductDropdown() {
     const productDropdown = document.getElementById("productId");
     if (!productDropdown) return;
@@ -116,7 +108,6 @@ function setupProductDropdown() {
     });
 }
 
-// Task dropdown setup
 function setupTaskDropdown() {
     const taskDropdown = document.getElementById("taskId");
     if (!taskDropdown) return;
@@ -155,7 +146,6 @@ function setupTaskDropdown() {
     });
 }
 
-// Create product tag (with amount and unit)
 function createProductTag(productId, productName) {
     const tag = document.createElement("div");
     tag.className = "dropdown-search__item-tag";
@@ -219,10 +209,10 @@ function createProductTag(productId, productName) {
     return tag;
 }
 
-// Create task tag (simple, no amount/unit)
+
 function createTaskTag(taskId, taskName) {
     const tag = document.createElement("div");
-    tag.className = "dropdown-search__item-tag";
+    tag.className = "dropdown-search__item-tag--task";
     tag.id = `task-tag-${taskId}`;
 
     const hiddenInput = document.createElement("input");
@@ -251,7 +241,7 @@ function createTaskTag(taskId, taskName) {
     return tag;
 }
 
-// ✅ CLEAR ALL SELECTIONS FUNCTION
+
 function clearAllSelections() {
     const productList = document.getElementById('productId-list');
     const taskList = document.getElementById('taskId-list');
