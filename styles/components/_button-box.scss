@@ -50,4 +50,31 @@
 	&:hover {
 		cursor: pointer;
 	}
+
+	&__product-row {
+		@include text-label-body;
+		display: flex;
+		align-items: center;
+		gap: $spacing-sm;
+		padding: $spacing-xs 0;
+		border-bottom: 1px solid $color-surface;
+
+		&:last-child {
+			border-bottom: none;
+		}
+	}
+
+	&__product-name {
+		flex: 1;
+		font-weight: 500;
+	}
+
+	&__product-amount {
+		white-space: nowrap;
+		color: $color-muted;
+	}
+
+	&__comment {
+		@include text-label-body;
+	}
 }

@@ -53,15 +53,19 @@
     <div class="flex flex-col gap-md">
         {{>label text="Kommentar"}}
         <div class="button-box">
-            
+            <span class="button-box__comment">
             {{log.comment}}
-
+</span>
         </div>
     </div>
     <div class="flex flex-col gap-md">
-<div class="button-box">
     {{>label text="Produkter"}}
-    {{#each products}} <p>{{product.name}}</p> <p>{{amount}}</p> <p>{{unit.name}}</p>
+<div class="button-box">
+    {{#each products}}
+    <div class="button-box__product-row">
+        <span class="button-box__product-name">{{product.name}}</span>
+        <span class="button-box__product-amount">{{amount}} {{unit.name}}</span>
+    </div>
     {{/each}}
     </div>
     </div>
