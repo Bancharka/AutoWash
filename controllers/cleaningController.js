@@ -166,7 +166,7 @@ exports.postNewCleaning = async (req, res) => {
 
     console.log("Email sendt!");
 
-    res.redirect(`/dashboard`);
+    res.redirect("/");
   } catch (error) {
     console.error("Upload fejl:", error);
     res.status(500).send("Fejl ved upload af billeder: " + error.message);
