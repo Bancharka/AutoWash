@@ -84,6 +84,12 @@ app.use((req, res, next) => {
 	next();
 });
 
+app.get("/logout", (req, res) => {
+	req.session.destroy(() => {
+	  res.redirect("/");
+	});
+  });
+
 app.get("/", isNotAuthenticated, async (req, res) => {
 	try {
 		res.render("login", {
