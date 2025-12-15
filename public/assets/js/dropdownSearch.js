@@ -1,5 +1,3 @@
-console.log("Dropdown search script running...");
-
 function showDropdown(dropdownId) {
     const dropdown = document.getElementById(dropdownId);
     if (!dropdown) return;
@@ -248,11 +246,9 @@ function clearAllSelections() {
 
     if (productList) {
         productList.innerHTML = '';
-        console.log('✅ Cleared product selections');
     }
 
     if (taskList) {
         taskList.innerHTML = '';
-        console.log('✅ Cleared task selections');
     }
 }

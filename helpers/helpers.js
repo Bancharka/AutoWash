@@ -1,5 +1,3 @@
-//her ligger vi al den js vi skal bruge som helpers, og kan derefter kalde dem i vores views og partials
-
 module.exports = {
   eq: function (a, b) {
     return a === b;
