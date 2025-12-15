@@ -1,21 +1,12 @@
 <div class="flex flex-col gap-xl">
 	<h1>{{title}}</h1>
 	<form action="/add-station" method="POST" class="flex flex-col gap-lg">
-		<div class="flex flex-col gap-md">
-			{{>label for="address" text="Indtast adresse"}}
-			{{>input type="text" id="address" name="address"}}
-		</div>
-		<div class="flex flex-col gap-md">
-			{{>label for="postal-code" text="Indtast postnummer"}}
-			{{>input type="text" id="postal-code" name="postalCode"}}
-		</div>
-		<div class="flex flex-col gap-md">
-			{{>label for="city" text="Indtast by"}}
-			{{>input type="text" id="city" name="city"}}
-		</div>
+		{{>labeledInput type="text" id="address" name="address" label="Indtast adresse" required=true}}
+		{{>labeledInput type="text" id="postal-code" name="postalCode" label="Indtast postnummer" required=true}}
+		{{>labeledInput type="text" id="city" name="city" label="Indtast by" required=true}}
 		<div class="flex flex-col gap-md">
 			{{>label for="company" text="Stations navn"}}
-			<select id="company" name="companyId" required>{{!-- ## --}}
+			<select id="company" name="companyId" required>
 				{{#each companies}}
 					<option value="{{id}}">{{name}}</option>
 				{{/each}}
@@ -23,7 +14,7 @@
 		</div>
 		<div class="grid grid-cols-2 gap-md">
 			{{> button variant="outline" href="/stations" text="Annuller"}}
-			{{> button variant="primary" type="submit"  text="Tilføj station"}}
+			{{> button type="submit"  text="Tilføj station"}}
 		</div>
 	</form>
 </div>

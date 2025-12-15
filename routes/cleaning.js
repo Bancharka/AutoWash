@@ -1,12 +1,12 @@
 const router = require("express").Router();
-const { isAuthenticated } = require("../middleware/auth");
+const { isUser } = require("../middleware/auth");
 const upload = require("../multer");
 const cleaningController = require("../controllers/cleaningController");
 
-router.get("/new-cleaning", isAuthenticated, cleaningController.getNewCleaning);
+router.get("/new-cleaning", isUser, cleaningController.getNewCleaning);
 router.post(
   "/new-cleaning",
-  isAuthenticated,
+  isUser,
   upload.fields([
     { name: "beforeImages", maxCount: 8 },
     { name: "afterImages", maxCount: 8 },

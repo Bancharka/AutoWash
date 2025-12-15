@@ -1,17 +1,8 @@
 <div class="flex flex-col gap-md">
   <form action="/users/{{user.id}}" method="POST" class="flex flex-col gap-lg">
-    <div class="flex flex-col gap-md">
-      {{> label for="first-name" text="Fornavn"}}
-      {{> input type="text" id="first-name" name="firstName" value=user.firstName}}
-    </div>
-    <div class="flex flex-col gap-md">
-      {{> label for="last-name" text="Efternavn" }}
-      {{> input type="text" id="last-name" name="lastName" value=user.lastName}}
-    </div>
-    <div class="flex flex-col gap-md">
-      {{> label for="email" text="Email"}}
-      {{> input type="text" id="email" name="email" value=user.email}}
-    </div>
+    {{> labeledInput type="text" id="first-name" name="firstName" label="Fornavn" value=user.firstName required=true}}
+    {{> labeledInput type="text" id="last-name" name="lastName" label="Efternavn" value=user.lastName required=true}}
+    {{> labeledInput type="text" id="email" name="email" label="Email" value=user.email required=true}}
     {{> button type="submit" text="Gem"}}
   </form>
   <div class="grid grid-cols-2 gap-md">

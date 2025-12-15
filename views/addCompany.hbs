@@ -1,19 +1,16 @@
 <div class="flex flex-col gap-xl">
     <h1>{{title}}</h1>
     <div class="flex flex-col gap-lg">
-        <form class="add-form" action="/addCompanies" method="POST">
-            <div class="flex flex-col gap-md">
-                <label for="name">Indtast firmanavn</label>
-                <input type="text" id="name" name="name" />
-            </div>
-            <div class="flex gap-md btn-row">
+        <form class="flex flex-col gap-lg" action="/add-company" method="POST">
+            {{>labeledInput type="text" id="name" name="name" label="Indtast firmanavn" required=true}}
+            <div class="grid grid-cols-2 gap-md">
                 {{> button href="/stations" text="Annuller" variant="outline"}}
-                {{> button type="submit" text="Tilføj" variant="primary"}}
+                {{> button type="submit" text="Tilføj"}}
             </div>
         </form>
-        
+
         <div class="flex flex-col gap-md">
-            <label for="listItems">Eksisterende firmaer</label>
+            {{>label text="Eksisterende firmaer"}}
             <div class="list-items"> 
 
                 {{#each companies}}

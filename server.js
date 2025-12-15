@@ -7,9 +7,10 @@ const path = require("path");
 const Handlebars = require("handlebars");
 const helpers = require("./helpers/helpers");
 const authRoutes = require("./routes/auth");
-const dashboardRoutes = require("./routes/dashboard");
+const homeRoutes = require("./routes/home");
 const userRoutes = require("./routes/users");
 const stationRoutes = require("./routes/stations");
+const companyRoutes = require("./routes/companies");
 const productRoutes = require("./routes/products");
 const cleaningRoutes = require("./routes/cleaning");
 const { isAuthenticated, isNotAuthenticated } = require("./middleware/auth");
@@ -59,13 +60,14 @@ app.use((req, res, next) => {
 });
 
 app.use(authRoutes);
-app.use(dashboardRoutes);
+app.use(homeRoutes);
 app.use(userRoutes);
 app.use(stationRoutes);
+app.use(companyRoutes);
 app.use(productRoutes);
 app.use(cleaningRoutes);
 
-app.get("/", isNotAuthenticated, (req, res) => {
+app.get("/login", isNotAuthenticated, (req, res) => {
   res.render("login", {
     title: "Log ind",
     showgraphic: true,

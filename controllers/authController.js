@@ -11,15 +11,15 @@ exports.getLogin = (req, res) => {
   });
 };
 
-exports.getCreateUser = (req, res) => {
-  res.render("createUser", {
+exports.getRegister = (req, res) => {
+  res.render("register", {
     title: "Opret bruger",
     showgraphic: true,
     hideHeader: true,
   });
 };
 
-exports.postCreateUser = async (req, res) => {
+exports.postRegister = async (req, res) => {
   const saltRounds = parseInt(process.env.SALT_ROUNDS);
 
   try {
@@ -33,7 +33,7 @@ exports.postCreateUser = async (req, res) => {
       isAdmin: false,
     });
 
-    res.redirect("/");
+    res.redirect("/login");
   } catch (error) {
     console.error("Error creating user:", error);
     res.status(500).send("Error creating user");
@@ -51,13 +51,13 @@ exports.postLogin = async (req, res) => {
 
     if (!user) {
       req.session.error = "Forkert email eller adgangskode";
-      return res.redirect("/");
+      return res.redirect("/login");
     }
 
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) {
       req.session.error = "Forkert email eller adgangskode";
-      return res.redirect("/");
+      return res.redirect("/login");
     }
 
     req.session.user = {
@@ -68,13 +68,9 @@ exports.postLogin = async (req, res) => {
       lastName: user.lastName,
     };
 
-    if (user.isAdmin) {
-      return res.redirect("/users");
-    } else {
-      return res.redirect("/dashboard");
-    }
+    return res.redirect("/");
   } catch (error) {
     console.error("Login error:", error);
-    res.redirect("/");
+    res.redirect("/login");
   }
 };

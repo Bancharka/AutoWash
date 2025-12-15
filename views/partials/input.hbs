@@ -2,8 +2,8 @@
   type="{{type}}"
   id="{{id}}"
   name="{{name}}"
-  placeholder="{{placeholder}}"
-  value="{{value}}"
   class="input"
+  {{#if value}}value="{{value}}"{{/if}}
+  {{#if placeholder}}placeholder="{{placeholder}}"{{/if}}
   {{#if required}}required{{/if}}
 />

@@ -2,10 +2,10 @@ const router = require("express").Router();
 const { isAuthenticated, isNotAuthenticated } = require("../middleware/auth");
 const authController = require("../controllers/authController");
 
-router.get("/", isNotAuthenticated, authController.getLogin);
-router.post("/", authController.postLogin);
+router.get("/login", isNotAuthenticated, authController.getLogin);
+router.post("/login", authController.postLogin);
 
-router.get("/create-user", isNotAuthenticated, authController.getCreateUser);
-router.post("/create-user", authController.postCreateUser);
+router.get("/register", isNotAuthenticated, authController.getRegister);
+router.post("/register", authController.postRegister);
 
 module.exports = router;

@@ -1,39 +1,32 @@
-<div class="flex flex-col gap-md">
+<div class="flex flex-col gap-xl">
 	<h1>{{title}}</h1>
-	<form action="/stations/{{station.id}}" method="POST" class="flex flex-col gap-lg">
-		<div class="flex flex-col gap-md">
-			{{> label for="address" text="Adresse"}}
-			{{> input type="text" id="address" name="address" value=station.address}}
-		</div>
-		<div class="flex flex-col gap-md">
-			{{> label for="postal-code" text="Postnummer" }}
-			{{> input type="text" id="postal-code" name="postalCode" value=station.postalCode}}
-		</div>
-		<div class="flex flex-col gap-md">
-			{{> label for="city" text="By"}}
-			{{> input type="text" id="city" name="city" value=station.city}}
-		</div>
-		<div class="flex flex-col gap-md">
-			{{>label id="company" text="Vælg firma"}}
-			<select class="dropdown" name="companyId" id="company" required>
-				{{#each companies}}
+	<div class="flex flex-col gap-md">
+		<form action="/stations/{{station.id}}" method="POST" class="flex flex-col gap-lg">
+			{{> labeledInput type="text" id="address" name="address" label="Adresse" value=station.address required=true}}
+			{{> labeledInput type="text" id="postal-code" name="postalCode" label="Postnummer" value=station.postalCode required=true}}
+			{{> labeledInput type="text" id="city" name="city" label="By" value=station.city}}
+			<div class="flex flex-col gap-md">
+				{{>label id="company" text="Vælg firma"}}
+				<select class="dropdown" name="companyId" id="company" required>
+					{{#each companies}}
 
-					<option class="dropdown__item" 
-						value="{{id}}"
-						{{#if (eq id ../station.companyId)}}selected{{/if}}
-						>
-						{{name}}
-					</option>
+						<option class="dropdown__item" 
+							value="{{id}}"
+							{{#if (eq id ../station.companyId)}}selected{{/if}}
+							>
+							{{name}}
+						</option>
 
-				{{/each}}
-			</select>
-		</div>
-		{{> button type="submit" text="Gem"}}
-	</form>
-	<div class="grid grid-cols-2 gap-md">
-		<form action="/stations/{{station.id}}/delete" method="POST" onsubmit="return confirm('Er du sikker på at du vil slette denne station?')">
-			{{> button type="submit" variant="destructive" text="Slet station"}}
+					{{/each}}
+				</select>
+			</div>
+			{{> button type="submit" text="Gem"}}
 		</form>
-		{{> button variant="outline" href="/stations" text="Annuller"}}
+		<div class="grid grid-cols-2 gap-md">
+			<form action="/stations/{{station.id}}/delete" method="POST" onsubmit="return confirm('Er du sikker på at du vil slette denne station?')">
+				{{> button type="submit" variant="destructive" text="Slet station"}}
+			</form>
+			{{> button variant="outline" href="/stations" text="Annuller"}}
+		</div>
 	</div>
 </div>

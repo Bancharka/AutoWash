@@ -1,6 +1,8 @@
 const db = require("../models");
 
-exports.getDashboard = async (req, res) => {
+exports.getHome = async (req, res) => {
+  if (req.session.user.isAdmin) return res.redirect("/users");
+
   const id = req.session.user.id;
 
   const logs = await db.Logs.findAll({

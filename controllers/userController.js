@@ -10,26 +10,6 @@ exports.getUsers = async (req, res) => {
   });
 };
 
-exports.getAddUser = (req, res) => {
-  res.render("addUser", {
-    title: "Tilføj bruger",
-    message: "Velkommen homie gratt gratt!",
-  });
-};
-
-exports.postAddUser = async (req, res) => {
-  const { firstName, lastName, email, password } = req.body;
-
-  await db.Users.create({
-    firstName,
-    lastName,
-    email,
-    password,
-  });
-
-  res.redirect("/users");
-};
-
 exports.getEditUser = async (req, res) => {
   const { id } = req.params;
 

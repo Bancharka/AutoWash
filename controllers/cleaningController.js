@@ -43,7 +43,7 @@ exports.getNewCleaning = async (req, res) => {
       taskOptions,
       unitOptions,
       units,
-      backUrl: "/dashboard",
+      backUrl: "/",
     });
   } catch (error) {
     console.error(error);
@@ -142,7 +142,7 @@ exports.postNewCleaning = async (req, res) => {
       html: emailHTML,
     });
 
-    res.redirect("/dashboard");
+    res.redirect("/");
   } catch (error) {
     console.error("Upload fejl:", error);
     res.status(500).send("Fejl ved upload af billeder");
