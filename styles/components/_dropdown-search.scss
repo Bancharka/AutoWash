@@ -50,14 +50,6 @@
         display: flex;
         align-items: center;
         padding: 0 $spacing-xs;
-        height: 2.5rem;
-        flex-shrink: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        cursor: pointer;
-        text-decoration: none;
-        color: inherit;
 
         &:hover {
             background-color: $color-background;
@@ -79,25 +71,21 @@
     }
 
     &__item-tag {
-        display: flex;
-        align-items: center;
+        display: grid;
         gap: $spacing-xs;
-        margin-top: $spacing-xs;
     }
 
     &__item-text {
         @include box;
-        flex: 1;
-        min-width: 0;
+        grid-column: span 3 / span 3;
         display: flex;
         align-items: center;
         color: $color-muted;
     }
 
     &__delete-button {
+        grid-column-start: 4;
         @include box;
-        display: flex;
-        cursor: pointer;
     }
 
     &__amount-input,
@@ -106,8 +94,17 @@
         @include text-input;
         padding: $spacing-xs $spacing-sm;
         height: 2.5rem;
-        flex: 1; // ← Both inputs share equal space
-        min-width: 0; // ← Allows them to shrink
+    }
+
+    &__amount-input {
+        grid-column: span 2 / span 2;
+        grid-row-start: 2;
+    }
+
+    &__unit-select {
+        grid-column: span 2 / span 2;
+        grid-column-start: 3;
+        grid-row-start: 2;
     }
 
 }

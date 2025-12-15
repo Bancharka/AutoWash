@@ -42,6 +42,7 @@ module.exports = (sequelize, DataTypes) => {
 			stationId: DataTypes.INTEGER,
 			viewToken: DataTypes.TEXT,
 			tokenUsed: DataTypes.BOOLEAN,
+			taskIds: DataTypes.STRING,
 		},
 		{
 			sequelize,

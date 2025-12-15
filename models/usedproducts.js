@@ -10,9 +10,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       UsedProducts.belongsTo(models.Logs, {
         foreignKey: "logId",
+        as: "log",
       });
       UsedProducts.belongsTo(models.Products, {
         foreignKey: "productId",
+        as: "product",
       });
       UsedProducts.belongsTo(models.Units, {
         foreignKey: "unitId",

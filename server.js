@@ -13,7 +13,7 @@ const stationRoutes = require("./routes/stations");
 const companyRoutes = require("./routes/companies");
 const productRoutes = require("./routes/products");
 const cleaningRoutes = require("./routes/cleaning");
-const { isAuthenticated, isNotAuthenticated } = require("./middleware/auth");
+const { isNotAuthenticated } = require("./middleware/auth");
 const fsPromises = require("fs").promises;
 
 const app = express();

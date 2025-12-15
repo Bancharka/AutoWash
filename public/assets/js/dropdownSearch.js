@@ -63,6 +63,22 @@ function filterDropdown(dropdownId) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
+        // CLEAR any existing selected items when page loads
+        const productList = document.getElementById('productId-list');
+        const taskList = document.getElementById('taskId-list');
+
+        if (productList) productList.innerHTML = '';
+        if (taskList) taskList.innerHTML = '';
+
+        // Setup for PRODUCT dropdown
+        setupProductDropdown();
+
+        // Setup for TASK dropdown
+        setupTaskDropdown();
+
+        // ... rest of your code
+    });
     const dropdowns = document.querySelectorAll(".dropdown-search");
 
     dropdowns.forEach(function (dropdownContainer) {
@@ -98,35 +114,48 @@ document.addEventListener("DOMContentLoaded", function () {
                 tag.id = `item-tag-${itemId}`;
                 tag.dataset.itemId = itemId;
 
-                // Hidden input for product ID
-                const hiddenInput = document.createElement("input");
-                hiddenInput.type = "hidden";
-                hiddenInput.name = "productIds[]";
-                hiddenInput.value = itemId;
-
                 // Product name
                 const text = document.createElement("span");
                 text.className = "dropdown-search__item-text";
                 text.textContent = itemName;
 
-                tag.appendChild(hiddenInput);
-                tag.appendChild(text);
+                // Delete button
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "dropdown-search__delete-button";
+                button.onclick = () => removeItem(itemId, dropdownId);
 
-                // If this is the product dropdown, add amount and unit inputs
+                const img = document.createElement("img");
+                img.src = "/assets/icons/delete.svg";
+                img.alt = "Slet";
+                button.appendChild(img);
+
+                // Add first row: text, delete button
+                tag.appendChild(text);
+                tag.appendChild(button);
+
+                // If this is the PRODUCT dropdown, add amount and unit inputs
                 if (dropdownId === "productId") {
-                    // Amount input
+                    // Hidden input for product ID
+                    const hiddenInput = document.createElement("input");
+                    hiddenInput.type = "hidden";
+                    hiddenInput.name = "productIds[]";
+                    hiddenInput.value = itemId;
+                    tag.appendChild(hiddenInput);
+
+                    // Amount input - use specific name with product ID
                     const amountInput = document.createElement("input");
                     amountInput.type = "number";
-                    amountInput.name = "productAmounts[]"; // Changed to array
+                    amountInput.name = `productAmount_${itemId}`; // ← Changed to use product ID
                     amountInput.min = "0";
                     amountInput.step = "0.01";
                     amountInput.placeholder = "Mængde";
                     amountInput.required = true;
                     amountInput.className = "dropdown-search__amount-input";
 
-                    // Unit select
+                    // Unit select - use specific name with product ID
                     const unitSelect = document.createElement("select");
-                    unitSelect.name = "productUnits[]"; // Changed to array
+                    unitSelect.name = `productUnit_${itemId}`; // ← Changed to use product ID
                     unitSelect.required = true;
                     unitSelect.className = "dropdown-search__unit-select";
 
@@ -148,22 +177,18 @@ document.addEventListener("DOMContentLoaded", function () {
                         });
                     }
 
+                    // Add second row: amount and unit
                     tag.appendChild(amountInput);
                     tag.appendChild(unitSelect);
+                } else {
+                    // For tasks or other dropdowns, just add hidden input
+                    const hiddenInput = document.createElement("input");
+                    hiddenInput.type = "hidden";
+                    hiddenInput.name = `${dropdownId}s[]`; // taskIds[]
+                    hiddenInput.value = itemId;
+                    tag.appendChild(hiddenInput);
                 }
 
-                // Delete button
-                const button = document.createElement("button");
-                button.type = "button";
-                button.className = "dropdown-search__delete-button";
-                button.onclick = () => removeItem(itemId, dropdownId);
-
-                const img = document.createElement("img");
-                img.src = "/assets/icons/delete.svg";
-                img.alt = "Slet";
-                button.appendChild(img);
-
-                tag.appendChild(button);
                 selectedList.appendChild(tag);
 
                 // Clear search and close dropdown
