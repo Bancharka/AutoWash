@@ -49,8 +49,11 @@
       <div id="selected-products" class="product-rows"></div>
     
   
+      <div class="grid grid-cols-2 gap-md">
       {{>button type="submit" text="Opret rengøring" variant="primary"}}
-      </div>
+			</form>
+			{{> button variant="outline" href="/" text="Annuller"}}
+		</div>
     
 <script type="application/json" id="unitData">
   {{{json unitOptions}}}
