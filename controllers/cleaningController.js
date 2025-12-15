@@ -6,257 +6,264 @@ const path = require("path");
 const nodemailer = require("nodemailer");
 
 exports.getNewCleaning = async (req, res) => {
-  try {
-    const stations = await db.Stations.findAll({
-      include: [{ model: db.Companies, as: "companies" }],
-      raw: false,
-    });
+	try {
+		const stations = await db.Stations.findAll({
+			include: [{ model: db.Companies, as: "companies" }],
+			raw: false,
+		});
 
-    const products = await db.Products.findAll({ raw: true });
-    const units = await db.Units.findAll({ raw: true });
-    const tasks = await db.Tasks.findAll({ raw: true });
+		const products = await db.Products.findAll({ raw: true });
+		const units = await db.Units.findAll({ raw: true });
+		const tasks = await db.Tasks.findAll({ raw: true });
 
-    const stationOptions = stations.map((station) => ({
-      value: station.id,
-      text: `${station.address}, ${station.city}`,
-    }));
+		const stationOptions = stations.map((station) => ({
+			value: station.id,
+			text: `${station.address}, ${station.city}`,
+		}));
 
-    const productOptions = products.map((product) => ({
-      value: product.id,
-      text: product.name,
-    }));
+		const productOptions = products.map((product) => ({
+			value: product.id,
+			text: product.name,
+		}));
 
-    const unitOptions = units.map((unit) => ({
-      value: unit.id,
-      text: unit.name,
-    }));
+		const unitOptions = units.map((unit) => ({
+			value: unit.id,
+			text: unit.name,
+		}));
 
-    const taskOptions = tasks.map((task) => ({
-      value: task.id,
-      text: task.name,
-    }));
+		const taskOptions = tasks.map((task) => ({
+			value: task.id,
+			text: task.name,
+		}));
 
-    res.render("newCleaning", {
-      title: "Ny rengøring",
-      stationOptions,
-      productOptions,
-      taskOptions,
-      unitOptions,
-      units,
-      backUrl: "/",
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error loading page");
-  }
+		res.render("newCleaning", {
+			title: "Ny rengøring",
+			stationOptions,
+			productOptions,
+			taskOptions,
+			unitOptions,
+			units,
+			backUrl: "/",
+		});
+	} catch (error) {
+		console.error(error);
+		res.status(500).send("Error loading page");
+	}
 };
 
 exports.postNewCleaning = async (req, res) => {
-  try {
-    const userId = req.session.user.id;
-    const viewToken = crypto.randomBytes(32).toString("hex");
+	try {
+		const userId = req.session.user.id;
+		const viewToken = crypto.randomBytes(32).toString("hex");
 
-    const taskIds = req.body.taskIds || [];
-    const taskIdsString = taskIds.join(",");
+		const taskIds = req.body.taskIds || [];
+		const taskIdsString = taskIds.join(",");
 
-    const newLog = await db.Logs.create({
-      stationId: req.body.stationId,
-      comment: req.body.comment,
-      userId: userId,
-      viewToken: viewToken,
-      tokenUsed: false,
-      taskIds: taskIdsString,
-    });
+		const newLog = await db.Logs.create({
+			stationId: req.body.stationId,
+			comment: req.body.comment,
+			userId: userId,
+			viewToken: viewToken,
+			tokenUsed: false,
+			taskIds: taskIdsString,
+		});
 
-    console.log("New log created:", newLog.id);
+		console.log("New log created:", newLog.id);
 
-    const station = await db.Stations.findByPk(req.body.stationId, {
-      include: [
-        {
-          model: db.Companies,
-          as: "companies",
-        },
-      ],
-      raw: false,
-    });
+		const station = await db.Stations.findByPk(req.body.stationId, {
+			include: [
+				{
+					model: db.Companies,
+					as: "companies",
+				},
+			],
+			raw: false,
+		});
 
-    const user = await db.Users.findByPk(userId, { raw: true });
-    const plainStation = station.toJSON();
+		const user = await db.Users.findByPk(userId, { raw: true });
+		const plainStation = station.toJSON();
 
-    const productIds = req.body.productIds || [];
+		const productIds = req.body.productIds || [];
 
-    if (productIds.length > 0) {
-      for (const productId of productIds) {
-        const amount = parseFloat(req.body[`productAmount_${productId}`]);
-        const unitId = parseInt(req.body[`productUnit_${productId}`]);
+		if (productIds.length > 0) {
+			for (const productId of productIds) {
+				const amount = parseFloat(
+					req.body[`productAmount_${productId}`]
+				);
+				const unitId = parseInt(req.body[`productUnit_${productId}`]);
 
-        console.log(`Product ${productId}: amount=${amount}, unitId=${unitId}`);
+				console.log(
+					`Product ${productId}: amount=${amount}, unitId=${unitId}`
+				);
 
-        if (isNaN(amount) || isNaN(unitId)) {
-          console.error(`Invalid data for product ${productId}`);
-          continue;
-        }
+				if (isNaN(amount) || isNaN(unitId)) {
+					console.error(`Invalid data for product ${productId}`);
+					continue;
+				}
 
-        await db.UsedProducts.create({
-          logId: newLog.id,
-          productId: productId,
-          amount: amount,
-          unitId: unitId,
-        });
+				await db.UsedProducts.create({
+					logId: newLog.id,
+					productId: productId,
+					amount: amount,
+					unitId: unitId,
+				});
 
-        console.log(`Saved product ${productId}`);
-      }
-    }
+				console.log(`Saved product ${productId}`);
+			}
+		}
 
-    const uploadImages = async (files, isBefore) => {
-      if (!files) return;
+		const uploadImages = async (files, isBefore) => {
+			if (!files) return;
 
-      for (const file of files) {
-        const resizedFilename = `resized-${file.filename}`;
-        const resizedPath = path.join(
-          __dirname,
-          "image-uploads",
-          resizedFilename
-        );
+			for (const file of files) {
+				const resizedFilename = `resized-${file.filename}`;
+				const resizedPath = path.join(
+					__dirname,
+					"..",
+					"image-uploads",
+					resizedFilename
+				);
 
-        await sharp(file.path)
-          .rotate()
-          .resize(800, 600, { fit: "inside" })
-          .jpeg({ quality: 80 })
-          .toFile(resizedPath);
+				await sharp(file.path)
+					.rotate()
+					.resize(800, 600, { fit: "inside" })
+					.jpeg({ quality: 80 })
+					.toFile(resizedPath);
 
-        fs.unlinkSync(file.path);
+				await db.Images.create({
+					logId: newLog.id,
+					path: `image-uploads/${resizedFilename}`,
+					isBefore: isBefore,
+				});
+			}
+		};
 
-        await db.Images.create({
-          logId: newLog.id,
-          path: `image-uploads/${resizedFilename}`,
-          isBefore: isBefore,
-        });
-      }
-    };
+		await uploadImages(req.files.beforeImages, true);
+		await uploadImages(req.files.afterImages, false);
 
-    await uploadImages(req.files.beforeImages, true);
-    await uploadImages(req.files.afterImages, false);
+		const nodemailer = require("nodemailer");
 
-    const nodemailer = require("nodemailer");
+		const transporter = nodemailer.createTransport({
+			host: "smtp.gmail.com",
+			port: 587,
+			secure: false,
+			auth: {
+				user: "op7486684@gmail.com",
+				pass: process.env.EMAIL_PASS_SECRET,
+			},
+		});
 
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false,
-      auth: {
-        user: "op7486684@gmail.com",
-        pass: process.env.EMAIL_PASS_SECRET,
-      },
-    });
+		const viewLink = `http://localhost:3000/view-cleaning/${viewToken}`;
 
-    const viewLink = `http://localhost:3000/view-cleaning/${viewToken}`;
-
-    const emailHTML = `
+		const emailHTML = `
 				<h2>Station rengjort</h2>
 				<p><a href="${viewLink}">Tryk her for at se rengÃ¸ringsrapport</a></p>
 			`;
 
-    await transporter.sendMail({
-      from: '"AutoWash System" <op7486684@gmail.com>',
-      to: "denlacour@gmail.com",
-      subject: `Station rengjort: ${plainStation.address}`,
-      html: emailHTML,
-    });
+		await transporter.sendMail({
+			from: '"AutoWash System" <op7486684@gmail.com>',
+			to: "olipet101@gmail.com",
+			subject: `Station rengjort: ${plainStation.address}`,
+			html: emailHTML,
+		});
 
-    console.log("Email sendt!");
+		console.log("Email sendt!");
 
-    res.redirect("/");
-  } catch (error) {
-    console.error("Upload fejl:", error);
-    res.status(500).send("Fejl ved upload af billeder: " + error.message);
-  }
+		res.redirect("/");
+	} catch (error) {
+		console.error("Upload fejl:", error);
+		res.status(500).send("Fejl ved upload af billeder: " + error.message);
+	}
 };
 
 exports.viewCleaning = async (req, res) => {
-  try {
-    const { token } = req.params;
+	try {
+		const { token } = req.params;
 
-    const log = await db.Logs.findOne({
-      where: {
-        viewToken: token,
-        tokenUsed: false,
-      },
-      include: [
-        {
-          model: db.Stations,
-          as: "stations",
-          include: [
-            {
-              model: db.Companies,
-              as: "companies",
-            },
-          ],
-        },
-        {
-          model: db.Users,
-        },
-        {
-          model: db.Images,
-        },
-      ],
-    });
+		const log = await db.Logs.findOne({
+			where: {
+				viewToken: token,
+				tokenUsed: false,
+			},
+			include: [
+				{
+					model: db.Stations,
+					as: "stations",
+					include: [
+						{
+							model: db.Companies,
+							as: "companies",
+						},
+					],
+				},
+				{
+					model: db.Users,
+				},
+				{
+					model: db.Images,
+				},
+			],
+		});
 
-    if (!log) {
-      return res
-        .status(404)
-        .send("Dette link er ugyldigt eller er allerede åbnet, og brugt");
-    }
+		if (!log) {
+			return res
+				.status(404)
+				.send(
+					"Dette link er ugyldigt eller er allerede åbnet, og brugt"
+				);
+		}
 
-    await log.update({ tokenUsed: true });
+		await log.update({ tokenUsed: true });
 
-    const plainLog = log.toJSON();
+		const plainLog = log.toJSON();
 
-    const beforeImages = plainLog.Images.filter((img) => img.isBefore);
-    const afterImages = plainLog.Images.filter((img) => !img.isBefore);
+		const beforeImages = plainLog.Images.filter((img) => img.isBefore);
+		const afterImages = plainLog.Images.filter((img) => !img.isBefore);
 
-    const usedProducts = await db.UsedProducts.findAll({
-      where: { logId: log.id },
-      include: [
-        {
-          model: db.Products,
-          as: "product",
-        },
-        {
-          model: db.Units,
-          as: "unit",
-        },
-      ],
-      raw: false,
-    });
+		const usedProducts = await db.UsedProducts.findAll({
+			where: { logId: log.id },
+			include: [
+				{
+					model: db.Products,
+					as: "product",
+				},
+				{
+					model: db.Units,
+					as: "unit",
+				},
+			],
+			raw: false,
+		});
 
-    const plainProducts = usedProducts.map((up) => up.toJSON());
-    let plainTasks = [];
-    if (plainLog.taskIds) {
-      const taskIdArray = plainLog.taskIds.split(",").map((id) => parseInt(id));
+		const plainProducts = usedProducts.map((up) => up.toJSON());
+		let plainTasks = [];
+		if (plainLog.taskIds) {
+			const taskIdArray = plainLog.taskIds
+				.split(",")
+				.map((id) => parseInt(id));
 
-      const tasks = await db.Tasks.findAll({
-        where: {
-          id: taskIdArray,
-        },
-        raw: true,
-      });
+			const tasks = await db.Tasks.findAll({
+				where: {
+					id: taskIdArray,
+				},
+				raw: true,
+			});
 
-      plainTasks = tasks;
-    }
+			plainTasks = tasks;
+		}
 
-    res.render("viewCleaning", {
-      title: "Rengøringsrapport",
-      log: plainLog,
-      stations: plainLog.stations,
-      user: plainLog.User,
-      beforeImages: beforeImages,
-      afterImages: afterImages,
-      products: plainProducts,
-      tasks: plainTasks,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Fejl ved indlæsning");
-  }
+		res.render("viewCleaning", {
+			title: "Rengøringsrapport",
+			log: plainLog,
+			stations: plainLog.stations,
+			user: plainLog.User,
+			beforeImages: beforeImages,
+			afterImages: afterImages,
+			products: plainProducts,
+			tasks: plainTasks,
+		});
+	} catch (error) {
+		console.error(error);
+		res.status(500).send("Fejl ved indlæsning");
+	}
 };
