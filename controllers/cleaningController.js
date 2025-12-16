@@ -157,7 +157,7 @@ exports.postNewCleaning = async (req, res) => {
 
 		const emailHTML = `
 				<h2>Station rengjort</h2>
-				<p><a href="${viewLink}">Tryk her for at se rengÃ¸ringsrapport</a></p>
+				<p><a href="${viewLink}">Tryk her for at se rengøringsrapport</a></p>
 			`;
 
 		await transporter.sendMail({
