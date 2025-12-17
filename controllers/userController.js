@@ -20,11 +20,7 @@ exports.getEditUser = async (req, res) => {
         as: "stations",
         through: { attributes: [] },
         include: [
-          {
-            model: db.Companies,
-            as: "companies",
-            attributes: ["name"],
-          },
+          { model: db.Companies, as: "companies", attributes: ["name"] },
         ],
       },
     ],
@@ -32,18 +28,47 @@ exports.getEditUser = async (req, res) => {
 
   if (!user) return res.status(404).send("Bruger ikke fundet");
 
+  const allStations = await db.Stations.findAll({
+    include: [{ model: db.Companies, as: "companies", attributes: ["name"] }],
+    order: [
+      [{ model: db.Companies, as: "companies" }, "name", "ASC"],
+      ["address", "ASC"],
+      ["postalCode", "ASC"],
+    ],
+  });
+
+  const stationItems = allStations.map((station) => ({
+    id: station.id,
+    text: `${station.companies.name}, ${station.address}, ${station.postalCode}`,
+  }));
+
   res.render("editUser", {
     title: "Rediger bruger",
     user: user.toJSON(),
+    stationItems,
     backUrl: "/users",
   });
 };
 
 exports.postEditUser = async (req, res) => {
   const { id } = req.params;
-  const { firstName, lastName, email } = req.body;
+  const { firstName, lastName, email, isAdmin, stationIds } = req.body;
 
-  await db.Users.update({ firstName, lastName, email }, { where: { id } });
+  const adminValue = !!isAdmin;
+
+  await db.Users.update(
+    { firstName, lastName, email, isAdmin: adminValue },
+    { where: { id } }
+  );
+
+  const user = await db.Users.findByPk(id);
+
+  await user.setStations([]);
+
+  if (stationIds) {
+    const stations = await db.Stations.findAll({ where: { id: stationIds } });
+    await user.addStations(stations);
+  }
 
   res.redirect("/users");
 };

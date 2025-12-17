@@ -1,0 +1,18 @@
+<div class="combobox" data-combobox>
+  <input
+    type="text"
+    class="combobox__input"
+    placeholder="{{placeholder}}"
+    autocomplete="off"
+    data-combobox-input
+  />
+  <div class="combobox__content" data-combobox-content>
+    <div class="combobox__results" data-combobox-results>
+      {{#each items}}
+        <div class="combobox__item" data-value="{{id}}" data-text="{{text}}">
+          {{text}}
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="flex flex-col gap-xl">
+  <h1>{{title}}</h1>
+  <div class="flex flex-col gap-md">
+    <form action="/products/{{product.id}}" method="POST" class="flex flex-col gap-lg">
+      {{> labeledInput type="text" id="name" name="name" label="Navn" value=product.name required=true}}
+      {{> button type="submit" text="Gem"}}
+    </form>
+    <div class="grid grid-cols-2 gap-md">
+      <form action="/products/{{product.id}}/delete" method="POST" onsubmit="return confirm('Er du sikker på at du vil slette dette produkt?')">
+        {{> button type="submit" variant="destructive" text="Slet produkt"}}
+      </form>
+      {{> button variant="outline" href="/products" text="Annuller"}}
+    </div>
+  </div>
+</div>

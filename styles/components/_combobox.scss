@@ -1,0 +1,52 @@
+@use "../abstracts" as *;
+
+.combobox {
+  position: relative;
+
+  &__content {
+    @include box;
+
+    position: absolute;
+    top: calc(100% + $spacing-xs);
+    width: 100%;
+    display: none;
+  }
+
+  &:focus-within &__content {
+    display: block;
+  }
+
+  &__input {
+    @include text-label-body;
+    @include box;
+
+    width: 100%;
+  }
+
+  &__results {
+    display: flex;
+    flex-direction: column;
+    margin: -$spacing-xs;
+    max-height: 7.5rem;
+    overflow-y: auto;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  &__item {
+    @include text-label-body;
+
+    display: flex;
+    align-items: center;
+    padding: 0 $spacing-xs;
+    min-height: 2.5rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $color-background;
+      border-radius: $border-radius;
+    }
+  }
+}
