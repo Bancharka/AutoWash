@@ -28,7 +28,9 @@
 
     <div class="flex flex-wrap gap-md">
         {{#each beforeImages}}
-            <img src="/{{path}}" alt="Before" style="max-width: 80px;" />
+            <a href="/{{path}}" target="_blank">
+                <img src="/{{path}}" alt="Before" style="max-width: 80px;" />
+            </a>
         {{/each}}
     </div>
 
@@ -37,7 +39,9 @@
 
     <div class="flex flex-wrap gap-md">
         {{#each afterImages}}
-            <img src="/{{path}}" alt="After" style="max-width: 80px;" />
+            <a href="/{{path}}" target="_blank">
+                <img src="/{{path}}" alt="After" style="max-width: 80px;" />
+            </a>
         {{/each}}
     </div>
 

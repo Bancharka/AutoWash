@@ -6,6 +6,7 @@ exports.getCompany = async (req, res) => {
   res.render("addCompany", {
     title: "Tilføj firma",
     companies,
+    backUrl: "/stations",
   });
 };
 

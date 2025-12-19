@@ -1,17 +1,11 @@
 <div class="flex flex-col gap-xl">
     <h1>{{title}}</h1>
-    <div class="flex flex-col gap-lg">
-            <div class="flex flex-col gap-md">
-            <p class="label-add">Navn</p>
-            {{> input}}
+    <form class="flex flex-col gap-lg" action="/add-product" method="POST">
+        {{>labeledInput type="text" id="name" name="name" label="Navn"}}
+        <div class="grid grid-cols-2 gap-md">
+            {{> button href="/products" text="Annuller" variant="outline"}}
+            {{> button type="submit" text="Tilføj"}}
         </div>
-            <div class="flex flex-col gap-md">
-            <p class="label-add">Mængdeindikater</p>
-            {{> dropdownSearch id ="testDropDown" label="Det her er en test" placeholder="Søg efter mængdeindikater" items=testItems}}
-    </div>
-    <div class="flex gap-md btn-row">
-        {{> button href="/products" text="Annuller" variant="outline"}}
-        {{> button type="button" text="Tilføj"}}
-    </div>
+    </form>
     {{> footerNav}}
 </div>
