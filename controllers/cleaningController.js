@@ -149,7 +149,7 @@ exports.postNewCleaning = async (req, res) => {
       },
     });
 
-    const viewLink = `http://localhost:3000/view-cleaning/${viewToken}`;
+    const viewLink = `http://91.107.227.88:3000/view-cleaning/${viewToken}`;
 
     const emailHTML = `
 				<h2>Station rengjort</h2>
