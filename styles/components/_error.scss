@@ -1,0 +1,7 @@
+@use "../abstracts" as *;
+
+.error-message {
+    background-color: $color-error;
+    color: $color-destructive;
+
+}
