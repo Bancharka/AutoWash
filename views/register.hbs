@@ -1,27 +1,8 @@
-{{!-- <form class="flex flex-col gap-lg" action="/register" method="POST">
+<form class="flex flex-col gap-lg" action="/register" method="POST">
   {{>labeledInput type="text" id="first-name" name="firstName" label="Fornavn" required=true}}
   {{>labeledInput type="text" id="last-name" name="lastName" label="Efternavn" required=true}}
   {{>labeledInput type="email" id="email" name="email" label="Email" required=true}}
   {{>labeledInput type="password" id="password" name="password" label="Kodeord" required=true}}
-  {{>labeledInput type="password" id="confirm-password" name="confirmPassword" label="Bekræft kodeord" required=true}}
-
-  <div class="flex flex-col gap-md">
-    {{>button type="submit" text="Opret bruger"}}
-    {{>button href="/login" text="Log ind" variant="outline"}}
-  </div>
-</form> --}}
-
-{{!-- {{#if error}} --}}
-  <div class="error-message">{{error}}</div>
-{{!-- {{/if}} --}}
-
-<form class="flex flex-col gap-lg" action="/register" method="POST">
-  {{>labeledInput type="text" id="first-name" name="firstName" label="Fornavn"}}
-  {{>labeledInput type="text" id="last-name" name="lastName" label="Efternavn"}}
-  {{>labeledInput type="email" id="email" name="email" label="Email"}}
-  {{>labeledInput type="password" id="password" name="password" label="Kodeord"}}
-  {{>labeledInput type="password" id="confirm-password" name="confirmPassword" label="Bekræft kodeord"}}
-
   <div class="flex flex-col gap-md">
     {{>button type="submit" text="Opret bruger"}}
     {{>button href="/login" text="Log ind" variant="outline"}}
