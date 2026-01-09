@@ -9,8 +9,7 @@ exports.getLogin = (req, res) => {
     title: "Log ind",
     showgraphic: true,
     hideHeader: true,
-    error: req.session.error,  //fejlbesked sendes til viewet
-    success: req.session.success,
+    error: req.session.error //fejlbesked sendes til viewet
   });
   delete req.session.error; //sletning af fejlbesked, så den ikke vises i den næste session efter fejl
 };
@@ -20,8 +19,7 @@ exports.getRegister = (req, res) => {
     title: "Opret bruger",
     showgraphic: true,
     hideHeader: true,
-    error: req.session.error,//fejlbesked sendes til viewet
-    succes: req.session.succes,
+    error: req.session.error || "Test fejlbesked til styling" //fejlbesked sendes til viewet
   });
   delete req.session.error; //sletning af fejlbesked, så den ikke vises i den næste session efter fejl
 };
@@ -80,14 +78,11 @@ exports.postRegister = async (req, res) => {
       password: hashedPassword,
       isAdmin: false,
     });
-    //også tilføjet en succes besked 
 
-    req.session.success = "Bruger oprettet! Du kan nu logge ind."
     res.redirect("/login");
   } catch (error) {
     console.error("Error creating user:", error);
-    req.session.error = "Der opstod en fejl, prøv igen.";
-    req.redirect("/register");
+    res.status(500).send("Error creating user");
   }
 };
 
