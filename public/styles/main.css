@@ -670,8 +670,17 @@ input {
 }
 
 .error-message {
+  display: flex;
   background-color: #ffe2e4;
   color: #e31919;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: #e31919 solid 3px;
+}
+.error-message__icon {
+  height: 1.5rem;
+  margin-right: 1rem;
 }
 
 .container {

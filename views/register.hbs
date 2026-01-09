@@ -1,4 +1,16 @@
-{{!-- <form class="flex flex-col gap-lg" action="/register" method="POST">
+{{!--
+{{#if error}} 
+  <div class="error-message">
+    <img 
+      class="error-message__icon" 
+      src="\assets\icons\error.png" 
+      alt="Fejl"
+    />
+    {{error}}
+  </div>
+{{/if}}
+
+ <form class="flex flex-col gap-lg" action="/register" method="POST">
   {{>labeledInput type="text" id="first-name" name="firstName" label="Fornavn" required=true}}
   {{>labeledInput type="text" id="last-name" name="lastName" label="Efternavn" required=true}}
   {{>labeledInput type="email" id="email" name="email" label="Email" required=true}}
@@ -11,9 +23,26 @@
   </div>
 </form> --}}
 
-{{!-- {{#if error}} --}}
-  <div class="error-message">{{error}}</div>
-{{!-- {{/if}} --}}
+{{#if error}} 
+  <div class="error-message">
+    <img 
+      class="error-message__icon" 
+      src="\assets\icons\error.png" 
+      alt="Fejl"
+    />
+    {{error}}
+  </div>
+{{/if}}
+{{#if success}} 
+  <div class="success-message">
+    <img 
+      class="success-message__icon" 
+      src="\assets\icons\error.png" 
+      alt="Fejl"
+    />
+    {{error}}
+  </div>
+{{/if}}
 
 <form class="flex flex-col gap-lg" action="/register" method="POST">
   {{>labeledInput type="text" id="first-name" name="firstName" label="Fornavn"}}
