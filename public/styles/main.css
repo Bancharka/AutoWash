@@ -678,7 +678,21 @@ input {
   margin-bottom: 0.5rem;
   border: #e31919 solid 3px;
 }
-.error-message__icon {
+.error-message__error-icon {
+  height: 1.5rem;
+  margin-right: 1rem;
+}
+
+.success-message {
+  display: flex;
+  background-color: #e6fbe6;
+  color: #0fb915;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: #0fb915 solid 3px;
+}
+.success-message__icon {
   height: 1.5rem;
   margin-right: 1rem;
 }

@@ -13,6 +13,7 @@ exports.getLogin = (req, res) => {
     success: req.session.success,
   });
   delete req.session.error; //sletning af fejlbesked, så den ikke vises i den næste session efter fejl
+  delete req.session.success;
 };
 
 exports.getRegister = (req, res) => {
@@ -21,7 +22,7 @@ exports.getRegister = (req, res) => {
     showgraphic: true,
     hideHeader: true,
     error: req.session.error,//fejlbesked sendes til viewet
-    succes: req.session.succes,
+    success: req.session.success,
   });
   delete req.session.error; //sletning af fejlbesked, så den ikke vises i den næste session efter fejl
 };
@@ -82,18 +83,24 @@ exports.postRegister = async (req, res) => {
     });
     //også tilføjet en succes besked 
 
-    req.session.success = "Bruger oprettet! Du kan nu logge ind."
+    req.session.success = "Bruger oprettet! Du kan nu logge ind.";
     res.redirect("/login");
   } catch (error) {
     console.error("Error creating user:", error);
     req.session.error = "Der opstod en fejl, prøv igen.";
-    req.redirect("/register");
+    res.redirect("/register");
   }
 };
 
 exports.postLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    //validering igen
+    if (!email || !password) {
+      req.session.error = "Email og adgangskode skal udfyldes";
+      return res.redirect("/login");
+    }
 
     const user = await db.Users.findOne({
       where: { email },
