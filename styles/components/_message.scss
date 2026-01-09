@@ -1,13 +1,13 @@
 @use "../abstracts" as *;
 
-.success-message {
+.error-message {
     display: flex;
-    background-color: $color-success-muted;
-    color: $color-success;
+    background-color: $color-error;
+    color: $color-destructive;
     border-radius: $border-radius;
     padding: $spacing-xs;
     margin-bottom: $spacing-xs;
-    border: $color-success solid 3px;
+    border: $color-destructive solid 3px;
 
     &__icon {
         height: $icon-size;
